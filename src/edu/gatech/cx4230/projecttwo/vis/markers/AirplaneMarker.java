@@ -1,10 +1,14 @@
 package edu.gatech.cx4230.projecttwo.vis.markers;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
+import processing.core.PGraphics;
 import processing.core.PImage;
+import de.fhpotsdam.unfolding.geo.Location;
+import de.fhpotsdam.unfolding.marker.AbstractMarker;
 import edu.gatech.cx4230.projecttwo.utilities.FileHelper;
 
-public class AirplaneMarker {
+public class AirplaneMarker extends AbstractMarker {
 	public static final int REGIONAL = 76486;
 	public static final int SHORT_RANGE = 12922;
 	public static final int MEDIUM_RANGE = 394855;
@@ -14,24 +18,41 @@ public class AirplaneMarker {
 	private static final String PLANE_GREEN = "drawable/air_plane_green.png";
 	private static final String PLANE_PURPLE = "drawable/air_plane_purple.png";
 	private int type;
-	private int heading; // from North
-	private double x,y;
+	private int heading; // degrees from North
 	private PImage img;
+	private static final double SCALING = 0.1;
+	private int width, height;
 	
-	public AirplaneMarker(PApplet p, int type, double x, double y, int heading) {
+	public AirplaneMarker(Location location, int type, int heading, PApplet p) {
+		super(location);
+		
 		this.type = type;
-		this.x = x;
-		this.y = y;
 		String file = getFilenameForType(type);
 		
 		FileHelper fh = new FileHelper();
 		String fullpath = fh.getPathToResource(file);
 		img = p.loadImage(fullpath);
 		
+		width = (int) (img.width * SCALING);
+		height = (int) (img.height * SCALING);
+		
 	}
 	
-	public void draw(PApplet p) {
+	@Override
+	public void draw(PGraphics pg, float x, float y) {
+		pg.pushStyle();
+		pg.imageMode(PConstants.CORNER);
+		// The image is drawn in object coordinates, i.e. the marker's origin (0,0) is at its geo-location.
+		pg.rotate((heading + 90)*(PConstants.TWO_PI/180));
+		pg.translate(x - width/2, y - height / 2);
+		pg.image(img, 0, 0, width, height);
+		pg.popStyle();
 		
+	}
+
+	@Override
+	protected boolean isInside(float checkX, float checkY, float x, float y) {
+		return checkX > x && checkX < x + img.width && checkY > y && checkY < y + img.height;
 	}
 	
 	private String getFilenameForType(int in) {
@@ -79,34 +100,6 @@ public class AirplaneMarker {
 	 */
 	public void setHeading(int heading) {
 		this.heading = heading;
-	}
-
-	/**
-	 * @return the x
-	 */
-	public double getX() {
-		return x;
-	}
-
-	/**
-	 * @param x the x to set
-	 */
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	/**
-	 * @return the y
-	 */
-	public double getY() {
-		return y;
-	}
-
-	/**
-	 * @param y the y to set
-	 */
-	public void setY(double y) {
-		this.y = y;
 	}
 
 }
