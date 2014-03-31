@@ -51,7 +51,7 @@ public class AirplaneMarker extends AbstractMarker {
 
 	@Override
 	protected boolean isInside(float checkX, float checkY, float x, float y) {
-		return checkX > x && checkX < x + img.width && checkY > y && checkY < y + img.height;
+		return checkX > x && checkX < x + width && checkY > y && checkY < y + height;
 	}
 	
 	private String getFilenameForType(int in) {
