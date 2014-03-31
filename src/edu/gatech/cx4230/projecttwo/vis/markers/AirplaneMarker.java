@@ -29,8 +29,7 @@ public class AirplaneMarker extends AbstractMarker {
 		this.type = type;
 		String file = getFilenameForType(type);
 		
-		FileHelper fh = new FileHelper();
-		String fullpath = fh.getPathToResource(file);
+		String fullpath = FileHelper.getPathToResource(file);
 		img = p.loadImage(fullpath);
 		
 		width = (int) (img.width * SCALING);

@@ -10,20 +10,13 @@ import java.io.File;
 public class FileHelper {
 	public static final String WORKING_DIRECTORY = "CX4230_ProjectTwo";
 	public static final String RESOURCE_PATH = "res/";
-	
-	/**
-	 * Creates a new FileHelper object
-	 */
-	public FileHelper() {
-		
-	}
 
 	/**
 	 * Checks if the given file exists.  The filename must include a file path
 	 * @param filename Filename of the file in question
 	 * @return true if the file exists and false otherwise
 	 */
-	public boolean fileExists(String filename) {
+	public static boolean fileExists(String filename) {
 		boolean out = false;
 		
 		if(filename != null) {
@@ -42,7 +35,7 @@ public class FileHelper {
 	 * @param filename Name of the file in question
 	 * @return true if the file exists and false otherwise
 	 */
-	public boolean fileExists(String path, String filename) {
+	public static boolean fileExists(String path, String filename) {
 		return fileExists(path + File.separator + filename);
 	}
 	
@@ -51,7 +44,7 @@ public class FileHelper {
 	 * @param folder Folder path in question
 	 * @return true if the folder is a directory that works and false otherwise
 	 */
-	public boolean folderExists(String folder) {
+	public static boolean folderExists(String folder) {
 		boolean out = false;
 		
 		if(folder != null) {
@@ -69,7 +62,7 @@ public class FileHelper {
 	 * @param files Array of filenames to be tested
 	 * @return true if all the files exist and false otherwise
 	 */
-	public boolean checkFiles(String path, String[] files) {
+	public static boolean checkFiles(String path, String[] files) {
 		boolean out = true;
 		for(int i = 0; i < files.length; i++) {
 			File file = new File(path + File.separator + files[i]);
@@ -81,7 +74,7 @@ public class FileHelper {
 		return out;
 	}
 	
-	public String getPathToResource(String filename) {
+	public static String getPathToResource(String filename) {
 		String workingDirectory = System.getProperty("user.dir");
 		int index = workingDirectory.indexOf(WORKING_DIRECTORY);
 		String localPath = workingDirectory.substring(0,index);
@@ -91,8 +84,7 @@ public class FileHelper {
 	}
 	
 	public static void main(String[] args) {
-		FileHelper fh = new FileHelper();
-		String out = fh.getPathToResource("Model_Roster.csv");
+		String out = FileHelper.getPathToResource("Model_Roster.csv");
 		System.out.println(out);
 	}
 }
