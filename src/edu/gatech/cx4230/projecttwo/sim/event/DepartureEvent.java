@@ -28,9 +28,9 @@ public class DepartureEvent extends Event {
 		double flightDuration = flight.getDistance() / flight.getAircraft().getSpeed();
 		int arriveTime = currSimTime + (int)flightDuration;
 		
-		// update flight
-		flight.setTimeOfDeparture(currSimTime);
-		flight.setEstimatedTimeArrival(arriveTime);
+		// update flight - is this info already specified when the flight is generated?
+		// flight.setTimeOfDeparture(currSimTime);
+		// flight.setEstimatedTimeArrival(arriveTime);
 		
 		// schedule ArrivalEvent for destination airport
 		ArrivalEvent arriveEvent = new ArrivalEvent(flight, currSimTime, arriveTime);
