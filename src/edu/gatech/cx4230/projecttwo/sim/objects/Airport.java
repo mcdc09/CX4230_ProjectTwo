@@ -1,7 +1,6 @@
 package edu.gatech.cx4230.projecttwo.sim.objects;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import edu.gatech.cx4230.projecttwo.sim.event.Event;
 import edu.gatech.cx4230.projecttwo.sim.event.EventPriorityQueue;
@@ -10,13 +9,13 @@ import edu.gatech.cx4230.projecttwo.sim.event.EventPriorityQueue;
 public class Airport {
 
 	// properties
-	private List<Runway> runways;
-	private float latitude;
-	private float longitude;
-	private String city;
-	private String state;
-	private String icaoCode;
-	private String timeZone;
+	private final ArrayList<Runway> runways;
+	private final float latitude;
+	private final float longitude;
+	private final String city;
+	private final String state;
+	private final String icaoCode;
+	private final String timeZone;
 	
 	// state
 	private int onTheGround;
@@ -26,66 +25,45 @@ public class Airport {
 	EventPriorityQueue<Event> pendingEvents;
 	ArrayList<Event> processedEvents;
 	
-	public Airport() {
-		
+	public Airport(ArrayList<Runway> runways, float latitude, float longitude,
+			String city, String state, String icaoCode, String timeZone) {
+		this.runways = runways;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.city = city;
+		this.state = state;
+		this.icaoCode = icaoCode;
+		this.timeZone = timeZone;
 	}
 
 	/* PROPERTIES */
 	
-	public List<Runway> getRunways() {
+	public ArrayList<Runway> getRunways() {
 		return runways;
-	}
-
-	public void setRunways(List<Runway> runways) {
-		this.runways = runways;
 	}
 
 	public float getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(float latitude) {
-		this.latitude = latitude;
-	}
-
 	public float getLongitude() {
 		return longitude;
-	}
-
-	public void setLongitude(float longitude) {
-		this.longitude = longitude;
 	}
 
 	public String getCity() {
 		return city;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
-	}
-
 	public String getState() {
 		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
 	}
 
 	public String getIcaoCode() {
 		return icaoCode;
 	}
 
-	public void setIcaoCode(String icaoCode) {
-		this.icaoCode = icaoCode;
-	}
-
 	public String getTimeZone() {
 		return timeZone;
-	}
-
-	public void setTimeZone(String timeZone) {
-		this.timeZone = timeZone;
 	}
 
 	
@@ -113,10 +91,6 @@ public class Airport {
 	public EventPriorityQueue<Event> getPendingEvents() {
 		return pendingEvents;
 	}
-	
-	public Event getNextPendingEvent() {
-		return pendingEvents.removeMin();
-	}
 
 	public void addPendingEvent(Event event) {
 		pendingEvents.addInOrder(event);
@@ -130,8 +104,12 @@ public class Airport {
 		processedEvents.add(event);
 	}
 	
+	public int getTimeNextPendingEvent() {
+		return pendingEvents.getMinValue();
+	}
+	
 	public void processNextEvent() {
-		Event event = getNextPendingEvent();
+		Event event = pendingEvents.removeMin();
 		event.process();
 		addProcessedEvent(event);
 	}

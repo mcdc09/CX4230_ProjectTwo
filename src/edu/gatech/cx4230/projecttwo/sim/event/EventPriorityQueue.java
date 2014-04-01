@@ -17,4 +17,8 @@ public class EventPriorityQueue<Event> {
 	public Event removeMin() {
 		return null;
 	}
+
+	public int getMinValue() {
+		return 0;
+	}
 }
