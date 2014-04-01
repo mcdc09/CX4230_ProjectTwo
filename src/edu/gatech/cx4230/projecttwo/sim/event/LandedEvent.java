@@ -27,12 +27,14 @@ public class LandedEvent extends Event {
 				
 		// calculate simulation times
 		int currSimTime = 0; // TODO get current sim time
+		int runwayTime = flight.getAircraft().getRunwayTime();
+		int onGroundTime = flight.getAircraft().getGroundTime();
 		
 		// update flight
 		flight.setActualTimeArrival(currSimTime);
 		
-		// TODO schedule DepartureEvent
-		// we need a new flight with the same aircraft - is this done with the FlightGenerator?
+		// TODO schedule DepartureEvent with destination airport as new origin airport
+		// we need a new flight with the same aircraft - FlightGenerator?
 		
 		// TODO options: 
 		// option 1: if flight is added to inTheAir queue during ArrivalEvent
