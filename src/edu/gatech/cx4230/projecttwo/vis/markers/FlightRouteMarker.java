@@ -3,8 +3,8 @@ package edu.gatech.cx4230.projecttwo.vis.markers;
 import java.util.List;
 
 import processing.core.PGraphics;
+import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.AbstractShapeMarker;
-import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.utils.MapPosition;
 
 public class FlightRouteMarker extends AbstractShapeMarker {
@@ -12,10 +12,13 @@ public class FlightRouteMarker extends AbstractShapeMarker {
 	private static final int COLOR_GREEN = 168;
 	private static final int COLOR_BLUE = 69;
 	private static final int COLOR_ALPHA = 150;
+	private String icaoCodeA, icaoCodeB;
 	
-	public FlightRouteMarker(Marker fromMark, Marker toMark) {
-		addLocations(fromMark.getLocation());
-		addLocations(toMark.getLocation());
+	public FlightRouteMarker(Location a, Location b, String codeA, String codeB) {
+		addLocations(a);
+		addLocations(b);
+		this.icaoCodeA = codeA;
+		this.icaoCodeB = codeB;
 	}
 
 	@Override
@@ -27,6 +30,20 @@ public class FlightRouteMarker extends AbstractShapeMarker {
 		pg.color(COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_ALPHA);
 		pg.line(from.x, from.y, to.x, to.y);
 		pg.popStyle();
+	}
+
+	/**
+	 * @return the icaoCodeA
+	 */
+	public String getIcaoCodeA() {
+		return icaoCodeA;
+	}
+
+	/**
+	 * @return the icaoCodeB
+	 */
+	public String getIcaoCodeB() {
+		return icaoCodeB;
 	}
 	
 

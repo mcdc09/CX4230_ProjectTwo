@@ -5,10 +5,19 @@ import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.AbstractMarker;
 
 public class AirportMarker extends AbstractMarker {
+	private final String icaoCode;
 	
-	public AirportMarker(Location location) {
+	public AirportMarker(Location location, String icaoCode) {
 		super(location);
+		this.icaoCode = icaoCode;
 		
+	}
+
+	/**
+	 * @return the icaoCode
+	 */
+	public String getIcaoCode() {
+		return icaoCode;
 	}
 
 	@Override
