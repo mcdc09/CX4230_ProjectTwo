@@ -14,21 +14,30 @@ public class ArrivalEvent extends Event {
 	
 	@Override
 	public void process() {
-		// TODO Auto-generated method stub
 		Airport destination = flight.getDestination();
+		
+		// increment inTheAir counter for destination airport
 		int inAir = destination.getInTheAir();
 		destination.setInTheAir(++inAir);
 		
+		// TODO options: either add this flight to an "intTheAir" queue
+		// or, go ahead and schedule a LandedEvent with this flight
+		// and let the airport handle when to create/process the LandedEvent 
+		
+		/* check if destination airport has a free runway
 		Runway runway = destination.getFreeRunway();
 		if(runway != null) {
 			runway.setRunwayFree(false);
 			runway.setAircraft(flight.getAircraft());
-			
-			int currSimTime = 0; // TODO get current sim time
-			int processTime = currSimTime + 1; // TODO when should the landing event be processed?
-			LandedEvent landEvent = new LandedEvent(flight, currSimTime, processTime);
-			destination.addPendingEvent(landEvent);
-		}
+		*/
+		
+		// calculate simulation times
+		int currSimTime = 0; // TODO get current sim time
+		int landTime = currSimTime; // TODO when should the landing event be processed?
+		
+		// schedule LandedEvent for destination airport
+		LandedEvent landEvent = new LandedEvent(flight, currSimTime, landTime);
+		destination.addPendingEvent(landEvent);
 	}
 
 }
