@@ -21,6 +21,8 @@ public class DepartureEvent extends Event {
 		int onGround = origin.getOnTheGround();
 		origin.setInTheAir(--onGround);
 		
+		// TODO update runway's "runwayFree" and "aircraft"?
+		
 		// calculate simulation times
 		int currSimTime = 0; // TODO get current sim time
 		double flightDuration = flight.getDistance() / flight.getAircraft().getSpeed();
