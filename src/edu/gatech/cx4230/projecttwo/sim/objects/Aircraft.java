@@ -11,7 +11,6 @@ public class Aircraft {
 	
 	public Aircraft(String aircraftType, int passengerCapacity, int speed,
 			int minRunwayLength, int runwayTime, int groundTime) {
-		super();
 		this.aircraftType = aircraftType;
 		this.passengerCapacity = passengerCapacity;
 		this.speed = speed;
