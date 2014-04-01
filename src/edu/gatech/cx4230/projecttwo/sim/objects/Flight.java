@@ -2,20 +2,16 @@ package edu.gatech.cx4230.projecttwo.sim.objects;
 
 public class Flight {
 
-	private Aircraft aircraft;
-	private Airport origin;
-	private Airport destination;
-	private int timeOfDeparture;
-	private int estimatedTimeArrival;
+	private final Aircraft aircraft;
+	private final Airport origin;
+	private final Airport destination;
+	private final double distance;
+	private final int timeOfDeparture;
+	private final int estimatedTimeArrival;
 	private int actualTimeArrival;
-	private double distance;
 	
-	public Flight() {
-		
-	}
-
 	public Flight(Aircraft aircraft, Airport origin, Airport destination,
-			int timeOfDeparture, int estimatedTimeArrival, double distance) {
+			 double distance, int timeOfDeparture, int estimatedTimeArrival) {
 		this.aircraft = aircraft;
 		this.origin = origin;
 		this.destination = destination;
@@ -28,40 +24,24 @@ public class Flight {
 		return aircraft;
 	}
 
-	public void setAircraft(Aircraft aircraft) {
-		this.aircraft = aircraft;
-	}
-
 	public Airport getOrigin() {
 		return origin;
-	}
-
-	public void setOrigin(Airport origin) {
-		this.origin = origin;
 	}
 
 	public Airport getDestination() {
 		return destination;
 	}
 
-	public void setDestination(Airport destination) {
-		this.destination = destination;
+	public double getDistance() {
+		return distance;
 	}
 
 	public int getTimeOfDeparture() {
 		return timeOfDeparture;
 	}
 
-	public void setTimeOfDeparture(int timeOfDeparture) {
-		this.timeOfDeparture = timeOfDeparture;
-	}
-
 	public int getEstimatedTimeArrival() {
 		return estimatedTimeArrival;
-	}
-
-	public void setEstimatedTimeArrival(int estimatedTimeArrival) {
-		this.estimatedTimeArrival = estimatedTimeArrival;
 	}
 
 	public int getActualTimeArrival() {
@@ -72,11 +52,4 @@ public class Flight {
 		this.actualTimeArrival = actualTimeArrival;
 	}
 
-	public double getDistance() {
-		return distance;
-	}
-
-	public void setDistance(double distance) {
-		this.distance = distance;
-	}
 }
