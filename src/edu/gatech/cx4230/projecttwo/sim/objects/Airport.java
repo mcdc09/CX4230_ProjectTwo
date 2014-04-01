@@ -85,6 +85,14 @@ public class Airport {
 		this.inTheAir = inTheAir;
 	}
 
+	public Runway getFreeRunway() {
+		for(Runway r : runways) {
+			if(r.isRunwayFree()) {
+				return r;
+			}
+		}
+		return null;
+	}
 	
 	/* EVENTS */
 	 	
