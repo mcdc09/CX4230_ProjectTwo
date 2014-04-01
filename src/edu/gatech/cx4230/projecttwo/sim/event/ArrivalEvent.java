@@ -20,8 +20,9 @@ public class ArrivalEvent extends Event {
 		int inAir = destination.getInTheAir();
 		destination.setInTheAir(++inAir);
 		
-		// TODO options: either add this flight to an "intTheAir" queue
-		// or, go ahead and schedule a LandedEvent with this flight
+		// TODO options: 
+		// option 1: add this flight to an "intTheAir" queue
+		// option 2: go ahead and schedule a LandedEvent with this flight
 		// and let the airport handle when to create/process the LandedEvent 
 		
 		/* check if destination airport has a free runway

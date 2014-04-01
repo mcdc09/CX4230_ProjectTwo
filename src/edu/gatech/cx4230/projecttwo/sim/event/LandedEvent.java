@@ -30,6 +30,18 @@ public class LandedEvent extends Event {
 		
 		// update flight
 		flight.setActualTimeArrival(currSimTime);
+		
+		// TODO schedule DepartureEvent
+		// we need a new flight with the same aircraft - is this done with the FlightGenerator?
+		
+		// TODO options: 
+		// option 1: if flight is added to inTheAir queue during ArrivalEvent
+		// if(inTheAir > 0) { schedule LandedEvent for next aircraft in inTheAir queue } 
+		// else { update runway's "runwayFree" and "aircraft" }
+		
+		// option 2: if LandedEvent is scheduled during ArrivalEvent
+		// update runway's "runwayFree" and "aircraft"
+		// let airport decide when to process next landed event that has already been scheduled
 	}
 
 }
