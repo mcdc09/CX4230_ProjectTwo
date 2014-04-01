@@ -1,6 +1,8 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
+import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
+import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
 
 public class DepartureEvent extends Event {
 
@@ -12,8 +14,25 @@ public class DepartureEvent extends Event {
 	
 	@Override
 	public void process() {
-		// TODO Auto-generated method stub
+		Airport origin = flight.getOrigin();
+		Airport destination = flight.getDestination();
 		
+		// decrement onTheGround counter for origin airport
+		int onGround = origin.getOnTheGround();
+		origin.setInTheAir(--onGround);
+		
+		// calculate simulation times
+		int currSimTime = 0; // TODO get current sim time
+		double flightDuration = flight.getDistance() / flight.getAircraft().getSpeed();
+		int arriveTime = currSimTime + (int)flightDuration;
+		
+		// update flight
+		flight.setTimeOfDeparture(currSimTime);
+		flight.setEstimatedTimeArrival(arriveTime);
+		
+		// schedule ArrivalEvent for destination airport
+		ArrivalEvent arriveEvent = new ArrivalEvent(flight, currSimTime, arriveTime);
+		destination.addPendingEvent(arriveEvent);
 	}
 
 }
