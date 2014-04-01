@@ -2,20 +2,16 @@ package edu.gatech.cx4230.projecttwo.sim.objects;
 
 public class Runway {
 
-	private int length;
+	private final int length;
 	private Aircraft aircraft;
 	private boolean runwayFree;
 	
-	public Runway() {
-		
-	}
-	
-	public int getLength() {
-		return length;
+	public Runway(int length) {
+		this.length = length;
 	}
 
-	public void setLength(int length) {
-		this.length = length;
+	public int getLength() {
+		return length;
 	}
 
 	public Aircraft getAircraft() {
