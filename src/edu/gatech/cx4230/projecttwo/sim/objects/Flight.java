@@ -14,6 +14,16 @@ public class Flight {
 		
 	}
 
+	public Flight(Aircraft aircraft, Airport origin, Airport destination,
+			int timeOfDeparture, int estimatedTimeArrival, double distance) {
+		this.aircraft = aircraft;
+		this.origin = origin;
+		this.destination = destination;
+		this.timeOfDeparture = timeOfDeparture;
+		this.estimatedTimeArrival = estimatedTimeArrival;
+		this.distance = distance;
+	}
+
 	public Aircraft getAircraft() {
 		return aircraft;
 	}
