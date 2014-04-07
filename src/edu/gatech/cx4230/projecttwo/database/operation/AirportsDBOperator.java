@@ -19,7 +19,11 @@ public class AirportsDBOperator extends DatabaseConnectionInterface {
 	}
 	
 	public List<AirportRunwayDataFromDB> getAirportsData() {
-		ResultSet results = dbOp.executeSQLQuery(getDBQuery());
+		return getAirportsData(null);
+	} // close getAirportsData
+	
+	public List<AirportRunwayDataFromDB> getAirportsData(String airport) {
+		ResultSet results = dbOp.executeSQLQuery(getDBQuery(airport));
 		List<AirportRunwayDataFromDB> data = new ArrayList<AirportRunwayDataFromDB>();
 		
 		try {
@@ -41,13 +45,12 @@ public class AirportsDBOperator extends DatabaseConnectionInterface {
 		} // close catch
 		
 		return data;
-	}
+	} // close getAirportsData(...)
 	
-	
-	
-	private String getDBQuery() {
+	private String getDBQuery(String a) {
 		String out = "SELECT ident, name, latitude_degree, longitude_degree, municipality, length_ft ";
 		out += "FROM 'Airports' JOIN 'Runways' ON 'Airports'.id = 'Runways'.airport_ref ";
+		if(a != null && !a.isEmpty()) out += "WHERE ident = '" + a + "' ";
 		out += "GROUP BY ident";
 		out += ";";
 		
