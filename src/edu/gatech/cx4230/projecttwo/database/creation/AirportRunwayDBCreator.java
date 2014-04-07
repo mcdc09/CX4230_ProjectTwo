@@ -11,6 +11,11 @@ import java.sql.Statement;
 
 import edu.gatech.cx4230.projecttwo.utilities.FileHelper;
 
+/**
+ * Class that reads in data from the airports.csv and runways.csv files and adds data to a database file
+ * @author tbowling3
+ *
+ */
 public class AirportRunwayDBCreator {
 	private String dbPath;
 	private String dbAirport = "data/AirportDB.db";
@@ -29,7 +34,7 @@ public class AirportRunwayDBCreator {
 			Statement state = conOut.createStatement();
 
 			if (!conOut.isClosed())  System.out.println("Successfully connected to database");
-			//readAirportsCSV(state);
+			readAirportsCSV(state);
 			readRunwaysCSV(state);
 
 		} catch(SQLException e) {

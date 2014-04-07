@@ -10,11 +10,10 @@ import edu.gatech.cx4230.projecttwo.utilities.FileHelper;
 
 public class DatabaseOperator {
 	private static Connection con;
-	public static String dbTotal = "MillionSongSubset.db";
 	private String dbPath;
 	
-	public DatabaseOperator() {
-		dbPath = FileHelper.getPathToResource(dbTotal);
+	public DatabaseOperator(String file) {
+		dbPath = FileHelper.getPathToResource(file);
 		
 		con = getNewConnection(dbPath);
 	}
@@ -144,20 +143,5 @@ public class DatabaseOperator {
 			out = true;
 		}
 		return out;
-	}
-	
-	public static void main(String[] args) {
-		DatabaseOperator dbOp = new DatabaseOperator();
-		String sql = "SELECT COUNT(*) FROM songs_h5";
-		ResultSet rs = dbOp.executeSQLQuery(sql);
-		try {
-			int count = rs.getInt(1);
-			System.out.println("Song count: " + count);
-			
-		} catch (SQLException e) {
-			System.err.println("Check count failed");
-			e.printStackTrace();
-		}
-		
 	}
 } // close DatabaseOperator

@@ -1,0 +1,56 @@
+package edu.gatech.cx4230.projecttwo.database.operation;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Class used to interact with the AirportDB.db file.  AirportDB.db contains information read from
+ * the airports.csv and runways.csv files.  The database schema of AirportDB.db can be found in the res/data folder.
+ * @author tbowling3
+ *
+ */
+public class AirportsDBOperator extends DatabaseConnectionInterface {
+	private static String dbFilePath = "data/AirportDB.db";
+	
+	public AirportsDBOperator() {
+		dbOp = new DatabaseOperator(dbFilePath);
+	}
+	
+	public List<AirportRunwayDataFromDB> getAirportsData() {
+		ResultSet results = dbOp.executeSQLQuery(getDBQuery());
+		List<AirportRunwayDataFromDB> data = new ArrayList<AirportRunwayDataFromDB>();
+		
+		try {
+			while(results.next()) {
+				String ident = results.getString("ident");
+				String airportName = results.getString("name");
+				double lat = results.getDouble("latitude_degree");
+				double lon = results.getDouble("longitude_degree");
+				String munic = results.getString("municipality");
+				int runwayLength = results.getInt("length_ft");
+				
+				data.add(new AirportRunwayDataFromDB(ident, airportName, lat, lon, munic, runwayLength));
+				
+				
+			} // close while
+		} catch (SQLException e) {
+			System.out.println("Error with SQL Query");
+			e.printStackTrace();
+		} // close catch
+		
+		return data;
+	}
+	
+	
+	
+	private String getDBQuery() {
+		String out = "SELECT ident, name, latitude_degree, longitude_degree, municipality, length_ft ";
+		out += "FROM 'Airports' JOIN 'Runways' ON 'Airports'.id = 'Runways'.airport_ref ";
+		out += "GROUP BY ident";
+		out += ";";
+		
+		return out;
+	}
+}
