@@ -1,49 +1,46 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
+import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 
 public class LandedEvent extends Event {
 
-	public LandedEvent(Flight flight, int creationTime, int processTime) {
+	int currSimTime;
+
+	public LandedEvent(Flight flight) {
 		this.flight = flight;
-		this.creationTime = creationTime;
-		this.processTime = processTime;
+		
+		currSimTime = 0; //TODO get current simulation time
+
+		this.creationTime = currSimTime;
+		this.processTime = flight.getEstimatedTimeArrival();
 	}
 	
 	@Override
 	public void process() {
 		Airport destination = flight.getDestination();
+		Aircraft aircraft = flight.getAircraft();
 		
 		// decrement inTheAir counter for destination airport
 		int inAir = destination.getInTheAir();
 		destination.setInTheAir(--inAir);
 				
-		// increment onTheGround counter for destination airport
-		int onGround = destination.getOnTheGround();
-		destination.setInTheAir(++onGround);
-		
-		// TODO update runway's "runwayFree" and "aircraft"?
+		// add aircraft to onTheGround at destination airport
+		destination.addAircraftOnTheGround(aircraft);
+				
+		// update flight
+		flight.setActualTimeArrival(currSimTime);
 				
 		// calculate simulation times
-		int currSimTime = 0; // TODO get current sim time
 		int runwayTime = flight.getAircraft().getRunwayTime();
 		int onGroundTime = flight.getAircraft().getGroundTime();
 		
-		// update flight
-		flight.setActualTimeArrival(currSimTime);
-		
+		// TODO update runway's "runwayFree" and "aircraft"?
+
 		// TODO schedule DepartureEvent with destination airport as new origin airport
 		// we need a new flight with the same aircraft - FlightGenerator?
 		
-		// TODO options: 
-		// option 1: if flight is added to inTheAir queue during ArrivalEvent
-		// if(inTheAir > 0) { schedule LandedEvent for next aircraft in inTheAir queue } 
-		// else { update runway's "runwayFree" and "aircraft" }
-		
-		// option 2: if LandedEvent is scheduled during ArrivalEvent
-		// update runway's "runwayFree" and "aircraft"
-		// let airport decide when to process next landed event that has already been scheduled
 	}
 
 }

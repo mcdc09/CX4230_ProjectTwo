@@ -1,39 +1,37 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
+import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
 
 public class DepartureEvent extends Event {
 
-	public DepartureEvent(Flight flight, int creationTime, int processTime) {
+	int currSimTime;
+	
+	public DepartureEvent(Flight flight) {
 		this.flight = flight;
-		this.creationTime = creationTime;
-		this.processTime = processTime;
+	
+		currSimTime = 0; //TODO get current simulation time
+		//this.creationTime = creationTime;
+		this.creationTime = currSimTime;
+		//this.processTime = processTime;
+		this.processTime = flight.getTimeOfDeparture();
 	}
 	
 	@Override
 	public void process() {
 		Airport origin = flight.getOrigin();
 		Airport destination = flight.getDestination();
+		Aircraft aircraft = flight.getAircraft();
 		
-		// decrement onTheGround counter for origin airport
-		int onGround = origin.getOnTheGround();
-		origin.setInTheAir(--onGround);
+		// remove aircraft from onTheGround at origin airport
+		origin.removeAircraftOnTheGround(aircraft);
 		
 		// TODO update runway's "runwayFree" and "aircraft"?
 		
-		// calculate simulation times
-		int currSimTime = 0; // TODO get current sim time
-		double flightDuration = flight.getDistance() / flight.getAircraft().getSpeed();
-		int arriveTime = currSimTime + (int)flightDuration;
-		
-		// update flight - is this info already specified when the flight is generated?
-		// flight.setTimeOfDeparture(currSimTime);
-		// flight.setEstimatedTimeArrival(arriveTime);
-		
 		// schedule ArrivalEvent for destination airport
-		ArrivalEvent arriveEvent = new ArrivalEvent(flight, currSimTime, arriveTime);
+		ArrivalEvent arriveEvent = new ArrivalEvent(flight);
 		destination.addPendingEvent(arriveEvent);
 	}
 
