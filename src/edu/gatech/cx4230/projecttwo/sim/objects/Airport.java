@@ -179,6 +179,7 @@ public class Airport {
 			}
 		}
 		else {
+			// if the event could not be processed, add it back to the pending event queue 
 			addPendingEvent(event);
 		}
 	}
