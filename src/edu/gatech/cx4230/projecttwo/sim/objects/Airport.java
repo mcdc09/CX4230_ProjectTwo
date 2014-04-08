@@ -146,7 +146,7 @@ public class Airport {
 	}
 	
 	public boolean canProcessDeparture() {
-		if(onTheGround.size() > 0) {
+		if(onTheGround.size() > 0 && hasFreeRunway()) {
 			return true;
 		}
 		return false;
