@@ -99,6 +99,15 @@ public class Airport {
 		this.inTheAir = inTheAir;
 	}
 
+	public boolean hasFreeRunway() {
+		for(Runway r : runways) {
+			if(r.isRunwayFree()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public Runway getFreeRunway() {
 		for(Runway r : runways) {
 			if(r.isRunwayFree()) {
@@ -134,5 +143,20 @@ public class Airport {
 		Event event = pendingEvents.removeMin();
 		event.process();
 		addProcessedEvent(event);
+	}
+	
+	public boolean canProcessDeparture() {
+		if(onTheGround.size() > 0) {
+			return true;
+		}
+		return false;
+	}
+		
+	public boolean canProcessArrival() {
+		return true;
+	}
+	
+	public boolean canProcessLanding() {
+		return hasFreeRunway();
 	}
 }
