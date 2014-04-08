@@ -34,15 +34,16 @@ public class Timetable {
 	 * scheduled flights as aircraft become available at their airport.
 	 * @param origin Airport that is the origin of a flight, presumably the airport calling this
 	 * method.
-	 * @param aircraftType String representation of the type of aircraft that is on the ground.  If
-	 * there is no flight leaving the specified airport for the given type of aircraft, that aircraft
-	 * will remain on the ground.
+	 * @param a Aircraft that is on the ground.  If there is no flight leaving the specified airport
+	 * for the given type of aircraft, that aircraft will remain on the ground.
+	 * @return
 	 */
-	public Flight getScheduledFlight(Airport origin, Aircraft a){
-		World w = new World();
+	public Flight scheduleFlight(Airport origin, Aircraft a){
+		World w = new World(); // cue the Dvorak music... but really, TODO globalize the World
 		ScheduledFlight f = timetable.get(origin.getIcaoCode()).get(a.getAircraftType()).pop();
 		Airport destination = w.getAirport(f.getDestination());
-		int distance = 0;
+		int distance = (int)World.calculateDistance(origin.getLatitude(), origin.getLongitude(), 
+						destination.getLatitude(), destination.getLongitude());
 		int TOD = w.getCurrentSimTime() + 0; // add global time plus some constant
 		int ETA = TOD + distance * a.getSpeed();
 		return new Flight(a, origin, destination, distance, TOD, ETA);

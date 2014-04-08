@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class World {
-
+	private static Random globalRand = new Random(); // Seed as necessary
+	
 	private HashMap<String,Airport> airports;
 	private int currentSimTime;
 	
@@ -41,7 +43,7 @@ public class World {
 		currentSimTime = time;
 	}
 	
-	static double calculateDistance(double lat1, double lon1, double lat2, double lon2){
+	public static double calculateDistance(double lat1, double lon1, double lat2, double lon2){
 		double R = 6371; // km
 		double dLat = (lat2 - lat1) * Math.PI / 180.0;
 		double dLon = (lon2 - lon1) * Math.PI / 180.0;
@@ -53,5 +55,9 @@ public class World {
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 		double distance = R * c;
 		return distance; // km
+	}
+	
+	public static Random chance(){
+		return globalRand;
 	}
 }
