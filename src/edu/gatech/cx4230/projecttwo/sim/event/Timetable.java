@@ -39,10 +39,11 @@ public class Timetable {
 	 * will remain on the ground.
 	 */
 	public Flight getScheduledFlight(Airport origin, Aircraft a){
+		World w = new World();
 		ScheduledFlight f = timetable.get(origin.getIcaoCode()).get(a.getAircraftType()).pop();
-		Airport destination = null;
+		Airport destination = w.getAirport(f.getDestination());
 		int distance = 0;
-		int TOD = 0;
+		int TOD = w.getCurrentSimTime() + 0; // add global time plus some constant
 		int ETA = TOD + distance * a.getSpeed();
 		return new Flight(a, origin, destination, distance, TOD, ETA);
 	}
