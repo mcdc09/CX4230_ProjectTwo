@@ -13,9 +13,8 @@ public class DepartureEvent extends Event {
 		this.flight = flight;
 	
 		currSimTime = 0; //TODO get current simulation time
-		//this.creationTime = creationTime;
+		
 		this.creationTime = currSimTime;
-		//this.processTime = processTime;
 		this.processTime = flight.getTimeOfDeparture();
 	}
 	
