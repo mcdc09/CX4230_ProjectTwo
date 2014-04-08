@@ -87,6 +87,10 @@ public class Airport {
 		onTheGround.add(a);
 	}
 
+	public void removeAircraftOnTheGround(Aircraft a) {
+		onTheGround.remove(a);
+	}
+	
 	public int getInTheAir() {
 		return inTheAir;
 	}
