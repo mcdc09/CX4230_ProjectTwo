@@ -10,6 +10,7 @@ public class Airport {
 
 	// properties
 	private final ArrayList<Runway> runways;
+	private final int maxAircraftCapacity;
 	private final float latitude;
 	private final float longitude;
 	private final String city;
@@ -18,16 +19,17 @@ public class Airport {
 	private final String timeZone;
 	
 	// state
-	private int onTheGround;
+	private ArrayList<Aircraft> onTheGround;
 	private int inTheAir;
 	
 	// events
 	EventPriorityQueue<Event> pendingEvents;
 	ArrayList<Event> processedEvents;
 	
-	public Airport(ArrayList<Runway> runways, float latitude, float longitude,
+	public Airport(ArrayList<Runway> runways, int maxAircraftCapacity, float latitude, float longitude,
 			String city, String state, String icaoCode, String timeZone) {
 		this.runways = runways;
+		this.maxAircraftCapacity = maxAircraftCapacity;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.city = city;
@@ -40,6 +42,10 @@ public class Airport {
 	
 	public ArrayList<Runway> getRunways() {
 		return runways;
+	}
+
+	public int getMaxAircraftCapacity() {
+		return maxAircraftCapacity;
 	}
 
 	public float getLatitude() {
@@ -69,12 +75,16 @@ public class Airport {
 	
 	/* STATE */
 	
-	public int getOnTheGround() {
+	public ArrayList<Aircraft> getAircraftsOnTheGround() {
 		return onTheGround;
 	}
+	
+	public int getNumOnTheGround() {
+		return onTheGround.size();
+	}
 
-	public void setOnTheGround(int onTheGround) {
-		this.onTheGround = onTheGround;
+	public void addAircraftOnTheGround(Aircraft a) {
+		onTheGround.add(a);
 	}
 
 	public int getInTheAir() {
