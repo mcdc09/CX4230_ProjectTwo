@@ -10,6 +10,7 @@ public class World {
 	private static Random globalRand = new Random(); // Seed as necessary
 	private static HashMap<String,Airport> airports = new HashMap<String,Airport>();
 	private static int currentSimTime = 0;
+	public static final int timeStep = 10; // seconds per time step
 	
 	public World() {
 		// Sorry for deleting the airport hash map instantiation.  I would like to be able to access it from elsewhere.

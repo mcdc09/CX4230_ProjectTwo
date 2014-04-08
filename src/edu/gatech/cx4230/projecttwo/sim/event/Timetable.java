@@ -21,7 +21,11 @@ public class Timetable {
 	 * @param departureTime
 	 */
 	public void addScheduledFlight(String origin, String destination, String aircraftType, int departureTime){
-		// TODO create new airports and new aircraft types if not already in the map
+		if(!timetable.containsKey(origin))
+			timetable.put(origin, new HashMap<String, LinkedList<ScheduledFlight>>());
+		if(!timetable.get(origin).containsKey(aircraftType)){
+			timetable.get(origin).put(aircraftType, new LinkedList<ScheduledFlight>());
+		}
 		ScheduledFlight f = new ScheduledFlight(origin, destination, aircraftType, departureTime);
 		timetable.get(origin).get(aircraftType).add(f);
 	}
@@ -39,12 +43,11 @@ public class Timetable {
 	 * @return
 	 */
 	public Flight scheduleFlight(Airport origin, Aircraft a){
-		World w = new World(); // cue the Dvorak music... but really, TODO globalize the World
 		ScheduledFlight f = timetable.get(origin.getIcaoCode()).get(a.getAircraftType()).pop();
-		Airport destination = w.getAirport(f.getDestination());
+		Airport destination = World.getAirport(f.getDestination());
 		int distance = (int)World.calculateDistance(origin.getLatitude(), origin.getLongitude(), 
 						destination.getLatitude(), destination.getLongitude());
-		int TOD = w.getCurrentSimTime() + 0; // add global time plus some constant
+		int TOD = World.getCurrentSimTime() + 2400 / World.timeStep; // schedule take-off in 40 minutes
 		int ETA = TOD + distance * a.getSpeed();
 		return new Flight(a, origin, destination, distance, TOD, ETA);
 	}
