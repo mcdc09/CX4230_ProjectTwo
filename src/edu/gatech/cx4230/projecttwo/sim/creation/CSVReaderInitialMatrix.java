@@ -14,7 +14,6 @@ public class CSVReaderInitialMatrix extends CSVReader {
 
 	public CSVReaderInitialMatrix(String filename) {
 		super(FileHelper.getPathToResource(filename));
-		// TODO Auto-generated constructor stub
 	}
 	
 	public CSVReaderInitialMatrix() {
