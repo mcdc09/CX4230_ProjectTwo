@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.gatech.cx4230.projecttwo.utilities.ListHelper;
+
 /**
  * Class used to interact with the AirportDB.db file.  AirportDB.db contains information read from
  * the airports.csv and runways.csv files.  The database schema of AirportDB.db can be found in the res/data folder.
@@ -51,9 +53,19 @@ public class AirportsDBOperator extends DatabaseConnectionInterface {
 		String out = "SELECT ident, name, latitude_degree, longitude_degree, municipality, length_ft ";
 		out += "FROM 'Airports' JOIN 'Runways' ON 'Airports'.id = 'Runways'.airport_ref ";
 		if(a != null && !a.isEmpty()) out += "WHERE ident = '" + a + "' ";
-		out += "GROUP BY ident";
+		out += "ORDER BY ident";
 		out += ";";
 		
 		return out;
+	} // close getDBQuery(...)
+	
+	public static void main(String[] args) {
+		AirportsDBOperator op = new AirportsDBOperator();
+		List<AirportRunwayDataFromDB> list = op.getAirportsData();
+		System.out.println("Size of list: " + list.size());
+		
+		list = op.getAirportsData("KATL");
+		System.out.println("Runways of KATL: " + list.size());
+		System.out.println(ListHelper.listToString(list));
 	}
 }

@@ -16,6 +16,10 @@ public class AirportRunwayDataFromDB {
 		this.municipality = munic;
 		this.runwayLength = length;
 	}
+	
+	public String toString() {
+		return "[" + airportID + "  " + airportName + "  (" + latitude + ", " + longitude + ")  " + runwayLength;
+	}
 
 	/**
 	 * @return the airportID
