@@ -53,7 +53,7 @@ public class AirportsDBOperator extends DatabaseConnectionInterface {
 		String out = "SELECT ident, name, latitude_degree, longitude_degree, municipality, length_ft ";
 		out += "FROM 'Airports' JOIN 'Runways' ON 'Airports'.id = 'Runways'.airport_ref ";
 		if(a != null && !a.isEmpty()) out += "WHERE ident = '" + a + "' ";
-		if(a == null || a.isEmpty()) out += "GROUP BY ident";
+		out += "ORDER BY ident";
 		out += ";";
 		
 		return out;
