@@ -4,7 +4,7 @@ public class Runway {
 
 	private final int length;
 	private Aircraft aircraft;
-	private boolean runwayFree;
+	private int timeNextAvailable;
 	
 	public Runway(int length) {
 		this.length = length;
@@ -22,12 +22,12 @@ public class Runway {
 		this.aircraft = aircraft;
 	}
 
-	public boolean isRunwayFree() {
-		return runwayFree;
+	public boolean isRunwayFree(int currSimTime) {
+		return timeNextAvailable <= currSimTime;
 	}
 
-	public void setRunwayFree(boolean runwayFree) {
-		this.runwayFree = runwayFree;
+	public void setTimeNextAvailable(int time) {
+		this.timeNextAvailable = time;
 	}
 
 }

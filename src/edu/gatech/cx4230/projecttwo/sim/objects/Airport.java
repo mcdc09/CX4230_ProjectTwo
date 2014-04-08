@@ -103,8 +103,9 @@ public class Airport {
 	}
 
 	public boolean hasFreeRunway() {
+		int currSimTime = 0; // TODO get current simulation time
 		for(Runway r : runways) {
-			if(r.isRunwayFree()) {
+			if(r.isRunwayFree(currSimTime)) {
 				return true;
 			}
 		}
@@ -112,8 +113,9 @@ public class Airport {
 	}
 	
 	public Runway getFreeRunway() {
+		int currSimTime = 0; // TODO get current simulation time
 		for(Runway r : runways) {
-			if(r.isRunwayFree()) {
+			if(r.isRunwayFree(currSimTime)) {
 				return r;
 			}
 		}
@@ -150,12 +152,31 @@ public class Airport {
 	}
 	
 	public void processNextEvent() {
+		int currSimTime = 0; // TODO get current simulation time
+		
 		Event event = pendingEvents.removeMin();
 		if(event instanceof DepartureEvent && canProcessDeparture()
 			|| event instanceof ArrivalEvent && canProcessArrival()
 			|| event instanceof LandedEvent && canProcessLanding()) {
 			event.process();
 			addProcessedEvent(event);
+			
+			// runway management
+			Aircraft a = event.getFlight().getAircraft();
+			if(event instanceof DepartureEvent) {
+				// get a free runway and make it occupied with this aircraft
+				// for the amount of time that it takes to clear the runway during takeoff
+				Runway r = getFreeRunway();
+				r.setAircraft(a);
+				r.setTimeNextAvailable(currSimTime + a.getGroundTime() + a.getRunwayTime());
+			}
+			else if(event instanceof LandedEvent) {
+				// get a free runway and make it occupied with this aircraft
+				// for the amount of time that it takes to clear the runway during landing
+				Runway r = getFreeRunway();
+				r.setAircraft(a);
+				r.setTimeNextAvailable(currSimTime + Math.max(a.getRunwayTime(),a.getGroundTime()));
+			}
 		}
 		else {
 			addPendingEvent(event);
