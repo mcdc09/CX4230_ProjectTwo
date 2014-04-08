@@ -1,17 +1,16 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
 import java.util.*;
-
 import edu.gatech.cx4230.projecttwo.sim.objects.*;
 
 public class Timetable {
-	private Map<String, HashMap<String, LinkedList<Object>>> timetable;
+	private Map<String, HashMap<String, LinkedList<ScheduledFlight>>> timetable;
 	
 	/**
 	 * 
 	 */
 	public Timetable() {
-		timetable = new HashMap<String, HashMap<String, LinkedList<Object>>>();
+		timetable = new HashMap<String, HashMap<String, LinkedList<ScheduledFlight>>>();
 	}
 	
 	/**
@@ -22,6 +21,7 @@ public class Timetable {
 	 * @param departureTime
 	 */
 	public void addScheduledFlight(String origin, String destination, String aircraftType, int departureTime){
+		// TODO create new airports and new aircraft types if not already in the map
 		ScheduledFlight f = new ScheduledFlight(origin, destination, aircraftType, departureTime);
 		timetable.get(origin).get(aircraftType).add(f);
 	}
@@ -38,8 +38,13 @@ public class Timetable {
 	 * there is no flight leaving the specified airport for the given type of aircraft, that aircraft
 	 * will remain on the ground.
 	 */
-	public Object getScheduledFlight(String origin, String aircraftType){
-		return timetable.get(origin).get(aircraftType).pop();
+	public Flight getScheduledFlight(Airport origin, Aircraft a){
+		ScheduledFlight f = timetable.get(origin.getIcaoCode()).get(a.getAircraftType()).pop();
+		Airport destination = null;
+		int distance = 0;
+		int TOD = 0;
+		int ETA = TOD + distance * a.getSpeed();
+		return new Flight(a, origin, destination, distance, TOD, ETA);
 	}
 	
 	public void timetableStatus(){

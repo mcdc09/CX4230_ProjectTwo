@@ -5,26 +5,26 @@ public class ScheduledFlight {
 	private String destination;
 	private String aircraftType;
 	private int departureTime;
-	
+
 	public ScheduledFlight(String origin, String destination, String aircraftType, int departureTime) {
 		this.origin = origin;
 		this.destination = destination;
 		this.aircraftType = aircraftType;
 		this.departureTime = departureTime;
 	}
-	
+
 	public String getOrigin(){
 		return origin;
 	}
-	
+
 	public String getDestination(){
 		return destination;
 	}
-	
+
 	public String getAircraftType(){
 		return aircraftType;
 	}
-	
+
 	public int getDepartureTime(){
 		return departureTime;
 	}
