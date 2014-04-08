@@ -8,20 +8,19 @@ import java.util.Random;
 
 public class World {
 	private static Random globalRand = new Random(); // Seed as necessary
-	
-	private HashMap<String,Airport> airports;
-	private int currentSimTime;
+	private static HashMap<String,Airport> airports = new HashMap<String,Airport>();
+	private static int currentSimTime = 0;
 	
 	public World() {
-		airports = new HashMap<String,Airport>();
-		currentSimTime = 0;
+		// Sorry for deleting the airport hash map instantiation.  I would like to be able to access it from elsewhere.
+		// Yep.  currentSimTime, too
 	}
 	
 	public Collection<Airport> getAirports() {
 		return airports.values();
 	}
 	
-	public Airport getAirport(String icaoCode) {
+	public static Airport getAirport(String icaoCode) {
 		return airports.get(icaoCode);
 	}
 	
@@ -35,11 +34,11 @@ public class World {
 		}
 	}
 	
-	public int getCurrentSimTime() {
+	public static int getCurrentSimTime() {
 		return currentSimTime;
 	}
 	
-	public void setCurrentSimTime(int time) {
+	public static void setCurrentSimTime(int time) {
 		currentSimTime = time;
 	}
 	

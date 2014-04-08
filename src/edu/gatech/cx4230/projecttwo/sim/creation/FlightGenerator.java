@@ -7,7 +7,7 @@ import edu.gatech.cx4230.projecttwo.utilities.CSVRow;
 
 public class FlightGenerator {
 	private Timetable t;
-	private ArrayList<CSVRow> flightList;
+	private ArrayList<CSVRowInitialMatrix> flightList;
 	
 	public FlightGenerator(){
 		t = new Timetable();
