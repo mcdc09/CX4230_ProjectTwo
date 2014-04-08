@@ -8,7 +8,7 @@ import edu.gatech.cx4230.projecttwo.utilities.FileHelper;
 import edu.gatech.cx4230.projecttwo.utilities.Logger;
 
 public class CSVReaderInitialMatrix extends CSVReader {
-	private static final String filename = "initialMatrix.csv";
+	private static final String filename = "data/initialMatrix.csv";
 	private String[] header;
 	private int lineCount = 1;
 
