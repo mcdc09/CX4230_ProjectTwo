@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhpotsdam.unfolding.geo.Location;
+import de.fhpotsdam.unfolding.marker.Marker;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.vis.markers.FlightRouteMarker;
 
 public class FlightMarkerCreator {
-	private List<FlightRouteMarker> flightMarkers;
+	private List<Marker> flightMarkers;
 	
 	public FlightMarkerCreator(List<Flight> flights) {
-		flightMarkers = new ArrayList<FlightRouteMarker>();
+		flightMarkers = new ArrayList<Marker>();
 		
 		for(Flight f: flights) {
 			Airport origin = f.getOrigin();
@@ -28,7 +29,7 @@ public class FlightMarkerCreator {
 	/**
 	 * @return the flightMarkers
 	 */
-	public List<FlightRouteMarker> getFlightMarkers() {
+	public List<Marker> getFlightMarkers() {
 		return flightMarkers;
 	}
 

@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhpotsdam.unfolding.geo.Location;
+import de.fhpotsdam.unfolding.marker.Marker;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.vis.markers.AirportMarker;
 
 public class AirportMarkerCreator {
-	private List<AirportMarker> airportMarkers;
+	private List<Marker> airportMarkers;
 	
 	public AirportMarkerCreator(List<Airport> airports) {
-		airportMarkers = new ArrayList<AirportMarker>();
+		airportMarkers = new ArrayList<Marker>();
 		
 		for(Airport a: airports) {
 			Location loc = new Location(a.getLatitude(), a.getLongitude());
@@ -22,7 +23,7 @@ public class AirportMarkerCreator {
 	/**
 	 * @return the airportMarkers
 	 */
-	public List<AirportMarker> getAirportMarkers() {
+	public List<Marker> getAirportMarkers() {
 		return airportMarkers;
 	}
 
