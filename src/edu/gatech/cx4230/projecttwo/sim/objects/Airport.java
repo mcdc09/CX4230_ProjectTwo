@@ -2,8 +2,11 @@ package edu.gatech.cx4230.projecttwo.sim.objects;
 
 import java.util.ArrayList;
 
+import edu.gatech.cx4230.projecttwo.sim.event.ArrivalEvent;
+import edu.gatech.cx4230.projecttwo.sim.event.DepartureEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.Event;
 import edu.gatech.cx4230.projecttwo.sim.event.EventPriorityQueue;
+import edu.gatech.cx4230.projecttwo.sim.event.LandedEvent;
 
 
 public class Airport {
@@ -139,10 +142,24 @@ public class Airport {
 		return pendingEvents.getMinValue();
 	}
 	
+	public void processNextEvents() {
+		int currSimTime = 0; //TODO get current simulation time
+		while(getTimeNextPendingEvent() <= currSimTime) {
+			processNextEvent();
+		}
+	}
+	
 	public void processNextEvent() {
 		Event event = pendingEvents.removeMin();
-		event.process();
-		addProcessedEvent(event);
+		if(event instanceof DepartureEvent && canProcessDeparture()
+			|| event instanceof ArrivalEvent && canProcessArrival()
+			|| event instanceof LandedEvent && canProcessLanding()) {
+			event.process();
+			addProcessedEvent(event);
+		}
+		else {
+			addPendingEvent(event);
+		}
 	}
 	
 	public boolean canProcessDeparture() {
