@@ -14,6 +14,10 @@ public class CSVRowInitialMatrix extends CSVRow {
 		this.data = rowData;
 		this.originAirport = here;
 	}
+	
+	public String toString() {
+		return originAirport;
+	}
 
 	/**
 	 * @return the originAirport
