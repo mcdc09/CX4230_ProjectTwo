@@ -82,9 +82,4 @@ public class FileHelper {
 		
 		return out;
 	}
-	
-	public static void main(String[] args) {
-		String out = FileHelper.getPathToResource("Model_Roster.csv");
-		System.out.println(out);
-	}
 }
