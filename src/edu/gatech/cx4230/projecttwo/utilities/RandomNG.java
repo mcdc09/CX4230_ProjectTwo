@@ -14,7 +14,9 @@ public class RandomNG extends Random {
 		rand = new Random();
 	}
 	
-	
+	public RandomNG(int seed) {
+		rand = new Random(seed);
+	}
 	
 	/**
 	 * Returns member of normal distribution of specified mean and standard

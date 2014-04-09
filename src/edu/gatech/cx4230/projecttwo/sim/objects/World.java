@@ -5,9 +5,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import edu.gatech.cx4230.projecttwo.utilities.RandomNG;
 
 public class World {
-	private static Random globalRand = new Random(); // Seed as necessary
+	private static RandomNG globalRand = new RandomNG(); // Seed as necessary
 	private static HashMap<String,Airport> airports = new HashMap<String,Airport>();
 	private static int currentSimTime = 0;
 	public static final int timeStep = 10; // seconds per time step
@@ -57,7 +58,7 @@ public class World {
 		return distance; // km
 	}
 	
-	public static Random chance(){
+	public static RandomNG chance(){
 		return globalRand;
 	}
 }

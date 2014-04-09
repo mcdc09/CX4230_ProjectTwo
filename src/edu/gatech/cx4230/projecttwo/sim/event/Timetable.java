@@ -4,13 +4,13 @@ import java.util.*;
 import edu.gatech.cx4230.projecttwo.sim.objects.*;
 
 public class Timetable {
-	private Map<String, HashMap<String, LinkedList<ScheduledFlight>>> timetable;
+	private Map<String, HashMap<String, PriorityQueue<ScheduledFlight>>> timetable;
 	
 	/**
 	 * 
 	 */
 	public Timetable() {
-		timetable = new HashMap<String, HashMap<String, LinkedList<ScheduledFlight>>>();
+		timetable = new HashMap<String, HashMap<String, PriorityQueue<ScheduledFlight>>>();
 	}
 	
 	/**
@@ -22,9 +22,9 @@ public class Timetable {
 	 */
 	public void addScheduledFlight(String origin, String destination, String aircraftType, int departureTime){
 		if(!timetable.containsKey(origin))
-			timetable.put(origin, new HashMap<String, LinkedList<ScheduledFlight>>());
+			timetable.put(origin, new HashMap<String, PriorityQueue<ScheduledFlight>>());
 		if(!timetable.get(origin).containsKey(aircraftType)){
-			timetable.get(origin).put(aircraftType, new LinkedList<ScheduledFlight>());
+			timetable.get(origin).put(aircraftType, new PriorityQueue<ScheduledFlight>());
 		}
 		ScheduledFlight f = new ScheduledFlight(origin, destination, aircraftType, departureTime);
 		timetable.get(origin).get(aircraftType).add(f);
@@ -43,7 +43,7 @@ public class Timetable {
 	 * @return
 	 */
 	public Flight scheduleFlight(Airport origin, Aircraft a){
-		ScheduledFlight f = timetable.get(origin.getIcaoCode()).get(a.getAircraftType()).pop();
+		ScheduledFlight f = timetable.get(origin.getIcaoCode()).get(a.getAircraftType()).poll();
 		Airport destination = World.getAirport(f.getDestination());
 		int distance = (int)World.calculateDistance(origin.getLatitude(), origin.getLongitude(), 
 						destination.getLatitude(), destination.getLongitude());

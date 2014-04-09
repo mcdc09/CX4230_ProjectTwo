@@ -20,11 +20,35 @@ public class FlightGenerator {
 		int[][] fm = flightMatrix();
 		int[][] tzm = timezoneMatrix();
 		
+		String[] airports = {""};
+		
 		for(int i = 0; i < fm.length; i++){
 			for(int j = 0; j < fm[i].length; j++){
-				int lengthOfDay = 14 - tzm[i][j];
+				String aircraftType;
+				if(dm[i][j] < 850){
+					aircraftType = "Regional";
+				}else if(dm[i][j] < 1500){
+					aircraftType = "Small";
+				}else if(dm[i][j] < 1500){
+					aircraftType = "Medium";
+				}else{
+					aircraftType = "Large";
+				}
+				
+				int lengthOfDay = 14 - tzm[i][j]; // hours
+				if(fm[i][j] == 0)
+					continue;
 				int flightInterval = lengthOfDay * 3600 / fm[i][j];
-				// t.addScheduledFlight(origin, destination, aircraftType, departureTime);
+				
+				int k = 0;
+				while(fm[i][j] > 0){
+					// Allow non-uniform spacing of flights to common destinations (multi airlines).
+					// Also prevent flights from necessarily leaving at the same time (t=0).
+					int departureTime = World.chance().nextInt(flightInterval) + flightInterval * k;
+					t.addScheduledFlight(airports[i], airports[j], aircraftType, departureTime);
+					fm[i][j]--;
+					k++;
+				}
 			}
 		}
 	}
@@ -38,7 +62,7 @@ public class FlightGenerator {
 	}
 	
 	private int[][] timezoneMatrix(){
-		// Timezone of origin - Timezone of destination
+		// Timezone of destination - Timezone of origin
 		return null;
 	}
 }
