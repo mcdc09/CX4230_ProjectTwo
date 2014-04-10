@@ -11,6 +11,7 @@ public class AirportMarker extends SimplePointMarker {
 		super(location);
 		this.icaoCode = icaoCode;
 		setRadius(RAD);
+		setColor(-12016464);
 	}
 
 	/**

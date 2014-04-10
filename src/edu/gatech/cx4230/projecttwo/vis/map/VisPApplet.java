@@ -2,8 +2,10 @@ package edu.gatech.cx4230.projecttwo.vis.map;
 
 import processing.core.PApplet;
 import processing.core.PFont;
+import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
 
 public class VisPApplet extends PApplet {
+	private AirportSimulation sim;
 	private static final int WIDTH = 1000, HEIGHT = 800;
 	private SimMap simMap;
 	private int timeStep = 0;
@@ -41,11 +43,13 @@ public class VisPApplet extends PApplet {
 	}
 	
 	public void mouseClicked() {
-		
+		simMap.mouseClicked(mouseX, mouseY);
 	}
 	
 	private void timeChanged() {
-		// TODO check to see if the simulation time has changed and update if necessary
+		if(sim.isTimeChanged()) {
+			timeStep = sim.getTimeStep();
+		}
 	}
 	
 	private void checkFlightCount() {
