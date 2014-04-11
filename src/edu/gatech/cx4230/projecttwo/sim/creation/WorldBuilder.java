@@ -6,6 +6,7 @@ import java.util.List;
 import edu.gatech.cx4230.projecttwo.database.operation.AirportCodeHelper;
 import edu.gatech.cx4230.projecttwo.database.operation.AirportRunwayDataFromDB;
 import edu.gatech.cx4230.projecttwo.database.operation.AirportsDBOperator;
+import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
@@ -27,6 +28,7 @@ public class WorldBuilder {
 
 		for(String a: airportsIncluded) {
 			ArrayList<Runway> runways = new ArrayList<Runway>();
+			ArrayList<Aircraft> onTheGround = new ArrayList<Aircraft>();
 			List<AirportRunwayDataFromDB> airportData = airportsDB.getAirportsData(AirportCodeHelper.getICAOcode(a));
 
 			if(airportData.size() > 0) {
@@ -47,7 +49,9 @@ public class WorldBuilder {
 				String icaoCode = d.getAirportID();
 				String timeZone = ""; // TODO
 				
-				Airport airport = new Airport(runways, maxAircraftCap, lat, lon, city, state, icaoCode, timeZone);
+				// TODO create list of initial Aircrafts onTheGround for this airport
+				
+				Airport airport = new Airport(runways, onTheGround, maxAircraftCap, lat, lon, city, state, icaoCode, timeZone);
 				world.addAirport(airport);
 			} // close if
 		} // close for
