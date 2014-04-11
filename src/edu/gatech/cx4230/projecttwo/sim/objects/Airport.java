@@ -160,9 +160,7 @@ public class Airport {
 		int currSimTime = 0; // TODO get current simulation time
 		
 		Event event = pendingEvents.removeMin();
-		if(event instanceof DepartureEvent && canProcessDeparture()
-			|| event instanceof ArrivalEvent && canProcessArrival()
-			|| event instanceof LandedEvent && canProcessLanding()) {
+		if(canProcessEvent(event)) {
 			event.process();
 			addProcessedEvent(event);
 			
@@ -187,6 +185,12 @@ public class Airport {
 			// if the event could not be processed, add it back to the pending event queue 
 			addPendingEvent(event);
 		}
+	}
+	
+	public boolean canProcessEvent(Event e) {
+		return (e instanceof DepartureEvent && canProcessDeparture())
+				|| (e instanceof ArrivalEvent && canProcessArrival())
+				|| (e instanceof LandedEvent && canProcessLanding());
 	}
 	
 	public boolean canProcessDeparture() {
