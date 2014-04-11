@@ -3,10 +3,12 @@ package edu.gatech.cx4230.projecttwo.sim.objects;
 import java.util.ArrayList;
 
 import de.fhpotsdam.unfolding.geo.Location;
+import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.ArrivalEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.DepartureEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.Event;
 import edu.gatech.cx4230.projecttwo.sim.event.EventPriorityQueue;
+import edu.gatech.cx4230.projecttwo.sim.event.FlightEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.LandedEvent;
 
 
@@ -169,23 +171,7 @@ public class Airport {
 		if(canProcessEvent(event)) {
 			event.process();
 			addProcessedEvent(event);
-			
-			// runway management
-			Aircraft a = event.getFlight().getAircraft();
-			if(event instanceof DepartureEvent) {
-				// get a free runway and make it occupied with this aircraft
-				// for the amount of time that it takes to clear the runway during takeoff
-				Runway r = getFreeRunway();
-				r.setAircraft(a);
-				r.setTimeNextAvailable(currSimTime + a.getGroundTime() + a.getRunwayTime());
-			}
-			else if(event instanceof LandedEvent) {
-				// get a free runway and make it occupied with this aircraft
-				// for the amount of time that it takes to clear the runway during landing
-				Runway r = getFreeRunway();
-				r.setAircraft(a);
-				r.setTimeNextAvailable(currSimTime + Math.max(a.getRunwayTime(),a.getGroundTime()));
-			}
+			updateRunways(event, currSimTime);
 		}
 		else {
 			// if the event could not be processed, add it back to the pending event queue 
@@ -196,7 +182,8 @@ public class Airport {
 	public boolean canProcessEvent(Event e) {
 		return (e instanceof DepartureEvent && canProcessDeparture())
 				|| (e instanceof ArrivalEvent && canProcessArrival())
-				|| (e instanceof LandedEvent && canProcessLanding());
+				|| (e instanceof LandedEvent && canProcessLanding())
+				|| (e instanceof AirportEvent);
 	}
 	
 	public boolean canProcessDeparture() {
@@ -212,5 +199,29 @@ public class Airport {
 	
 	public boolean canProcessLanding() {
 		return onTheGround.size() < maxAircraftCapacity && hasFreeRunway();
+	}
+	
+	public void updateRunways(Event event, int currSimTime) {
+		// runway management
+		if(event instanceof FlightEvent) {
+			Aircraft a = ((FlightEvent)event).getFlight().getAircraft();
+			if(event instanceof DepartureEvent) {
+				// get a free runway and make it occupied with this aircraft
+				// for the amount of time that it takes to clear the runway during takeoff
+				Runway r = getFreeRunway();
+				r.setAircraft(a);
+				r.setTimeNextAvailable(currSimTime + a.getGroundTime() + a.getRunwayTime());
+			}
+			else if(event instanceof LandedEvent) {
+				// get a free runway and make it occupied with this aircraft
+				// for the amount of time that it takes to clear the runway during landing
+				Runway r = getFreeRunway();
+				r.setAircraft(a);
+				r.setTimeNextAvailable(currSimTime + Math.max(a.getRunwayTime(),a.getGroundTime()));
+			}
+		}
+		else if(event instanceof AirportEvent) {
+			// TODO
+		}
 	}
 }
