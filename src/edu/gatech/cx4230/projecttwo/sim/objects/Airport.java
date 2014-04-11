@@ -30,8 +30,9 @@ public class Airport {
 	EventPriorityQueue<Event> pendingEvents;
 	ArrayList<Event> processedEvents;
 	
-	public Airport(ArrayList<Runway> runways, int maxAircraftCapacity, float latitude, float longitude,
-			String city, String state, String icaoCode, String timeZone) {
+	public Airport(ArrayList<Runway> runways, ArrayList<Aircraft> onTheGround, int maxAircraftCapacity, 
+			float latitude, float longitude, String city, String state, String icaoCode, String timeZone) {
+		// set airport properties
 		this.runways = runways;
 		this.maxAircraftCapacity = maxAircraftCapacity;
 		this.latitude = latitude;
@@ -42,7 +43,7 @@ public class Airport {
 		this.timeZone = timeZone;
 		
 		// initialize state
-		// TODO onTheGround = aircrafts; // need to give this an ArrayList of initial aircrafts on the ground
+		this.onTheGround = onTheGround; // initial aircrafts on the ground
 		inTheAir = 0;
 		
 		// create new event queues
