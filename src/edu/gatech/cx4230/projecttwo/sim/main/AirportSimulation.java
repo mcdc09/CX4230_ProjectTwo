@@ -1,9 +1,12 @@
 package edu.gatech.cx4230.projecttwo.sim.main;
 
+import edu.gatech.cx4230.projecttwo.sim.creation.WorldBuilder;
+import edu.gatech.cx4230.projecttwo.sim.objects.World;
 import edu.gatech.cx4230.projecttwo.vis.map.VisPApplet;
 
 public class AirportSimulation {
 	private int flightCount;
+	private World world;
 	boolean timeChanged;
 	private boolean flightCountChanged;
 	private SimulationThread simThread;
@@ -11,6 +14,8 @@ public class AirportSimulation {
 	public AirportSimulation(VisPApplet vis) {
 		
 		// TODO Creation of the simulation
+		WorldBuilder wb = new WorldBuilder();
+		world = wb.getWorld();
 		// Create a FlightGenerator and WorldBuilder
 		
 		
@@ -25,7 +30,7 @@ public class AirportSimulation {
 	}
 	
 	public void processEventsForTimeStep(int timeStep) {
-		
+		world.processTimeStep(timeStep);
 	}
 	
 	public boolean continueSimulation() {

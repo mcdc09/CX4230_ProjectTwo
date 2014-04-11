@@ -1,7 +1,6 @@
 package edu.gatech.cx4230.projecttwo.vis.map;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
@@ -10,7 +9,6 @@ import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.MarkerManager;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import de.fhpotsdam.unfolding.utils.ScreenPosition;
-import edu.gatech.cx4230.projecttwo.sim.creation.WorldBuilder;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.vis.creation.AirportMarkerCreator;
@@ -30,33 +28,29 @@ public class SimMap {
 		map = new UnfoldingMap(vis, MAP_X, MAP_Y, MAP_WIDTH, MAP_HEIGHT);
 		manager = map.getDefaultMarkerManager();
 
-		AirportMarkerCreator amc = new AirportMarkerCreator(getAirportList());
-		airportMarkers = amc.getAirportMarkers();
-		manager.addMarkers(airportMarkers);
-
-		FlightMarkerCreator fmc = new FlightMarkerCreator(getFlightList());
-		flightMarkers = fmc.getFlightMarkers();
-		manager.addMarkers(flightMarkers);
-
-		planeMarkers = new ArrayList<Marker>(); // TODO Change
-
 		MapUtils.createDefaultEventDispatcher(vis, map);
 	}
-
-	private List<Airport> getAirportList() {
-		WorldBuilder wb = new WorldBuilder();
-		Collection<Airport> outC = wb.getWorld().getAirports();
-		List<Airport> out = new ArrayList<Airport>(outC);
-
-		return out;
+	
+	public void createAirportMarkers(List<Airport> airports) {
+		AirportMarkerCreator amc = new AirportMarkerCreator(airports);
+		airportMarkers = amc.getAirportMarkers();
+		manager.addMarkers(airportMarkers);
 	}
-
-	private List<Flight> getFlightList() {
-		List<Flight> out = new ArrayList<Flight>();
-
-		// TODO
-
-		return out;
+	
+	public void createAirplaneAndFlightMarkers(List<Flight> flights) {
+		createFlightMarkers(flights);
+		createAircraftMarkers(flights);
+	}
+	
+	private void createFlightMarkers(List<Flight> flights) {
+		FlightMarkerCreator fmc = new FlightMarkerCreator(flights);
+		flightMarkers = fmc.getFlightMarkers();
+		manager.addMarkers(flightMarkers);
+	}
+	
+	private void createAircraftMarkers(List<Flight> flights) {
+		planeMarkers = new ArrayList<Marker>();
+		// TODO Change
 	}
 
 	public void draw() {	

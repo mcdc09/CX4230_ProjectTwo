@@ -68,4 +68,18 @@ public class VisPApplet extends PApplet {
 		
 	}
 
+	/**
+	 * @return the simMap
+	 */
+	public SimMap getSimMap() {
+		return simMap;
+	}
+
+	/**
+	 * @param simMap the simMap to set
+	 */
+	public void setSimMap(SimMap simMap) {
+		this.simMap = simMap;
+	}
+
 }
