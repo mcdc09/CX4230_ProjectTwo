@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import sun.security.util.Length;
 import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
+import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
 import edu.gatech.cx4230.projecttwo.utilities.CSVRow;
 
@@ -26,13 +27,13 @@ public class FlightGenerator {
 			for(int j = 0; j < fm[i].length; j++){
 				String aircraftType;
 				if(dm[i][j] < 850){
-					aircraftType = "Regional";
+					aircraftType = Aircraft.TYPE_REGIONAL;
 				}else if(dm[i][j] < 1500){
-					aircraftType = "Small";
+					aircraftType = Aircraft.TYPE_SMALL;
 				}else if(dm[i][j] < 1500){
-					aircraftType = "Medium";
+					aircraftType = Aircraft.TYPE_MEDIUM;
 				}else{
-					aircraftType = "Large";
+					aircraftType = Aircraft.TYPE_LARGE;
 				}
 				
 				int lengthOfDay = 14 - tzm[i][j]; // hours

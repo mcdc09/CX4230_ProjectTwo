@@ -9,6 +9,11 @@ public class Aircraft {
 	private final int runwayTime;
 	private final int groundTime;
 	
+	public static final String TYPE_REGIONAL = "Regional";
+	public static final String TYPE_SMALL = "Small";
+	public static final String TYPE_MEDIUM = "Medium";
+	public static final String TYPE_LARGE = "Large";
+	
 	public Aircraft(String aircraftType, int passengerCapacity, int speed,
 			int minRunwayLength, int runwayTime, int groundTime) {
 		this.aircraftType = aircraftType;
