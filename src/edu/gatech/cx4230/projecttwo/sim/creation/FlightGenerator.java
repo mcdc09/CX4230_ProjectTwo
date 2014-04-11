@@ -3,6 +3,7 @@ package edu.gatech.cx4230.projecttwo.sim.creation;
 import java.util.ArrayList;
 
 import sun.security.util.Length;
+import edu.gatech.cx4230.projecttwo.database.operation.AirportsDBOperator;
 import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
@@ -11,6 +12,7 @@ import edu.gatech.cx4230.projecttwo.utilities.CSVRow;
 public class FlightGenerator {
 	private Timetable t;
 	private ArrayList<CSVRowInitialMatrix> flightList;
+	private AirportsDBOperator db = new AirportsDBOperator();
 	
 	public FlightGenerator(){
 		t = new Timetable();
@@ -52,6 +54,10 @@ public class FlightGenerator {
 				}
 			}
 		}
+	}
+	
+	public Timetable getTimetable(){
+		return t;
 	}
 	
 	private int[][] distanceMatrix(){
