@@ -3,32 +3,22 @@ package edu.gatech.cx4230.projecttwo.sim.main;
 import edu.gatech.cx4230.projecttwo.vis.map.VisPApplet;
 
 public class AirportSimulation {
-	private VisPApplet vis;
 	private int flightCount;
-	private int timeStep;
 	boolean timeChanged;
 	private boolean flightCountChanged;
+	private SimulationThread simThread;
 	
-	public AirportSimulation() {
+	public AirportSimulation(VisPApplet vis) {
 		
 	}
 	
 	public boolean continueSimulation() {
 		return true; // TODO
 	}
-
-	/**
-	 * @return the timeStep
-	 */
+	
 	public int getTimeStep() {
-		return timeStep;
-	}
-
-	/**
-	 * @param timeStep the timeStep to set
-	 */
-	public void setTimeStep(int timeStep) {
-		this.timeStep = timeStep;
+		timeChanged = false;
+		return simThread.getTimeStep();
 	}
 
 	/**

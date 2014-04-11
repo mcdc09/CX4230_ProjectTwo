@@ -22,6 +22,8 @@ public class VisPApplet extends PApplet {
 		
 		f = createFont("Arial", 25, true);
 		
+		sim = new AirportSimulation(this);
+		
 		simMap = new SimMap(this);
 	}
 	
@@ -31,7 +33,7 @@ public class VisPApplet extends PApplet {
 		
 		fill(207, 14, 14);
 		textFont(f);
-		timeChanged();
+		updateTime();
 		checkFlightCount();
 		text("Time: " + timeStep, 5,20);
 		checkFlightCount();
@@ -46,14 +48,24 @@ public class VisPApplet extends PApplet {
 		simMap.mouseClicked(mouseX, mouseY);
 	}
 	
-	private void timeChanged() {
+	private void updateTime() {
 		if(sim.isTimeChanged()) {
 			timeStep = sim.getTimeStep();
 		}
 	}
 	
 	private void checkFlightCount() {
-		// TODO check to see if the flight count has changed and update if necessary
+		if(sim.isFlightCountChanged()) {
+			flightCount = sim.getFlightCount();
+		}
+	}
+	
+	public void updateDisplayInfo(String airportCode) {
+		
+	}
+	
+	public void updateDisplayInfo(String aircraft, String origin, String destination) {
+		
 	}
 
 }
