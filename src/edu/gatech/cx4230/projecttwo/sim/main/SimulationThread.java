@@ -9,7 +9,8 @@ package edu.gatech.cx4230.projecttwo.sim.main;
 public class SimulationThread extends Thread {
 	private AirportSimulation as;
 	private boolean running;
-	private int timeStep;
+	private static int currTimeStep;
+	public static final int timeStep = 10; // seconds per time step
 	private boolean timeChanged;
 	private static boolean DEBUG = false;
 	private int wait;
@@ -19,28 +20,26 @@ public class SimulationThread extends Thread {
 		this.as = as;
 		this.wait = w;
 		this.id = s;
-		timeStep = 0;
+		currTimeStep = 0;
 	}
 	
 	@Override
 	public synchronized void start() {
-		timeStep = 0;
+		currTimeStep = 0;
 
 		running = true;
 		super.start();
 	}
 	
-	/**
-	 * handles tasks that need to be done at each time step
-	 * maintains crosswalk timing, spawns new people into simulation, moves active people in simulation
-	 */
+
 	public void run() {
 		while(as.continueSimulation()) {
 			if(running) {
-				timeStep++;
+				currTimeStep++;
 				as.setTimeChanged(true);
 
-				
+				// TODO tell as to process all events for timeStep
+				as.processEventsForTimeStep(timeStep);
 
 				try {
 					sleep((long) wait);
@@ -59,7 +58,7 @@ public class SimulationThread extends Thread {
 		if(DEBUG) System.out.println("Quitting Thread...");
 		
 		// TODO Elaborate on Terminating condition
-		if(DEBUG) System.out.println("Time steps: " + timeStep);
+		if(DEBUG) System.out.println("Time steps: " + currTimeStep);
 		
 		running = false;
 		interrupt();
@@ -72,15 +71,15 @@ public class SimulationThread extends Thread {
 	/**
 	 * @return the timeStep
 	 */
-	public int getTimeStep() {
-		return timeStep;
+	public static int getCurrTimeStep() {
+		return currTimeStep;
 	}
 
 	/**
 	 * @param timeStep the timeStep to set
 	 */
-	public void setTimeStep(int timeStep) {
-		this.timeStep = timeStep;
+	public static void setCurrTimeStep(int timeStep) {
+		SimulationThread.currTimeStep = timeStep;
 	}
 
 	/**

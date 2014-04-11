@@ -1,21 +1,27 @@
 package edu.gatech.cx4230.projecttwo.sim.objects;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+
 import edu.gatech.cx4230.projecttwo.utilities.RandomNG;
 
 public class World {
 	private static RandomNG globalRand = new RandomNG(); // Seed as necessary
 	private static HashMap<String,Airport> airports = new HashMap<String,Airport>();
-	private static int currentSimTime = 0;
-	public static final int timeStep = 10; // seconds per time step
+	
 	
 	public World() {
 		// Sorry for deleting the airport hash map instantiation.  I would like to be able to access it from elsewhere.
 		// Yep.  currentSimTime, too
+	}
+	
+	public void processTimeStep(int time) {
+		Collection<Airport> airportList = airports.values();
+		
+		for(Airport a: airportList) {
+			a.processNextEvents();
+		}
 	}
 	
 	public Collection<Airport> getAirports() {
@@ -34,14 +40,6 @@ public class World {
 		for(Airport a : airportList) {
 			addAirport(a);
 		}
-	}
-	
-	public static int getCurrentSimTime() {
-		return currentSimTime;
-	}
-	
-	public static void setCurrentSimTime(int time) {
-		currentSimTime = time;
 	}
 	
 	public static double calculateDistance(double lat1, double lon1, double lat2, double lon2){

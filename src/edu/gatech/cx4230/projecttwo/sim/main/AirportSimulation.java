@@ -10,6 +10,22 @@ public class AirportSimulation {
 	
 	public AirportSimulation(VisPApplet vis) {
 		
+		// TODO Creation of the simulation
+		// Create a FlightGenerator and WorldBuilder
+		
+		
+		// Handle the visualization
+		if(vis != null) {
+			// TODO Send vis flights and airports
+		}
+		
+		
+		simThread = new SimulationThread(this, 0, "Sim Thread");
+		simThread.start();
+	}
+	
+	public void processEventsForTimeStep(int timeStep) {
+		
 	}
 	
 	public boolean continueSimulation() {
@@ -18,7 +34,7 @@ public class AirportSimulation {
 	
 	public int getTimeStep() {
 		timeChanged = false;
-		return simThread.getTimeStep();
+		return SimulationThread.getCurrTimeStep();
 	}
 
 	/**

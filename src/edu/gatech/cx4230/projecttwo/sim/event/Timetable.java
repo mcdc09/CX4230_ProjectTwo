@@ -1,7 +1,15 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
-import java.util.*;
-import edu.gatech.cx4230.projecttwo.sim.objects.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
+
+import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
+import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
+import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
+import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
+import edu.gatech.cx4230.projecttwo.sim.objects.ScheduledFlight;
+import edu.gatech.cx4230.projecttwo.sim.objects.World;
 
 public class Timetable {
 	private Map<String, HashMap<String, PriorityQueue<ScheduledFlight>>> timetable;
@@ -47,7 +55,7 @@ public class Timetable {
 		Airport destination = World.getAirport(f.getDestination());
 		int distance = (int)World.calculateDistance(origin.getLatitude(), origin.getLongitude(), 
 						destination.getLatitude(), destination.getLongitude());
-		int TOD = World.getCurrentSimTime() + 2400 / World.timeStep; // schedule take-off in 40 minutes
+		int TOD = SimulationThread.getCurrTimeStep() + 2400 / SimulationThread.timeStep; // schedule take-off in 40 minutes
 		int ETA = TOD + distance * a.getSpeed();
 		return new Flight(a, origin, destination, distance, TOD, ETA);
 	}
