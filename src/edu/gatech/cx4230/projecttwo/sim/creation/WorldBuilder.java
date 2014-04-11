@@ -55,6 +55,17 @@ public class WorldBuilder {
 				world.addAirport(airport);
 			} // close if
 		} // close for
+		
+		
+		// TODO Create FlightGenerator and do something with Timetable
+		
+		// TODO Create Failure Event generator / simulation scenario
+		
+		
+		// TODO Build the visualization
+		// Give it the world
+		// Give it the flights
+		
 	} // close constructor
 
 
