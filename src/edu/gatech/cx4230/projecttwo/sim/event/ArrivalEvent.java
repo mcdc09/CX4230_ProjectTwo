@@ -6,12 +6,10 @@ import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
 
 public class ArrivalEvent extends Event {
 
-	int currSimTime;
-
 	public ArrivalEvent(Flight flight) {
 		this.flight = flight;
 		
-		currSimTime = 0; //TODO get current simulation time
+		int currSimTime = 0; //TODO get current simulation time
 
 		this.creationTime = currSimTime;
 		this.processTime = flight.getEstimatedTimeArrival();
@@ -26,7 +24,7 @@ public class ArrivalEvent extends Event {
 		destination.setInTheAir(++inAir);
 		
 		// go ahead and schedule a LandedEvent with this flight for destination airport
-		// and let the airport handle when to create/process the LandedEvent 
+		// and let the airport handle when to process the LandedEvent 
 		LandedEvent landEvent = new LandedEvent(flight);
 		destination.addPendingEvent(landEvent);
 	}
