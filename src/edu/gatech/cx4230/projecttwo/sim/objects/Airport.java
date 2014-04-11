@@ -201,6 +201,6 @@ public class Airport {
 	}
 	
 	public boolean canProcessLanding() {
-		return hasFreeRunway();
+		return onTheGround.size() < maxAircraftCapacity && hasFreeRunway();
 	}
 }
