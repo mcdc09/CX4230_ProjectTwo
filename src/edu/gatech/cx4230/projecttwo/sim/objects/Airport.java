@@ -40,6 +40,14 @@ public class Airport {
 		this.state = state;
 		this.icaoCode = icaoCode;
 		this.timeZone = timeZone;
+		
+		// initialize state
+		// TODO onTheGround = aircrafts;
+		inTheAir = 0;
+		
+		// create new event queues
+		pendingEvents = new EventPriorityQueue<Event>();
+		processedEvents = new ArrayList<Event>();
 	}
 
 	/* PROPERTIES */
