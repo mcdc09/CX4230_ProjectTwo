@@ -1,5 +1,6 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
+import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 
@@ -8,7 +9,7 @@ public class ArrivalEvent extends FlightEvent {
 	public ArrivalEvent(Flight flight) {
 		this.flight = flight;
 		
-		int currSimTime = 0; //TODO get current simulation time
+		int currSimTime = SimulationThread.getCurrTimeStep();
 
 		this.creationTime = currSimTime;
 		this.processTime = flight.getEstimatedTimeArrival();
