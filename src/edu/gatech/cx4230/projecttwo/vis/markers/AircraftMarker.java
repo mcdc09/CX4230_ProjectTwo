@@ -8,7 +8,7 @@ import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.AbstractMarker;
 import edu.gatech.cx4230.projecttwo.utilities.FileHelper;
 
-public class AirplaneMarker extends AbstractMarker {
+public class AircraftMarker extends AbstractMarker {
 	public static final int REGIONAL = 76486;
 	public static final int SHORT_RANGE = 12922;
 	public static final int MEDIUM_RANGE = 394855;
@@ -23,7 +23,7 @@ public class AirplaneMarker extends AbstractMarker {
 	private static final double SCALING = 0.1;
 	private int width, height;
 	
-	public AirplaneMarker(Location location, int type, int heading, PApplet p) {
+	public AircraftMarker(Location location, int type, int heading, PApplet p) {
 		super(location);
 		
 		this.type = type;
@@ -42,7 +42,7 @@ public class AirplaneMarker extends AbstractMarker {
 		pg.pushStyle();
 		pg.imageMode(PConstants.CORNER);
 		// The image is drawn in object coordinates, i.e. the marker's origin (0,0) is at its geo-location.
-		pg.rotate((heading + 90)*(PConstants.TWO_PI/180));
+		pg.rotate((heading + 90)*(PConstants.TWO_PI/360));
 		pg.translate(x - width/2, y - height / 2);
 		pg.image(img, 0, 0, width, height);
 		pg.popStyle();
