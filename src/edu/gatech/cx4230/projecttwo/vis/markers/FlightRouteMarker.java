@@ -19,6 +19,8 @@ public class FlightRouteMarker extends AbstractShapeMarker {
 		addLocations(b);
 		this.icaoCodeA = codeA;
 		this.icaoCodeB = codeB;
+		properties.put("icaoCodeA", icaoCodeA);
+		properties.put("icaoCodeB", icaoCodeB);
 	}
 
 	@Override

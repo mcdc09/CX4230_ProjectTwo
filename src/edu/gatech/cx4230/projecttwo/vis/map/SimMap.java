@@ -18,6 +18,7 @@ import edu.gatech.cx4230.projecttwo.vis.creation.FlightMarkerCreator;
 
 public class SimMap {
 	private UnfoldingMap map;
+	private VisPApplet vis;
 	public static final int MAP_X = 25, MAP_Y = 25, MAP_WIDTH = 600, MAP_HEIGHT = 500;
 	private MarkerManager<Marker> manager;
 	private List<Marker> airportMarkers;
@@ -25,6 +26,7 @@ public class SimMap {
 	private List<Marker> planeMarkers;
 
 	public SimMap(VisPApplet vis) {
+		this.vis = vis;
 		map = new UnfoldingMap(vis, MAP_X, MAP_Y, MAP_WIDTH, MAP_HEIGHT);
 		manager = map.getDefaultMarkerManager();
 
@@ -99,6 +101,8 @@ public class SimMap {
 			for(Marker a: airportMarkers) {
 				if(a.isInside(map, mouseX, mouseY) && !found) {
 					a.setSelected(true);
+					String code = a.getStringProperty("icaoCode");
+					vis.updateDisplayInfo(code);
 					found = true;
 				} else {
 					a.setSelected(false);
