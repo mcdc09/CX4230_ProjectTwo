@@ -31,8 +31,11 @@ public class LandedEvent extends FlightEvent {
 		int currSimTime = 0; //TODO get current simulation time
 		flight.setActualTimeArrival(currSimTime);
 		
+		// TODO consult timetable to get new flight for this aircraft
+		Flight newFlight = timetable.scheduleFlight(destination, aircraft);
 		// TODO schedule DepartureEvent with destination airport as new origin airport
-		// we need a new flight with the same aircraft - FlightGenerator?
+		DepartureEvent departEvent = new DepartureEvent(newFlight);
+		destination.addPendingEvent(departEvent);
 		
 	}
 
