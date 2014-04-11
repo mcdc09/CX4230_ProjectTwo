@@ -2,6 +2,7 @@ package edu.gatech.cx4230.projecttwo.sim.objects;
 
 import java.util.ArrayList;
 
+import de.fhpotsdam.unfolding.geo.Location;
 import edu.gatech.cx4230.projecttwo.sim.event.ArrivalEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.DepartureEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.Event;
@@ -42,6 +43,10 @@ public class Airport {
 	}
 
 	/* PROPERTIES */
+	
+	public Location getLocation() {
+		return new Location(latitude, longitude);
+	}
 	
 	public ArrayList<Runway> getRunways() {
 		return runways;
