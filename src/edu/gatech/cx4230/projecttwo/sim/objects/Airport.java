@@ -42,7 +42,7 @@ public class Airport {
 		this.timeZone = timeZone;
 		
 		// initialize state
-		// TODO onTheGround = aircrafts;
+		// TODO onTheGround = aircrafts; // need to give this an ArrayList of initial aircrafts on the ground
 		inTheAir = 0;
 		
 		// create new event queues
