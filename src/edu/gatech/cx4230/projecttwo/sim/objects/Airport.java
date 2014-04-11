@@ -158,8 +158,7 @@ public class Airport {
 		return pendingEvents.getMinValue();
 	}
 	
-	public void processNextEvents() {
-		int currSimTime = 0; //TODO get current simulation time
+	public void processNextEvents(int currSimTime) {
 		while(getTimeNextPendingEvent() <= currSimTime) {
 			processNextEvent();
 		}

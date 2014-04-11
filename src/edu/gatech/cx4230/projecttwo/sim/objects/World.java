@@ -20,7 +20,7 @@ public class World {
 		Collection<Airport> airportList = airports.values();
 		
 		for(Airport a: airportList) {
-			a.processNextEvents();
+			a.processNextEvents(time);
 		}
 	}
 	
