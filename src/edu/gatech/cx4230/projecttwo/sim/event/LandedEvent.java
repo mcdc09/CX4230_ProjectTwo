@@ -4,7 +4,7 @@ import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 
-public class LandedEvent extends Event {
+public class LandedEvent extends FlightEvent {
 
 	public LandedEvent(Flight flight) {
 		this.flight = flight;

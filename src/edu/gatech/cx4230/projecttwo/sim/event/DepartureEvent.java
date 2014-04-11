@@ -3,9 +3,8 @@ package edu.gatech.cx4230.projecttwo.sim.event;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
-import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
 
-public class DepartureEvent extends Event {
+public class DepartureEvent extends FlightEvent {
 	
 	public DepartureEvent(Flight flight) {
 		this.flight = flight;
