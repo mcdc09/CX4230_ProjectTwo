@@ -29,8 +29,9 @@ public class Airport {
 	private int inTheAir;
 	
 	// events
-	EventPriorityQueue<Event> pendingEvents;
-	ArrayList<Event> processedEvents;
+	private EventPriorityQueue<Event> pendingEvents;
+	private ArrayList<Event> processedEvents;
+	private int currSimTime;
 	
 	public Airport(ArrayList<Runway> runways, ArrayList<Aircraft> onTheGround, int maxAircraftCapacity, 
 			float latitude, float longitude, String city, String state, String icaoCode, int timeZone) {
@@ -119,7 +120,6 @@ public class Airport {
 	}
 
 	public boolean hasFreeRunway() {
-		int currSimTime = 0; // TODO get current simulation time
 		for(Runway r : runways) {
 			if(r.isRunwayFree(currSimTime)) {
 				return true;
@@ -129,7 +129,6 @@ public class Airport {
 	}
 	
 	public Runway getFreeRunway() {
-		int currSimTime = 0; // TODO get current simulation time
 		for(Runway r : runways) {
 			if(r.isRunwayFree(currSimTime)) {
 				return r;
@@ -161,17 +160,19 @@ public class Airport {
 	}
 	
 	public void processNextEvents(int currSimTime) {
+		this.currSimTime = currSimTime;
 		while(getTimeNextPendingEvent() <= currSimTime) {
 			processNextEvent(currSimTime);
 		}
 	}
 	
 	public void processNextEvent(int currSimTime) {
+		this.currSimTime = currSimTime;
 		Event event = pendingEvents.removeMin();
 		if(canProcessEvent(event)) {
 			event.process();
 			addProcessedEvent(event);
-			updateRunways(event, currSimTime);
+			updateRunways(event);
 		}
 		else {
 			// if the event could not be processed, add it back to the pending event queue 
@@ -201,7 +202,7 @@ public class Airport {
 		return onTheGround.size() < maxAircraftCapacity && hasFreeRunway();
 	}
 	
-	public void updateRunways(Event event, int currSimTime) {
+	public void updateRunways(Event event) {
 		// runway management
 		if(event instanceof FlightEvent) {
 			Aircraft a = ((FlightEvent)event).getFlight().getAircraft();
