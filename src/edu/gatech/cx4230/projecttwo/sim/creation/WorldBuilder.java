@@ -25,6 +25,7 @@ public class WorldBuilder {
 		String[] airportsIncluded = findIncludedAirports();
 
 		AirportsDBOperator airportsDB = new AirportsDBOperator();
+		CSVAirportTZCap airportTZCap = new CSVAirportTZCap();
 
 		for(String a: airportsIncluded) {
 			ArrayList<Runway> runways = new ArrayList<Runway>();
@@ -41,13 +42,13 @@ public class WorldBuilder {
 
 				AirportRunwayDataFromDB d = airportData.get(0);
 
-				int maxAircraftCap = 10; // TODO
+				int maxAircraftCap = airportTZCap.getCapacity(a);
 				float lat = (float) d.getLatitude();
 				float lon = (float) d.getLongitude();
 				String city = d.getMunicipality();
 				String state = ""; // TODO
 				String icaoCode = d.getAirportID();
-				String timeZone = ""; // TODO
+				int timeZone = airportTZCap.getTimezone(a);
 				
 				// TODO create list of initial Aircrafts onTheGround for this airport
 				
