@@ -39,7 +39,6 @@ public class WorldBuilder {
 					runways.add(r);
 				} // close for
 
-
 				AirportRunwayDataFromDB d = airportData.get(0);
 
 				int maxAircraftCap = airportTZCap.getCapacity(a);
@@ -50,23 +49,10 @@ public class WorldBuilder {
 				String icaoCode = d.getAirportID();
 				int timeZone = airportTZCap.getTimezone(a);
 				
-				// TODO create list of initial Aircrafts onTheGround for this airport
-				
 				Airport airport = new Airport(runways, onTheGround, maxAircraftCap, lat, lon, city, state, icaoCode, timeZone);
 				world.addAirport(airport);
 			} // close if
-		} // close for
-		
-		
-		// TODO Create FlightGenerator and do something with Timetable
-		
-		// TODO Create Failure Event generator / simulation scenario
-		
-		
-		// TODO Build the visualization
-		// Give it the world
-		// Give it the flights
-		
+		} // close for		
 	} // close constructor
 
 
