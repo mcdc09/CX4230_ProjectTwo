@@ -1,7 +1,11 @@
 package edu.gatech.cx4230.projecttwo.sim.main;
 
+import java.util.List;
+
 import edu.gatech.cx4230.projecttwo.sim.creation.WorldBuilder;
+import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
+import edu.gatech.cx4230.projecttwo.sim.testing.SimulationScenario;
 import edu.gatech.cx4230.projecttwo.vis.map.VisPApplet;
 
 public class AirportSimulation {
@@ -10,18 +14,27 @@ public class AirportSimulation {
 	boolean timeChanged;
 	private boolean flightCountChanged;
 	private SimulationThread simThread;
+	private SimulationScenario scenario;
 	
-	public AirportSimulation(VisPApplet vis) {
+	public AirportSimulation(VisPApplet vis, SimulationScenario scenario) {
+		this.scenario = scenario;
 		
-		// TODO Creation of the simulation
 		WorldBuilder wb = new WorldBuilder();
 		world = wb.getWorld();
-		// Create a FlightGenerator and WorldBuilder
+		// TODO Create a FlightGenerator
+		// TODO create list of initial Aircrafts onTheGround for this airport
 		
+		// Load simulation scenario events
+		List<AirportEvent> events = scenario.getEvents();
+		for(AirportEvent e: events) {
+			String id = e.getAirport().getIcaoCode();
+			World.getAirport(id).addPendingEvent(e);
+		}
 		
 		// Handle the visualization
 		if(vis != null) {
 			// TODO Send vis flights and airports
+			vis.sendAirports(world.getAirports());
 		}
 		
 		
@@ -34,7 +47,7 @@ public class AirportSimulation {
 	}
 	
 	public boolean continueSimulation() {
-		return true; // TODO
+		return scenario.continueSimulation(this);
 	}
 	
 	public int getTimeStep() {
