@@ -1,8 +1,14 @@
 package edu.gatech.cx4230.projecttwo.vis.map;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import processing.core.PApplet;
 import processing.core.PFont;
+import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
 import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
+import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
+import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
 
 public class VisPApplet extends PApplet {
 	private AirportSimulation sim;
@@ -22,7 +28,7 @@ public class VisPApplet extends PApplet {
 		
 		f = createFont("Arial", 25, true);
 		
-		sim = new AirportSimulation(this);
+		sim = new AirportSimulation(this, new DefaultScenario(true, new ArrayList<AirportEvent>()));
 		
 		simMap = new SimMap(this);
 	}
@@ -80,6 +86,10 @@ public class VisPApplet extends PApplet {
 	 */
 	public void setSimMap(SimMap simMap) {
 		this.simMap = simMap;
+	}
+	
+	public void sendAirports(Collection<Airport> airports) {
+		simMap.createAirportMarkers(new ArrayList<Airport>(airports));
 	}
 
 }
