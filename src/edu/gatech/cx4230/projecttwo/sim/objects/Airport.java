@@ -22,7 +22,7 @@ public class Airport {
 	private final String city;
 	private final String state;
 	private final String icaoCode;
-	private final String timeZone;
+	private final int timeZone;
 	
 	// state
 	private ArrayList<Aircraft> onTheGround;
@@ -33,7 +33,7 @@ public class Airport {
 	ArrayList<Event> processedEvents;
 	
 	public Airport(ArrayList<Runway> runways, ArrayList<Aircraft> onTheGround, int maxAircraftCapacity, 
-			float latitude, float longitude, String city, String state, String icaoCode, String timeZone) {
+			float latitude, float longitude, String city, String state, String icaoCode, int timeZone) {
 		// set airport properties
 		this.runways = runways;
 		this.maxAircraftCapacity = maxAircraftCapacity;
@@ -87,7 +87,7 @@ public class Airport {
 		return icaoCode;
 	}
 
-	public String getTimeZone() {
+	public int getTimeZone() {
 		return timeZone;
 	}
 
