@@ -1,5 +1,6 @@
 package edu.gatech.cx4230.projecttwo.sim.testing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
@@ -11,6 +12,9 @@ public abstract class SimulationScenario {
 	
 	public SimulationScenario(boolean vis, List<AirportEvent> failures) {
 		this.useVis = vis;
+		if(failures == null) {
+			failures = new ArrayList<AirportEvent>();
+		}
 		this.events = failures;
 	}
 	

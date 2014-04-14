@@ -21,8 +21,10 @@ public class AirportSimulation {
 		
 		WorldBuilder wb = new WorldBuilder();
 		world = wb.getWorld();
+		
+		
 		// TODO Create a FlightGenerator
-		// TODO create list of initial Aircrafts onTheGround for this airport
+		// TODO create list of initial Aircrafts onTheGround for each airport
 		
 		// Load simulation scenario events
 		List<AirportEvent> events = scenario.getEvents();
@@ -49,6 +51,15 @@ public class AirportSimulation {
 	public boolean continueSimulation() {
 		return scenario.continueSimulation(this);
 	}
+	
+	public void quitSimulation() {
+		// TODO handle closing of the simulation
+	}
+	
+	
+	
+	
+	// Properties
 	
 	public int getTimeStep() {
 		timeChanged = false;

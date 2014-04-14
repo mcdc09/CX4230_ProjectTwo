@@ -11,18 +11,17 @@ public class SimulationThread extends Thread {
 	private boolean running;
 	private static int currTimeStep;
 	public static final int timeStep = 10; // seconds per time step
-	private boolean timeChanged;
 	private static boolean DEBUG = false;
 	private int wait;
 	private String id;
-	
+
 	public SimulationThread(AirportSimulation as, int w, String s) {
 		this.as = as;
 		this.wait = w;
 		this.id = s;
 		currTimeStep = 0;
 	}
-	
+
 	@Override
 	public synchronized void start() {
 		currTimeStep = 0;
@@ -30,7 +29,7 @@ public class SimulationThread extends Thread {
 		running = true;
 		super.start();
 	}
-	
+
 
 	public void run() {
 		while(as.continueSimulation()) {
@@ -38,13 +37,14 @@ public class SimulationThread extends Thread {
 				currTimeStep++;
 				as.setTimeChanged(true);
 
-				// TODO tell as to process all events for timeStep
 				as.processEventsForTimeStep(timeStep);
 
-				try {
-					sleep((long) wait);
-				} catch(Exception e) {
-					e.printStackTrace();
+				if(wait > 0) {
+					try {
+						sleep((long) wait);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
 				}
 				if(!as.continueSimulation()) {
 					quit();
@@ -56,10 +56,10 @@ public class SimulationThread extends Thread {
 
 	public void quit() {
 		if(DEBUG) System.out.println("Quitting Thread...");
-		
-		// TODO Elaborate on Terminating condition
+
+		as.quitSimulation();
 		if(DEBUG) System.out.println("Time steps: " + currTimeStep);
-		
+
 		running = false;
 		interrupt();
 	}
@@ -80,20 +80,6 @@ public class SimulationThread extends Thread {
 	 */
 	public static void setCurrTimeStep(int timeStep) {
 		SimulationThread.currTimeStep = timeStep;
-	}
-
-	/**
-	 * @return the timeChanged
-	 */
-	public boolean isTimeChanged() {
-		return timeChanged;
-	}
-
-	/**
-	 * @param timeChanged the timeChanged to set
-	 */
-	public void setTimeChanged(boolean timeChanged) {
-		this.timeChanged = timeChanged;
 	}
 
 }
