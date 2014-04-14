@@ -56,7 +56,9 @@ public class AirportSimulation {
 		// TODO handle closing of the simulation
 	}
 	
-	
+	public void triggerThread() {
+		simThread.triggerRunning();
+	}
 	
 	
 	// Properties

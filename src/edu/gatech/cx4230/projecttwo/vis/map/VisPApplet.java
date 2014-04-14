@@ -45,6 +45,14 @@ public class VisPApplet extends PApplet {
 		text("Flight Count: " + flightCount, 200, 20);
 	}
 	
+	public void keyPressed() {
+		switch(key) {
+		case ' ':
+			sim.triggerThread();
+			break;
+		}
+	}
+	
 	public void mouseMoved() {
 		
 	}

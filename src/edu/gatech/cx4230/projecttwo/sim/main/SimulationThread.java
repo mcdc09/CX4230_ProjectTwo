@@ -82,4 +82,22 @@ public class SimulationThread extends Thread {
 		SimulationThread.currTimeStep = timeStep;
 	}
 
+	/**
+	 * @return the running
+	 */
+	public boolean isRunning() {
+		return running;
+	}
+
+	/**
+	 * @param running the running to set
+	 */
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+	
+	public void triggerRunning() {
+		running = !running;
+	}
+
 }
