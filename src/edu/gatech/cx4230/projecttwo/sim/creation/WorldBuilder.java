@@ -48,8 +48,9 @@ public class WorldBuilder {
 				String state = ""; // TODO
 				String icaoCode = d.getAirportID();
 				int timeZone = airportTZCap.getTimezone(a);
+				String name = d.getAirportName();
 				
-				Airport airport = new Airport(runways, onTheGround, maxAircraftCap, lat, lon, city, state, icaoCode, timeZone);
+				Airport airport = new Airport(runways, onTheGround, maxAircraftCap, lat, lon, city, state, icaoCode, timeZone, name);
 				world.addAirport(airport);
 			} // close if
 		} // close for		

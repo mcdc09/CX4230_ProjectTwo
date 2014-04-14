@@ -14,7 +14,7 @@ import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
 
 public class VisPApplet extends PApplet {
 	private AirportSimulation sim;
-	private static final int WIDTH = 1000, HEIGHT = 800;
+	private static final int WIDTH = 1100, HEIGHT = 550;
 	private SimMap simMap;
 	private Map<String, Airport> airports;
 	private int timeStep = 0;
@@ -34,7 +34,7 @@ public class VisPApplet extends PApplet {
 		
 		airports = new HashMap<String, Airport>();
 		simMap = new SimMap(this);
-		cview = new ControlsView(2*SimMap.MAP_X + SimMap.MAP_WIDTH, SimMap.MAP_Y, 300,  SimMap.MAP_HEIGHT);
+		cview = new ControlsView(2*SimMap.MAP_X + SimMap.MAP_WIDTH, SimMap.MAP_Y, 350,  SimMap.MAP_HEIGHT);
 		sim = new AirportSimulation(this, new DefaultScenario(true, new ArrayList<AirportEvent>()));	
 	}
 	

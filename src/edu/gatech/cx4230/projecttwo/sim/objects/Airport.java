@@ -22,6 +22,7 @@ public class Airport {
 	private final String city;
 	private final String state;
 	private final String icaoCode;
+	private final String name;
 	private final int timeZone;
 	
 	// state
@@ -34,7 +35,7 @@ public class Airport {
 	private int currSimTime;
 	
 	public Airport(ArrayList<Runway> runways, ArrayList<Aircraft> onTheGround, int maxAircraftCapacity, 
-			float latitude, float longitude, String city, String state, String icaoCode, int timeZone) {
+			float latitude, float longitude, String city, String state, String icaoCode, int timeZone, String name) {
 		// set airport properties
 		this.runways = runways;
 		this.maxAircraftCapacity = maxAircraftCapacity;
@@ -44,6 +45,7 @@ public class Airport {
 		this.state = state;
 		this.icaoCode = icaoCode;
 		this.timeZone = timeZone;
+		this.name = name;
 		
 		// initialize state
 		this.onTheGround = onTheGround; // initial aircrafts on the ground
@@ -52,6 +54,10 @@ public class Airport {
 		// create new event queues
 		pendingEvents = new EventPriorityQueue<Event>();
 		processedEvents = new ArrayList<Event>();
+	}
+	
+	public String toString() {
+		return name;
 	}
 
 	/* PROPERTIES */
@@ -90,6 +96,10 @@ public class Airport {
 
 	public int getTimeZone() {
 		return timeZone;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 	

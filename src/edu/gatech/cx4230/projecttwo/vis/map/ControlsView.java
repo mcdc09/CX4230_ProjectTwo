@@ -48,7 +48,7 @@ public class ControlsView {
 			if(airport != null) {
 				p.text("Airport", x + offset, y + 20);
 				p.text("ICAO: " + airport.getIcaoCode(), x + offset, y + 35);
-				//p.text(a.getName(), x + offset, y + 50); // TODO
+				p.text(airport.getName(), x + offset, y + 50); // TODO
 				p.text(airport.getCity() + ", " + airport.getState(), x + offset, y + 65);
 				p.text("Max capacity: " + airport.getMaxAircraftCapacity(), x + offset, y + 80);
 				p.text("In the air: " + airport.getInTheAir(), x + offset, y + 95);
