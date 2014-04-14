@@ -29,6 +29,10 @@ public class SimMap {
 		manager = map.getDefaultMarkerManager();
 
 		MapUtils.createDefaultEventDispatcher(vis, map);
+		
+		airportMarkers = new ArrayList<Marker>();
+		flightMarkers = new ArrayList<Marker>();
+		planeMarkers = new ArrayList<Marker>();
 	}
 	
 	public void createAirportMarkers(List<Airport> airports) {

@@ -28,9 +28,8 @@ public class VisPApplet extends PApplet {
 		
 		f = createFont("Arial", 25, true);
 		
-		sim = new AirportSimulation(this, new DefaultScenario(true, new ArrayList<AirportEvent>()));
-		
 		simMap = new SimMap(this);
+		sim = new AirportSimulation(this, new DefaultScenario(true, new ArrayList<AirportEvent>()));	
 	}
 	
 	public void draw() {
