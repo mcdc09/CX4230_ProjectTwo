@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.core.PFont;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
+import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
 
 public class ControlsView {
 	private int x, y;
@@ -53,6 +54,14 @@ public class ControlsView {
 				p.text("Max capacity: " + airport.getMaxAircraftCapacity(), x + offset, y + 80);
 				p.text("In the air: " + airport.getInTheAir(), x + offset, y + 95);
 				p.text("On the ground: " + airport.getNumOnTheGround(), x + offset, y + 110);
+				
+				p.text("Runways", x+offset, y + 150);
+				int yStart = y + 165;
+				for(Runway r: airport.getRunways()) {
+					p.text(r.getLength() + " ft", x+offset, yStart);
+					yStart += 15;
+					
+				}
 			}
 			break;
 		case V_AIRCRAFT:
