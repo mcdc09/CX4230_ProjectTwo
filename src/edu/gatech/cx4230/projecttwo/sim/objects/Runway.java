@@ -30,4 +30,11 @@ public class Runway {
 		this.timeNextAvailable = time;
 	}
 
+	/**
+	 * @return the timeNextAvailable
+	 */
+	public int getTimeNextAvailable() {
+		return timeNextAvailable;
+	}
+
 }

@@ -58,7 +58,7 @@ public class ControlsView {
 				p.text("Runways", x+offset, y + 150);
 				int yStart = y + 165;
 				for(Runway r: airport.getRunways()) {
-					p.text(r.getLength() + " ft", x+offset, yStart);
+					p.text(r.getLength() + " ft  Available at: " + r.getTimeNextAvailable(), x+offset, yStart);
 					yStart += 15;
 					
 				}
