@@ -25,7 +25,7 @@ public class CSVAirportTZCap {
 	public CSVAirportTZCap() {
 		timezones = new HashMap<String, Integer>();
 		capacities = new HashMap<String, Integer>();
-		
+
 		String filepath = FileHelper.getPathToResource(filename);
 
 		if(FileHelper.fileExists(filepath)) {
@@ -40,12 +40,8 @@ public class CSVAirportTZCap {
 						// use comma as separator
 						String[] lineSplit = line.split(csvSplitBy);
 
-						if(lineCount == 0) {
-							// This is the header row
-						} else {
-							// This is the rest of the data
-							handleDataRow(lineSplit);
-						} // close else
+						handleDataRow(lineSplit);
+
 
 					} else {
 						break;
@@ -68,16 +64,16 @@ public class CSVAirportTZCap {
 			} // close finally
 		}
 	} // close constructor
-	
+
 	private void handleDataRow(String[] lineSplit) {
 		String airport = lineSplit[0];
 		int timeZone = Integer.parseInt(lineSplit[1]);
 		int capacity = Integer.parseInt(lineSplit[2]);
-		
+
 		timezones.put(airport, timeZone);
 		capacities.put(airport, capacity);
 	} // close handleDataRow(...)
-	
+
 	/**
 	 * Gets the timezone from Eastern Time for an airport given its identification code
 	 * @param airportCode
@@ -88,10 +84,10 @@ public class CSVAirportTZCap {
 		if(timezones.containsKey(airportCode)) {
 			out = timezones.get(airportCode);
 		}
-		
+
 		return out;
 	} // close getTimezone
-	
+
 	/**
 	 * Gets the capacity for an airport given its identification code
 	 * @param airportCode
