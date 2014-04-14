@@ -22,10 +22,27 @@ public class EventPriorityQueue<T> {
 	}
 	
 	public Event removeMin() {
-		return events.remove(0);
+		Event out = null;
+		if(events != null && !events.isEmpty()) {
+			out = events.remove(0);
+		}
+		return out;
+	}
+	
+	public Event getMin() {
+		Event out = null;
+		if(events != null && !events.isEmpty()) {
+			out = events.get(0);
+		}
+		return out;
 	}
 
 	public int getMinValue() {
-		return events.get(0).getProcessTime();
+		Event minEvent = getMin();
+		int out = Integer.MAX_VALUE;
+		if(minEvent != null) {
+			out = minEvent.getProcessTime();
+		}
+		return out;
 	}
 }
