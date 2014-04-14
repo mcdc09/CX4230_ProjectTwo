@@ -23,7 +23,7 @@ public class CSVReaderInitialMatrix {
 
 	public CSVReaderInitialMatrix(String filename) {
 		String filepath = FileHelper.getPathToResource(filename);
-		System.out.println(filepath);
+		System.out.println("CSVReaderInitialMatrix<init> "+ filepath);
 		
 		rows = new ArrayList<CSVRowInitialMatrix>();
 		if(FileHelper.fileExists(filepath)) {

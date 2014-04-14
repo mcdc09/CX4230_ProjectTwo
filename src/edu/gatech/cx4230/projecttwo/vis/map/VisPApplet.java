@@ -2,6 +2,8 @@ package edu.gatech.cx4230.projecttwo.vis.map;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import processing.core.PApplet;
 import processing.core.PFont;
@@ -14,9 +16,11 @@ public class VisPApplet extends PApplet {
 	private AirportSimulation sim;
 	private static final int WIDTH = 1000, HEIGHT = 800;
 	private SimMap simMap;
+	private Map<String, Airport> airports;
 	private int timeStep = 0;
 	private int flightCount;
 	private PFont f;
+	private ControlsView cview;
 	
 	/**
 	 * 
@@ -28,7 +32,9 @@ public class VisPApplet extends PApplet {
 		
 		f = createFont("Arial", 25, true);
 		
+		airports = new HashMap<String, Airport>();
 		simMap = new SimMap(this);
+		cview = new ControlsView(2*SimMap.MAP_X + SimMap.MAP_WIDTH, SimMap.MAP_Y, 300,  SimMap.MAP_HEIGHT);
 		sim = new AirportSimulation(this, new DefaultScenario(true, new ArrayList<AirportEvent>()));	
 	}
 	
@@ -36,6 +42,7 @@ public class VisPApplet extends PApplet {
 		background(175);
 		simMap.draw();
 		
+		// Draw Time and Flight Count
 		fill(207, 14, 14);
 		textFont(f);
 		updateTime();
@@ -43,6 +50,9 @@ public class VisPApplet extends PApplet {
 		text("Time: " + timeStep, 5,20);
 		checkFlightCount();
 		text("Flight Count: " + flightCount, 200, 20);
+		
+		// Draw ControlsView
+		cview.draw(this);
 	}
 	
 	public void keyPressed() {
@@ -74,7 +84,7 @@ public class VisPApplet extends PApplet {
 	}
 	
 	public void updateDisplayInfo(String airportCode) {
-		
+		cview.updateForAirport(airports.get(airportCode));
 	}
 	
 	public void updateDisplayInfo(String aircraft, String origin, String destination) {
@@ -95,8 +105,12 @@ public class VisPApplet extends PApplet {
 		this.simMap = simMap;
 	}
 	
-	public void sendAirports(Collection<Airport> airports) {
-		simMap.createAirportMarkers(new ArrayList<Airport>(airports));
+	public void sendAirports(Collection<Airport> airportsC) {
+		airports = new HashMap<String, Airport>();
+		for(Airport a: airportsC) {
+			airports.put(a.getIcaoCode(), a);
+		}
+		simMap.createAirportMarkers(new ArrayList<Airport>(airportsC));
 	}
 
 }
