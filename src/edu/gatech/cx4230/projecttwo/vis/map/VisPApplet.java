@@ -3,6 +3,7 @@ package edu.gatech.cx4230.projecttwo.vis.map;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import processing.core.PApplet;
@@ -11,6 +12,7 @@ import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
 import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
 import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
+import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
 
 public class VisPApplet extends PApplet {
@@ -115,6 +117,10 @@ public class VisPApplet extends PApplet {
 			airports.put(a.getIcaoCode(), a);
 		}
 		simMap.createAirportMarkers(new ArrayList<Airport>(airportsC));
+	}
+	
+	public void sendFlights(List<Flight> flights) {
+		
 	}
 
 }

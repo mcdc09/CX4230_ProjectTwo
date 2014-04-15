@@ -1,9 +1,11 @@
 package edu.gatech.cx4230.projecttwo.sim.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cx4230.projecttwo.sim.creation.WorldBuilder;
 import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
+import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
 import edu.gatech.cx4230.projecttwo.sim.testing.SimulationScenario;
 import edu.gatech.cx4230.projecttwo.vis.map.VisPApplet;
@@ -25,6 +27,7 @@ public class AirportSimulation {
 		
 		// TODO Create a FlightGenerator
 		// TODO create list of initial Aircrafts onTheGround for each airport
+		List<Flight> flights = new ArrayList<Flight>();
 		
 		// Load simulation scenario events
 		List<AirportEvent> events = scenario.getEvents();
@@ -35,8 +38,8 @@ public class AirportSimulation {
 		
 		// Handle the visualization
 		if(vis != null) {
-			// TODO Send vis flights and airports
 			vis.sendAirports(world.getAirports());
+			vis.sendFlights(flights);
 		}
 		
 		
@@ -108,6 +111,27 @@ public class AirportSimulation {
 	 */
 	public void setFlightCountChanged(boolean flightCountChanged) {
 		this.flightCountChanged = flightCountChanged;
+	}
+
+	/**
+	 * @return the world
+	 */
+	public World getWorld() {
+		return world;
+	}
+
+	/**
+	 * @return the simThread
+	 */
+	public SimulationThread getSimThread() {
+		return simThread;
+	}
+
+	/**
+	 * @return the scenario
+	 */
+	public SimulationScenario getScenario() {
+		return scenario;
 	}
 	
 	
