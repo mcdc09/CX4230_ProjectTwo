@@ -9,6 +9,7 @@ import processing.core.PApplet;
 import processing.core.PFont;
 import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
 import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
+import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
 
@@ -18,6 +19,7 @@ public class VisPApplet extends PApplet {
 	private SimMap simMap;
 	private Map<String, Airport> airports;
 	private int timeStep = 0;
+	private String timeString = "";
 	private int flightCount;
 	private PFont f;
 	private ControlsView cview;
@@ -47,9 +49,10 @@ public class VisPApplet extends PApplet {
 		textFont(f);
 		updateTime();
 		checkFlightCount();
-		text("Time: " + timeStep, 5,20);
+		text("Time Step: " + timeStep, 5,20);
+		text(timeString, 225, 20);
 		checkFlightCount();
-		text("Flight Count: " + flightCount, 200, 20);
+		text("Flight Count: " + flightCount, 350, 20);
 		
 		// Draw ControlsView
 		cview.draw(this);
@@ -74,6 +77,7 @@ public class VisPApplet extends PApplet {
 	private void updateTime() {
 		if(sim.isTimeChanged()) {
 			timeStep = sim.getTimeStep();
+			timeString = SimulationThread.getRealTime(timeStep);
 		}
 	}
 	

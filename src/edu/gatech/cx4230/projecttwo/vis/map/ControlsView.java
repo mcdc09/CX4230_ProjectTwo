@@ -2,6 +2,7 @@ package edu.gatech.cx4230.projecttwo.vis.map;
 
 import processing.core.PApplet;
 import processing.core.PFont;
+import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
@@ -68,7 +69,14 @@ public class ControlsView {
 			if(f != null) {
 				p.text("Aircraft", x + offset, y + 20);
 				String originDest = flight.getOrigin().getIcaoCode() + " => " + flight.getDestination().getIcaoCode();
-				p.text(originDest, offset, y + 35);
+				p.text(originDest, x + offset, y + 35);
+				p.text("Time of Departure: " + flight.getTimeOfDeparture(), x+offset, y+50);
+				p.text("ETA: " + flight.getEstimatedTimeArrival(), x+offset, y+65);
+				p.text("ATA: " + flight.getActualTimeArrival() , x+offset, y+80);
+				
+				Aircraft a = flight.getAircraft();
+				p.text("Type: " + a.getAircraftType(), x+offset, y+95);
+				p.text("Speed: " + a.getSpeed(), x+offset, y+110);
 			}
 			break;
 		}

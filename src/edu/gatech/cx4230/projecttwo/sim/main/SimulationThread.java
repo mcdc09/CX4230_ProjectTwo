@@ -11,6 +11,7 @@ public class SimulationThread extends Thread {
 	private boolean running;
 	private static int currTimeStep;
 	public static final int timeStep = 10; // seconds per time step
+	public static final int START_TIME = 600; // Time of day in military time (0600 = 6AM, 2100 = 9PM) for the Eastern Time Zone 
 	private static boolean DEBUG = false;
 	private int wait;
 	private String id;
@@ -20,7 +21,7 @@ public class SimulationThread extends Thread {
 		this.wait = w;
 		this.id = s;
 		currTimeStep = 0;
-	}
+	} // close constructor
 
 	@Override
 	public synchronized void start() {
@@ -28,7 +29,7 @@ public class SimulationThread extends Thread {
 
 		running = true;
 		super.start();
-	}
+	} // close start()
 
 
 	public void run() {
@@ -50,7 +51,22 @@ public class SimulationThread extends Thread {
 					quit();
 				}
 			}
-		}
+		} // close while
+	} // close run
+	
+	public static String getRealTime(int time) {
+		String out = "";
+		int startSec = START_TIME * 36;
+		int curSec = startSec + time * timeStep;  // current time of day in seconds
+		int hour = curSec / 3600;
+		int minute = (curSec - hour*3600) / 60;
+		int sec = (curSec - hour*3600 - minute*60);
+		
+		String hourS = String.format("%02d", hour);
+		String minS = String.format("%02d", minute);
+		String secS = String.format("%02d", sec);
+		out = hourS + ":" + minS + ":" + secS;
+		return out;
 	}
 
 
