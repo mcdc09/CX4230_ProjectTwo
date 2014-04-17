@@ -9,6 +9,8 @@ public class Flight {
 	private final int timeOfDeparture;
 	private final int estimatedTimeArrival;
 	private int actualTimeArrival;
+	private final int flightNumber;
+	private static int flightCount = 0;
 	
 	public Flight(Aircraft aircraft, Airport origin, Airport destination,
 			 double distance, int timeOfDeparture, int estimatedTimeArrival) {
@@ -18,6 +20,15 @@ public class Flight {
 		this.timeOfDeparture = timeOfDeparture;
 		this.estimatedTimeArrival = estimatedTimeArrival;
 		this.distance = distance;
+		this.flightNumber = flightCount;
+		flightCount++;
+	}
+
+	/**
+	 * @return the flightNumber
+	 */
+	public int getFlightNumber() {
+		return flightNumber;
 	}
 
 	public Aircraft getAircraft() {
@@ -50,6 +61,13 @@ public class Flight {
 
 	public void setActualTimeArrival(int actualTimeArrival) {
 		this.actualTimeArrival = actualTimeArrival;
+	}
+
+	/**
+	 * @return the flightCount
+	 */
+	public static int getFlightCount() {
+		return flightCount;
 	}
 
 }
