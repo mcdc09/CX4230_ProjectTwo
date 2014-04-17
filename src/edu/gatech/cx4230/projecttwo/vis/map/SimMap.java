@@ -11,6 +11,7 @@ import de.fhpotsdam.unfolding.utils.MapUtils;
 import de.fhpotsdam.unfolding.utils.ScreenPosition;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
+import edu.gatech.cx4230.projecttwo.vis.creation.AircraftMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.creation.AirportMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.creation.FlightMarkerCreator;
 
@@ -55,8 +56,9 @@ public class SimMap {
 	}
 	
 	private void createAircraftMarkers(List<Flight> flights) {
-		planeMarkers = new ArrayList<Marker>();
-		// TODO Change
+		AircraftMarkerCreator amc = new AircraftMarkerCreator(flights, vis, vis.getTimeStep());
+		planeMarkers = amc.getAirplaneMarkers();
+		manager.addMarkers(planeMarkers);
 	}
 
 	public void draw() {	

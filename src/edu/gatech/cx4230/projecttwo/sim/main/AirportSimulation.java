@@ -17,6 +17,7 @@ public class AirportSimulation {
 	private boolean flightCountChanged;
 	private SimulationThread simThread;
 	private SimulationScenario scenario;
+	private List<Flight> flights;
 	
 	public AirportSimulation(VisPApplet vis, SimulationScenario scenario) {
 		this.scenario = scenario;
@@ -27,7 +28,7 @@ public class AirportSimulation {
 		
 		// TODO Create a FlightGenerator
 		// TODO create list of initial Aircrafts onTheGround for each airport
-		List<Flight> flights = new ArrayList<Flight>();
+		flights = new ArrayList<Flight>();
 		
 		// Load simulation scenario events
 		List<AirportEvent> events = scenario.getEvents();
@@ -89,6 +90,7 @@ public class AirportSimulation {
 	 * @return the flightCount
 	 */
 	public int getFlightCount() {
+		flightCountChanged = false;
 		return flightCount;
 	}
 
@@ -132,6 +134,13 @@ public class AirportSimulation {
 	 */
 	public SimulationScenario getScenario() {
 		return scenario;
+	}
+
+	/**
+	 * @return the flights
+	 */
+	public List<Flight> getFlights() {
+		return flights;
 	}
 	
 	

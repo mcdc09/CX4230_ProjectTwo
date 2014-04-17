@@ -50,7 +50,7 @@ public class ControlsView {
 			if(airport != null) {
 				p.text("Airport", x + offset, y + 20);
 				p.text("ICAO: " + airport.getIcaoCode(), x + offset, y + 35);
-				p.text(airport.getName(), x + offset, y + 50); // TODO
+				p.text(airport.getName(), x + offset, y + 50);
 				p.text(airport.getCity() + ", " + airport.getState(), x + offset, y + 65);
 				p.text("Max capacity: " + airport.getMaxAircraftCapacity(), x + offset, y + 80);
 				p.text("In the air: " + airport.getInTheAir(), x + offset, y + 95);
@@ -67,7 +67,7 @@ public class ControlsView {
 			break;
 		case V_AIRCRAFT:
 			if(f != null) {
-				p.text("Aircraft", x + offset, y + 20);
+				p.text("Aircraft Flight: " + flight.getFlightNumber(), x + offset, y + 20);
 				String originDest = flight.getOrigin().getIcaoCode() + " => " + flight.getDestination().getIcaoCode();
 				p.text(originDest, x + offset, y + 35);
 				p.text("Time of Departure: " + flight.getTimeOfDeparture(), x+offset, y+50);

@@ -20,6 +20,7 @@ public class VisPApplet extends PApplet {
 	private static final int WIDTH = 1100, HEIGHT = 550;
 	private SimMap simMap;
 	private Map<String, Airport> airports;
+	private Map<Integer, Flight> flights;
 	private int timeStep = 0;
 	private String timeString = "";
 	private int flightCount;
@@ -94,7 +95,14 @@ public class VisPApplet extends PApplet {
 	}
 	
 	public void updateDisplayInfo(int flightNumber) {
-		
+		cview.updateForFlight(flights.get(flightNumber));
+	}
+
+	/**
+	 * @return the timeStep
+	 */
+	public int getTimeStep() {
+		return timeStep;
 	}
 
 	/**
@@ -119,8 +127,12 @@ public class VisPApplet extends PApplet {
 		simMap.createAirportMarkers(new ArrayList<Airport>(airportsC));
 	}
 	
-	public void sendFlights(List<Flight> flights) {
-		
+	public void sendFlights(List<Flight> flightsL) {
+		flights = new HashMap<Integer, Flight>();
+		for(Flight flight: flightsL) {
+			flights.put(flight.getFlightNumber(), flight);
+		}
+		simMap.createAirplaneAndFlightMarkers(flightsL);
 	}
 
 }
