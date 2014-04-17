@@ -16,12 +16,13 @@ public class FlightMarkerCreator {
 		flightMarkers = new ArrayList<Marker>();
 		
 		for(Flight f: flights) {
+			int fn = f.getFlightNumber();
 			Airport origin = f.getOrigin();
 			Airport destination = f.getDestination();
 			
 			Location locO = new Location(origin.getLatitude(), origin.getLongitude());
 			Location locD = new Location(destination.getLatitude(), origin.getLongitude());
-			FlightRouteMarker m = new FlightRouteMarker(locO, locD, origin.getIcaoCode(), destination.getIcaoCode());
+			FlightRouteMarker m = new FlightRouteMarker(fn, locO, locD, origin.getIcaoCode(), destination.getIcaoCode());
 			flightMarkers.add(m);
 		}
 	}

@@ -93,7 +93,7 @@ public class VisPApplet extends PApplet {
 		cview.updateForAirport(airports.get(airportCode));
 	}
 	
-	public void updateDisplayInfo(String aircraft, String origin, String destination) {
+	public void updateDisplayInfo(int flightNumber) {
 		
 	}
 

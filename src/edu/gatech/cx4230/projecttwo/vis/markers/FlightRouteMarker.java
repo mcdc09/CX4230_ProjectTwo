@@ -1,5 +1,6 @@
 package edu.gatech.cx4230.projecttwo.vis.markers;
 
+import java.util.HashMap;
 import java.util.List;
 
 import processing.core.PGraphics;
@@ -14,13 +15,16 @@ public class FlightRouteMarker extends AbstractShapeMarker {
 	private static final int COLOR_ALPHA = 150;
 	private String icaoCodeA, icaoCodeB;
 	
-	public FlightRouteMarker(Location a, Location b, String codeA, String codeB) {
+	public FlightRouteMarker(int fn, Location a, Location b, String codeA, String codeB) {
 		addLocations(a);
 		addLocations(b);
 		this.icaoCodeA = codeA;
 		this.icaoCodeB = codeB;
+		
+		if(properties == null) properties = new HashMap<String, Object>();
 		properties.put("icaoCodeA", icaoCodeA);
 		properties.put("icaoCodeB", icaoCodeB);
+		properties.put("flightNumber", fn);
 	}
 
 	@Override

@@ -112,6 +112,8 @@ public class SimMap {
 				for(Marker m: planeMarkers) {
 					if(m.isInside(map, mouseX, mouseY) && !found) {
 						m.setSelected(true);
+						int flightNumber = Integer.parseInt(m.getStringProperty("flightNumber"));
+						vis.updateDisplayInfo(flightNumber);
 						found = true;
 					} else {
 						m.setSelected(false);

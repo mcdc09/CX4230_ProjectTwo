@@ -21,7 +21,7 @@ public class AircraftMarkerCreator {
 			Location l = determineAirplaneLocation(f, timeStep);
 			int type = determineAirplaneType(f.getAircraft());
 			int heading = determineAirplaneHeading(f);
-			AircraftMarker am = new AircraftMarker(l, type, heading, p);
+			AircraftMarker am = new AircraftMarker(f.getFlightNumber(), l, type, heading, p);
 			airplaneMarkers.add(am);
 		} // close for
 	} // close constructor(...)

@@ -1,5 +1,7 @@
 package edu.gatech.cx4230.projecttwo.vis.markers;
 
+import java.util.HashMap;
+
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
@@ -23,7 +25,7 @@ public class AircraftMarker extends AbstractMarker {
 	private static final double SCALING = 0.1;
 	private int width, height;
 	
-	public AircraftMarker(Location location, int type, int heading, PApplet p) {
+	public AircraftMarker(int fn, Location location, int type, int heading, PApplet p) {
 		super(location);
 		
 		this.type = type;
@@ -35,6 +37,8 @@ public class AircraftMarker extends AbstractMarker {
 		width = (int) (img.width * SCALING);
 		height = (int) (img.height * SCALING);
 		
+		if(properties == null) properties = new HashMap<String, Object>();
+		properties.put("flightNumber", fn);
 	}
 	
 	@Override
