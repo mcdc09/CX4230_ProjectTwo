@@ -17,6 +17,7 @@ import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
 
 public class VisPApplet extends PApplet {
 	private AirportSimulation sim;
+	public static final int STEPS_FLIGHT_UPDATE = 10;
 	private static final int WIDTH = 1100, HEIGHT = 550;
 	private SimMap simMap;
 	private Map<String, Airport> airports;
@@ -38,6 +39,7 @@ public class VisPApplet extends PApplet {
 		f = createFont("Arial", 25, true);
 		
 		airports = new HashMap<String, Airport>();
+		flights = new HashMap<Integer, Flight>();
 		simMap = new SimMap(this);
 		cview = new ControlsView(2*SimMap.MAP_X + SimMap.MAP_WIDTH, SimMap.MAP_Y, 350,  SimMap.MAP_HEIGHT);
 		sim = new AirportSimulation(this, new DefaultScenario(true, new ArrayList<AirportEvent>()));	
@@ -45,7 +47,6 @@ public class VisPApplet extends PApplet {
 	
 	public void draw() {
 		background(175);
-		simMap.draw();
 		
 		// Draw Time and Flight Count
 		fill(207, 14, 14);
@@ -57,7 +58,8 @@ public class VisPApplet extends PApplet {
 		checkFlightCount();
 		text("Flight Count: " + flightCount, 350, 20);
 		
-		// Draw ControlsView
+		updateFlightMarkers();
+		simMap.draw();
 		cview.draw(this);
 	}
 	
@@ -84,6 +86,15 @@ public class VisPApplet extends PApplet {
 		}
 	}
 	
+	/**
+	 * Updates the flight markers in the visualization.
+	 */
+	private void updateFlightMarkers() {
+		if(timeStep % STEPS_FLIGHT_UPDATE == 0) {
+			sendFlights(sim.getFlights());
+		}
+	}
+	
 	private void checkFlightCount() {
 		if(sim.isFlightCountChanged()) {
 			flightCount = sim.getFlightCount();
@@ -96,6 +107,22 @@ public class VisPApplet extends PApplet {
 	
 	public void updateDisplayInfo(int flightNumber) {
 		cview.updateForFlight(flights.get(flightNumber));
+	}
+	
+	public void sendAirports(Collection<Airport> airportsC) {
+		airports = new HashMap<String, Airport>();
+		for(Airport a: airportsC) {
+			airports.put(a.getIcaoCode(), a);
+		}
+		simMap.createAirportMarkers(new ArrayList<Airport>(airportsC));
+	}
+	
+	public void sendFlights(List<Flight> flightsL) {
+		flights = new HashMap<Integer, Flight>();
+		for(Flight flight: flightsL) {
+			flights.put(flight.getFlightNumber(), flight);
+		}
+		simMap.createAirplaneAndFlightMarkers(flightsL);
 	}
 
 	/**
@@ -118,21 +145,4 @@ public class VisPApplet extends PApplet {
 	public void setSimMap(SimMap simMap) {
 		this.simMap = simMap;
 	}
-	
-	public void sendAirports(Collection<Airport> airportsC) {
-		airports = new HashMap<String, Airport>();
-		for(Airport a: airportsC) {
-			airports.put(a.getIcaoCode(), a);
-		}
-		simMap.createAirportMarkers(new ArrayList<Airport>(airportsC));
-	}
-	
-	public void sendFlights(List<Flight> flightsL) {
-		flights = new HashMap<Integer, Flight>();
-		for(Flight flight: flightsL) {
-			flights.put(flight.getFlightNumber(), flight);
-		}
-		simMap.createAirplaneAndFlightMarkers(flightsL);
-	}
-
 }

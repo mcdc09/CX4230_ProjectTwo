@@ -3,6 +3,7 @@ package edu.gatech.cx4230.projecttwo.sim.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.gatech.cx4230.projecttwo.sim.creation.FlightGenerator;
 import edu.gatech.cx4230.projecttwo.sim.creation.WorldBuilder;
 import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
@@ -26,7 +27,7 @@ public class AirportSimulation {
 		world = wb.getWorld();
 		
 		
-		// TODO Create a FlightGenerator
+		FlightGenerator fg = new FlightGenerator();
 		// TODO create list of initial Aircrafts onTheGround for each airport
 		flights = new ArrayList<Flight>();
 		
