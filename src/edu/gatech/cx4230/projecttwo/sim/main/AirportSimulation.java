@@ -19,7 +19,7 @@ public class AirportSimulation {
 	private boolean flightCountChanged;
 	private SimulationThread simThread;
 	private SimulationScenario scenario;
-	private List<Flight> flights;
+	private static List<Flight> flights;
 	
 	public AirportSimulation(VisPApplet vis, SimulationScenario scenario) {
 		this.scenario = scenario;
@@ -148,6 +148,12 @@ public class AirportSimulation {
 		return flights;
 	}
 	
+	public static void addActiveFlight(Flight f) {
+		flights.add(f);
+	}
 	
+	public static void removeActiveFlight(Flight f) {
+		flights.remove(f);
+	}
 
 }
