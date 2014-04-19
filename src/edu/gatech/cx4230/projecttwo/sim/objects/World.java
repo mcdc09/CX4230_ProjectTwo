@@ -11,7 +11,7 @@ public class World {
 	private static RandomNG globalRand = new RandomNG(); // Seed as necessary
 	private static HashMap<String,Airport> airports = new HashMap<String,Airport>();
 	private static Timetable timetable;
-	
+	private static double[] aircraftDistr = new double[4];	
 	
 	public World() {
 		// Sorry for deleting the airport hash map instantiation.  I would like to be able to access it from elsewhere.
@@ -69,4 +69,19 @@ public class World {
 	public static RandomNG chance(){
 		return globalRand;
 	}
+	
+	public void populateACDistr(int rgl, int sml, int med, int lrg){
+		double total = (double)rgl + sml + med + lrg;
+		aircraftDistr[0] = (double)rgl / total;
+		aircraftDistr[1] = (double)med / total;
+		aircraftDistr[2] = (double)sml / total;
+		aircraftDistr[3] = (double)lrg / total;
+	}
+	
+	public double[] getAircraftDistr(){
+		// Don't forget to typecast your final aircraft count!
+		return aircraftDistr;
+	}
+	
+	
 }

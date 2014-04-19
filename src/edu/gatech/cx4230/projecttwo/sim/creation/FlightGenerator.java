@@ -28,18 +28,27 @@ public class FlightGenerator {
 		int[][] fm = flightMatrix();
 		int[][] tzm = timezoneMatrix();
 		
+		int rglCount = 0;
+		int smlCount = 0;
+		int medCount = 0;
+		int lrgCount = 0;
+		
 		System.out.println("Generating flight timetable.");
 		for(int i = 0; i < fm.length; i++){
 			for(int j = 0; j < fm[i].length; j++){
 				String aircraftType;
 				if(dm[i][j] < 850){
 					aircraftType = Aircraft.TYPE_REGIONAL;
+					rglCount++;
 				}else if(dm[i][j] < 1500){
 					aircraftType = Aircraft.TYPE_SMALL;
+					smlCount++;
 				}else if(dm[i][j] < 1500){
 					aircraftType = Aircraft.TYPE_MEDIUM;
+					medCount++;
 				}else{
 					aircraftType = Aircraft.TYPE_LARGE;
+					lrgCount++;
 				}
 				
 				int lengthOfDay = 14 - tzm[i][j]; // hours
