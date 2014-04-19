@@ -1,5 +1,6 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
+import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
 import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
@@ -28,6 +29,9 @@ public class DepartureEvent extends FlightEvent {
 		// schedule ArrivalEvent for destination airport
 		ArrivalEvent arriveEvent = new ArrivalEvent(flight);
 		destination.addPendingEvent(arriveEvent);
+		
+		// add flight to list of active flights
+		AirportSimulation.addActiveFlight(flight);
 	}
 
 }
