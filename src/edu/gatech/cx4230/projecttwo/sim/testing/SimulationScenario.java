@@ -8,14 +8,16 @@ import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
 
 public abstract class SimulationScenario {
 	private boolean useVis;
+	private int totalNumAircraft;
 	private List<AirportEvent> events;
 	
-	public SimulationScenario(boolean vis, List<AirportEvent> failures) {
+	public SimulationScenario(boolean vis, List<AirportEvent> failures, int totalAircraft) {
 		this.useVis = vis;
 		if(failures == null) {
 			failures = new ArrayList<AirportEvent>();
 		}
 		this.events = failures;
+		this.totalNumAircraft = totalAircraft;
 	}
 	
 	/**
@@ -52,6 +54,20 @@ public abstract class SimulationScenario {
 	 */
 	public void setEvents(List<AirportEvent> events) {
 		this.events = events;
+	}
+
+	/**
+	 * @return the totalNumAircraft
+	 */
+	public int getTotalNumAircraft() {
+		return totalNumAircraft;
+	}
+
+	/**
+	 * @param totalNumAircraft the totalNumAircraft to set
+	 */
+	public void setTotalNumAircraft(int totalNumAircraft) {
+		this.totalNumAircraft = totalNumAircraft;
 	}
 
 }

@@ -12,8 +12,8 @@ import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
  */
 public class DefaultScenario extends SimulationScenario {
 
-	public DefaultScenario(boolean vis, List<AirportEvent> failures) {
-		super(vis, failures);
+	public DefaultScenario(boolean vis, List<AirportEvent> failures, int totalAircraft) {
+		super(vis, failures, totalAircraft);
 	}
 
 	@Override

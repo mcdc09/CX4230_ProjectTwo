@@ -19,6 +19,7 @@ public class VisPApplet extends PApplet {
 	private AirportSimulation sim;
 	public static final int STEPS_FLIGHT_UPDATE = 10;
 	private static final int WIDTH = 1100, HEIGHT = 550;
+	public static int NUM_AIRCRAFT_FOR_VIS = 3000; // TODO change to be intelligent
 	private SimMap simMap;
 	private Map<String, Airport> airports;
 	private Map<Integer, Flight> flights;
@@ -42,7 +43,7 @@ public class VisPApplet extends PApplet {
 		flights = new HashMap<Integer, Flight>();
 		simMap = new SimMap(this);
 		cview = new ControlsView(2*SimMap.MAP_X + SimMap.MAP_WIDTH, SimMap.MAP_Y, 350,  SimMap.MAP_HEIGHT);
-		sim = new AirportSimulation(this, new DefaultScenario(true, new ArrayList<AirportEvent>()));	
+		sim = new AirportSimulation(this, new DefaultScenario(true, new ArrayList<AirportEvent>(), NUM_AIRCRAFT_FOR_VIS));	
 	}
 	
 	public void draw() {
