@@ -1,6 +1,6 @@
 package edu.gatech.cx4230.projecttwo.sim.objects;
 
-public class ScheduledFlight {
+public class ScheduledFlight implements Comparable {
 	private String origin;
 	private String destination;
 	private String aircraftType;
@@ -27,5 +27,11 @@ public class ScheduledFlight {
 
 	public int getDepartureTime(){
 		return departureTime;
+	}
+
+	@Override
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

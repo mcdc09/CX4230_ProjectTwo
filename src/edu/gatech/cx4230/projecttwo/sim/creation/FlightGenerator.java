@@ -1,6 +1,7 @@
 package edu.gatech.cx4230.projecttwo.sim.creation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import sun.security.util.Length;
@@ -92,8 +93,15 @@ public class FlightGenerator {
 		for(int i = 0; i < flightList.size(); i++){
 			CSVRowInitialMatrix ap = flightList.get(i);
 			for(int j = 0; j < airports.length; j++){
-				flights[i][j] = ap.getWeightForAirport(airports[j].getIcaoCode().substring(1));
-				System.out.println(flights[i][j]);
+				// get correct row to place this airport in
+				int k = -1;
+				for (int z = 0; z < airports.length; z++)
+					if(airports[z].getIcaoCode().substring(1).equals(ap.getOriginAirport())){
+						k = z;
+						break;
+					}
+				flights[k][j] = ap.getWeightForAirport(airports[j].getIcaoCode().substring(1));
+				//System.out.println(airports[k].getIcaoCode() + "-" + airports[j].getIcaoCode() + ": " + flights[k][j]);
 			}
 		}
 		return flights;
