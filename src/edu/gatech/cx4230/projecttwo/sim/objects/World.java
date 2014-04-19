@@ -24,7 +24,7 @@ public class World {
 		}
 	}
 	
-	public Collection<Airport> getAirports() {
+	public static Collection<Airport> getAirports() {
 		return airports.values();
 	}
 	
