@@ -6,6 +6,7 @@ import java.util.Collection;
 import sun.security.util.Length;
 import edu.gatech.cx4230.projecttwo.database.operation.AirportsDBOperator;
 import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
+import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
@@ -50,7 +51,8 @@ public class FlightGenerator {
 				while(fm[i][j] > 0){
 					// Allow non-uniform spacing of flights to common destinations (multi airlines).
 					// Also prevent flights from necessarily leaving at the same time (t=0).
-					int departureTime = World.chance().nextInt(flightInterval) + flightInterval * k;
+					int tzOffset = tzm[i][j] * 60 * (60 / SimulationThread.timeStep);
+					int departureTime = tzOffset + World.chance().nextInt(flightInterval) + flightInterval * k;
 					t.addScheduledFlight(airports[i].getIcaoCode(), airports[j].getIcaoCode(),
 							aircraftType, departureTime);
 					fm[i][j]--;
