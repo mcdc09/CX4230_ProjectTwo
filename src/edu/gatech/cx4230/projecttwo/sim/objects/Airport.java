@@ -237,13 +237,10 @@ public class Airport {
 		}
 	}
 	
-	public void addAircraftOnGround(Aircraft a) {
-		// TODO schedule flight for aircraft
-	}
 	
-	public void addAircraftOnGround(List<Aircraft> aircrafts) {
+	public void addAircraftOnTheGround(List<Aircraft> aircrafts) {
 		for(Aircraft a: aircrafts) {
-			addAircraftOnGround(a);
+			addAircraftOnTheGround(a);
 		}
 	}
 }
