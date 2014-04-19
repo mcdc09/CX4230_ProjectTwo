@@ -16,10 +16,10 @@ public class AirportSimulation {
 	private int flightCount;
 	private World world;
 	boolean timeChanged;
-	private boolean flightCountChanged;
+	private static boolean flightCountChanged;
 	private SimulationThread simThread;
 	private SimulationScenario scenario;
-	private static List<Flight> flights;
+	private static List<Flight> flights = new ArrayList<Flight>();
 	
 	public AirportSimulation(VisPApplet vis, SimulationScenario scenario) {
 		this.scenario = scenario;
@@ -33,7 +33,6 @@ public class AirportSimulation {
 		World.setTimetable(timetable);
 		
 		// TODO create list of initial Aircrafts onTheGround for each airport
-		flights = new ArrayList<Flight>();
 		
 		// Load simulation scenario events
 		List<AirportEvent> events = scenario.getEvents();
@@ -116,8 +115,8 @@ public class AirportSimulation {
 	/**
 	 * @param flightCountChanged the flightCountChanged to set
 	 */
-	public void setFlightCountChanged(boolean flightCountChanged) {
-		this.flightCountChanged = flightCountChanged;
+	public void setFlightCountChanged(boolean flightCount) {
+		flightCountChanged = flightCount;
 	}
 
 	/**
@@ -150,10 +149,12 @@ public class AirportSimulation {
 	
 	public static void addActiveFlight(Flight f) {
 		flights.add(f);
+		flightCountChanged = true;
 	}
 	
 	public static void removeActiveFlight(Flight f) {
 		flights.remove(f);
+		flightCountChanged = true;
 	}
 
 }
