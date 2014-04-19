@@ -70,15 +70,15 @@ public class World {
 		return globalRand;
 	}
 	
-	public void populateACDistr(int rgl, int sml, int med, int lrg){
+	public static void populateACDistr(int rgl, int sml, int med, int lrg){
 		double total = (double)rgl + sml + med + lrg;
 		aircraftDistr[0] = (double)rgl / total;
-		aircraftDistr[1] = (double)med / total;
-		aircraftDistr[2] = (double)sml / total;
+		aircraftDistr[1] = (double)sml / total;
+		aircraftDistr[2] = (double)med / total;
 		aircraftDistr[3] = (double)lrg / total;
 	}
 	
-	public double[] getAircraftDistr(){
+	public static double[] getAircraftDistr(){
 		// Don't forget to typecast your final aircraft count!
 		return aircraftDistr;
 	}

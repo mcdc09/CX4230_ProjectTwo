@@ -69,6 +69,7 @@ public class FlightGenerator {
 				}
 			}
 		}
+		World.populateACDistr(rglCount, smlCount, medCount, lrgCount);
 	}
 	
 	public Timetable getTimetable(){
