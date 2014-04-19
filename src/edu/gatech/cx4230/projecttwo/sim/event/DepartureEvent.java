@@ -31,7 +31,7 @@ public class DepartureEvent extends FlightEvent {
 		destination.addPendingEvent(arriveEvent);
 		
 		// add flight to list of active flights
-		AirportSimulation.addActiveFlight(flight);
+		//AirportSimulation.addActiveFlight(flight);
 	}
 
 }

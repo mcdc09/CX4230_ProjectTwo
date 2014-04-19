@@ -39,16 +39,16 @@ public class FlightGenerator {
 				String aircraftType;
 				if(dm[i][j] < 850){
 					aircraftType = Aircraft.TYPE_REGIONAL;
-					rglCount++;
+					rglCount += fm[i][j];
 				}else if(dm[i][j] < 1500){
 					aircraftType = Aircraft.TYPE_SMALL;
-					smlCount++;
+					smlCount += fm[i][j];
 				}else if(dm[i][j] < 1500){
 					aircraftType = Aircraft.TYPE_MEDIUM;
-					medCount++;
+					medCount += fm[i][j];
 				}else{
 					aircraftType = Aircraft.TYPE_LARGE;
-					lrgCount++;
+					lrgCount += fm[i][j];
 				}
 				
 				int lengthOfDay = 14 - tzm[i][j]; // hours
@@ -87,12 +87,13 @@ public class FlightGenerator {
 	}
 	
 	private int[][] flightMatrix(){
-		System.out.println("Getting aircraft routs.");
+		System.out.println("Getting aircraft routes.");
 		int[][] flights = new int[flightList.size()][airports.length];
 		for(int i = 0; i < flightList.size(); i++){
 			CSVRowInitialMatrix ap = flightList.get(i);
 			for(int j = 0; j < airports.length; j++){
-				flights[i][j] = ap.getWeightForAirport(airports[j].getIcaoCode());
+				flights[i][j] = ap.getWeightForAirport(airports[j].getIcaoCode().substring(1));
+				System.out.println(flights[i][j]);
 			}
 		}
 		return flights;
