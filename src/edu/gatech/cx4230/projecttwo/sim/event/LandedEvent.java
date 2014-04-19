@@ -1,5 +1,6 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
+import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
 import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
@@ -30,15 +31,17 @@ public class LandedEvent extends FlightEvent {
 		destination.addAircraftOnTheGround(aircraft);
 				
 		// update flight
-		int currSimTime = 0; //TODO get current simulation time
+		int currSimTime = SimulationThread.getCurrTimeStep();
 		flight.setActualTimeArrival(currSimTime);
 		
-		// TODO consult timetable to get new flight for this aircraft
+		// consult timetable to get new flight for this aircraft
 		Flight newFlight = World.getTimetable().scheduleFlight(destination, aircraft);
-		// TODO schedule DepartureEvent with destination airport as new origin airport
+		// schedule DepartureEvent with destination airport as new origin airport
 		DepartureEvent departEvent = new DepartureEvent(newFlight);
 		destination.addPendingEvent(departEvent);
 		
+		// remove flight from list of active flights
+		AirportSimulation.removeActiveFlight(flight);
 	}
 
 }
