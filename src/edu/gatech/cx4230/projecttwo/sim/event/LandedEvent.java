@@ -4,6 +4,7 @@ import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
+import edu.gatech.cx4230.projecttwo.sim.objects.World;
 
 public class LandedEvent extends FlightEvent {
 
@@ -33,7 +34,7 @@ public class LandedEvent extends FlightEvent {
 		flight.setActualTimeArrival(currSimTime);
 		
 		// TODO consult timetable to get new flight for this aircraft
-		Flight newFlight = timetable.scheduleFlight(destination, aircraft);
+		Flight newFlight = World.getTimetable().scheduleFlight(destination, aircraft);
 		// TODO schedule DepartureEvent with destination airport as new origin airport
 		DepartureEvent departEvent = new DepartureEvent(newFlight);
 		destination.addPendingEvent(departEvent);
