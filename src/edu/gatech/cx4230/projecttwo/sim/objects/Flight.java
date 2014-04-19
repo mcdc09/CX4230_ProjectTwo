@@ -70,4 +70,9 @@ public class Flight {
 		return flightCount;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		return o instanceof Flight 
+				&& ((Flight) o).getFlightNumber() == this.flightNumber;
+	}
 }
