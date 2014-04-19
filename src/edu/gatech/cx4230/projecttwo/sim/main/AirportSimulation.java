@@ -6,6 +6,7 @@ import java.util.List;
 import edu.gatech.cx4230.projecttwo.sim.creation.FlightGenerator;
 import edu.gatech.cx4230.projecttwo.sim.creation.WorldBuilder;
 import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
+import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
 import edu.gatech.cx4230.projecttwo.sim.testing.SimulationScenario;
@@ -28,6 +29,9 @@ public class AirportSimulation {
 		
 		
 		FlightGenerator fg = new FlightGenerator();
+		Timetable timetable = fg.getTimetable();
+		World.setTimetable(timetable);
+		
 		// TODO create list of initial Aircrafts onTheGround for each airport
 		flights = new ArrayList<Flight>();
 		
@@ -40,7 +44,7 @@ public class AirportSimulation {
 		
 		// Handle the visualization
 		if(vis != null) {
-			vis.sendAirports(world.getAirports());
+			vis.sendAirports(World.getAirports());
 			vis.sendFlights(flights);
 		}
 		

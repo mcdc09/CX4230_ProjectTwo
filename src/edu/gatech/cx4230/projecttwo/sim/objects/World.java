@@ -4,16 +4,26 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
 import edu.gatech.cx4230.projecttwo.utilities.RandomNG;
 
 public class World {
 	private static RandomNG globalRand = new RandomNG(); // Seed as necessary
 	private static HashMap<String,Airport> airports = new HashMap<String,Airport>();
+	private static Timetable timetable;
 	
 	
 	public World() {
 		// Sorry for deleting the airport hash map instantiation.  I would like to be able to access it from elsewhere.
 		// Yep.  currentSimTime, too
+	}
+	
+	public static Timetable getTimetable() {
+		return timetable;
+	}
+	
+	public static void setTimetable(Timetable t) {
+		timetable = t;
 	}
 	
 	public void processTimeStep(int time) {
