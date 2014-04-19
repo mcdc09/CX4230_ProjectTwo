@@ -39,13 +39,17 @@ public class AircraftMarkerCreator {
 	public int determineAirplaneHeading(Flight f) {
 		Location originLoc = f.getOrigin().getLocation();
 		Location destLoc = f.getDestination().getLocation();
+		float lon1 = originLoc.getLon();
+		float lat1 = originLoc.getLat();
+		float lon2 = destLoc.getLon();
+		float lat2 = destLoc.getLat();
+		float dLon = lon2 - lon1;
 		
-		double dx = destLoc.getLon() - originLoc.getLon();
-		double dy = destLoc.getLat() - originLoc.getLat();
-		double theta = Math.atan2(dy, dx); // radians
-		theta *= 180 / Math.PI; // degrees
-		theta = (theta + 90) % 360;
-		return (int) theta;
+		double y = Math.sin(dLon) * Math.cos(lat2);
+		double x = Math.cos(lat1)*Math.sin(lat2) -
+		        Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
+		double brng = Math.atan2(y, x) * 180 / Math.PI;
+		return (int) brng;
 	}
 	
 	public int determineAirplaneType(Aircraft a) {
