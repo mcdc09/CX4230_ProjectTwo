@@ -1,6 +1,7 @@
 package edu.gatech.cx4230.projecttwo.sim.objects;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.fhpotsdam.unfolding.geo.Location;
 import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
@@ -233,6 +234,16 @@ public class Airport {
 		}
 		else if(event instanceof AirportEvent) {
 			// TODO
+		}
+	}
+	
+	public void addAircraftOnGround(Aircraft a) {
+		// TODO schedule flight for aircraft
+	}
+	
+	public void addAircraftOnGround(List<Aircraft> aircrafts) {
+		for(Aircraft a: aircrafts) {
+			addAircraftOnGround(a);
 		}
 	}
 }
