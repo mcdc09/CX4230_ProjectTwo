@@ -19,36 +19,50 @@ public class AircraftMarker extends AbstractMarker {
 	private static final String PLANE_CYAN = "drawable/air_plane_cyan.png";
 	private static final String PLANE_GREEN = "drawable/air_plane_green.png";
 	private static final String PLANE_PURPLE = "drawable/air_plane_purple.png";
+	private static PImage imgReg, imgShort, imgMed, imgCross;
 	private int type;
 	private int heading; // degrees from North
-	private PImage img;
-	private static final double SCALING = 0.1;
-	private int width, height;
+	private static final double SCALING = 0.075;
+	private static int width, height;
 	
 	public AircraftMarker(int fn, Location location, int type, int heading, PApplet p) {
 		super(location);
 		
 		this.type = type;
-		String file = getFilenameForType(type);
+
+		if(imgReg == null) {
+			loadImages(p);
+		}
 		
+		HashMap<String,Object> prop = new HashMap<String, Object>();
+		prop.put("flightNumber", fn);
+		setProperties(prop);
+	}
+	
+	private void loadImages(PApplet p) {
+		imgReg = loadImageCust(PLANE_GREEN, p);
+		imgShort = loadImageCust(PLANE_CYAN,p);
+		imgMed = loadImageCust(PLANE_BLUE,p);
+		imgCross = loadImageCust(PLANE_PURPLE,p);
+		
+		width = (int) (imgCross.width * SCALING);
+		height = (int) (imgCross.height * SCALING);
+	}
+	
+	private PImage loadImageCust(String file, PApplet p) {
 		String fullpath = FileHelper.getPathToResource(file);
-		img = p.loadImage(fullpath);
-		
-		width = (int) (img.width * SCALING);
-		height = (int) (img.height * SCALING);
-		
-		if(properties == null) properties = new HashMap<String, Object>();
-		properties.put("flightNumber", fn);
+		return p.loadImage(fullpath);
 	}
 	
 	@Override
 	public void draw(PGraphics pg, float x, float y) {
 		pg.pushStyle();
-		pg.imageMode(PConstants.CORNER);
+		//pg.imageMode(PConstants.CORNER);
 		// The image is drawn in object coordinates, i.e. the marker's origin (0,0) is at its geo-location.
 		pg.rotate((heading + 90)*(PConstants.TWO_PI/360));
-		pg.translate(x - width/2, y - height / 2);
-		pg.image(img, 0, 0, width, height);
+		//pg.translate(x - width/2, y - height / 2);
+		//pg.ellipse(0, 0, width, height);
+		pg.image(getImageForType(type), x - width/2, y - height / 2, width, height);
 		pg.popStyle();
 		
 	}
@@ -58,20 +72,20 @@ public class AircraftMarker extends AbstractMarker {
 		return checkX > x && checkX < x + width && checkY > y && checkY < y + height;
 	}
 	
-	private String getFilenameForType(int in) {
-		String out = null;
+	private PImage getImageForType(int in) {
+		PImage out = null;
 		switch(in) {
 		case REGIONAL:
-			out = PLANE_GREEN;
+			out = imgReg;
 			break;
 		case SHORT_RANGE:
-			out = PLANE_CYAN;
+			out = imgShort;
 			break;
 		case MEDIUM_RANGE:
-			out = PLANE_BLUE;
+			out = imgMed;
 			break;
 		case CROSS_COUNTRY:
-			out = PLANE_PURPLE;
+			out = imgCross;
 			break;
 		}
 		return out;

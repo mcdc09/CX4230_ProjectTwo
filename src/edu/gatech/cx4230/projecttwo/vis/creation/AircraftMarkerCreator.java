@@ -6,9 +6,10 @@ import java.util.List;
 import processing.core.PApplet;
 import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.Marker;
+import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
-import edu.gatech.cx4230.projecttwo.utilities.MathHelper;
+import edu.gatech.cx4230.projecttwo.utilities.GeoHelper;
 import edu.gatech.cx4230.projecttwo.vis.markers.AircraftMarker;
 
 public class AircraftMarkerCreator {
@@ -20,36 +21,29 @@ public class AircraftMarkerCreator {
 		for(Flight f: flights) {
 			Location l = determineAirplaneLocation(f, timeStep);
 			int type = determineAirplaneType(f.getAircraft());
-			int heading = determineAirplaneHeading(f);
+			int heading = (int) determineAirplaneHeading(f);
 			AircraftMarker am = new AircraftMarker(f.getFlightNumber(), l, type, heading, p);
 			airplaneMarkers.add(am);
 		} // close for
 	} // close constructor(...)
 	
 	public Location determineAirplaneLocation(Flight f, int timeStep) {
+		double heading = determineAirplaneHeading(f);
 		Location originLoc = f.getOrigin().getLocation();
-		Location destLoc = f.getDestination().getLocation();
+		double speed = f.getAircraft().getSpeed(); // km/hr
+		double dtStep = timeStep - f.getTimeOfDeparture(); // steps
+		double dt = dtStep * SimulationThread.timeStep; // sec
+		dt = dt / 3600; // hr
+		double dist = speed * dt; // km
 		
-		double aLat = MathHelper.linearInterp(timeStep, f.getTimeOfDeparture(), originLoc.getLat(), f.getEstimatedTimeArrival(), destLoc.getLat());
-		double aLon = MathHelper.linearInterp(timeStep, f.getTimeOfDeparture(), originLoc.getLon(), f.getEstimatedTimeArrival(), destLoc.getLon());
-		
-		return new Location(aLat, aLon);
+		Location out = GeoHelper.calcDest(originLoc, heading, dist);
+		return out;
 	}
 	
-	public int determineAirplaneHeading(Flight f) {
+	public double determineAirplaneHeading(Flight f) {
 		Location originLoc = f.getOrigin().getLocation();
 		Location destLoc = f.getDestination().getLocation();
-		float lon1 = originLoc.getLon();
-		float lat1 = originLoc.getLat();
-		float lon2 = destLoc.getLon();
-		float lat2 = destLoc.getLat();
-		float dLon = lon2 - lon1;
-		
-		double y = Math.sin(dLon) * Math.cos(lat2);
-		double x = Math.cos(lat1)*Math.sin(lat2) -
-		        Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
-		double brng = Math.atan2(y, x) * 180 / Math.PI;
-		return (int) brng;
+		return GeoHelper.calcHeading(originLoc, destLoc);
 	}
 	
 	public int determineAirplaneType(Aircraft a) {
