@@ -2,7 +2,6 @@ package edu.gatech.cx4230.projecttwo.sim.main;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import edu.gatech.cx4230.projecttwo.sim.creation.FlightGenerator;
 import edu.gatech.cx4230.projecttwo.sim.creation.WorldBuilder;
 import edu.gatech.cx4230.projecttwo.sim.event.AircraftCreationEvent;
@@ -70,9 +69,7 @@ public class AirportSimulation {
 		simThread.triggerRunning();
 	}
 	
-	
 	// Properties
-	
 	public int getTimeStep() {
 		timeChanged = false;
 		return SimulationThread.getCurrTimeStep();
@@ -158,5 +155,4 @@ public class AirportSimulation {
 		flights.remove(f);
 		flightCountChanged = true;
 	}
-
 }

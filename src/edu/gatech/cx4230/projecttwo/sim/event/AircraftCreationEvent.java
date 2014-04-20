@@ -71,7 +71,5 @@ public class AircraftCreationEvent extends AirportEvent {
 				continue;
 			}
 		}
-
 	}
-
 }
