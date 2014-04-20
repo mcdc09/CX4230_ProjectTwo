@@ -5,10 +5,10 @@ import java.util.List;
 
 import processing.core.PGraphics;
 import de.fhpotsdam.unfolding.geo.Location;
-import de.fhpotsdam.unfolding.marker.AbstractShapeMarker;
+import de.fhpotsdam.unfolding.marker.SimpleLinesMarker;
 import de.fhpotsdam.unfolding.utils.MapPosition;
 
-public class FlightRouteMarker extends AbstractShapeMarker {
+public class FlightRouteMarker extends SimpleLinesMarker {
 	private static final int COLOR_RED = 73;
 	private static final int COLOR_GREEN = 168;
 	private static final int COLOR_BLUE = 69;
@@ -28,13 +28,10 @@ public class FlightRouteMarker extends AbstractShapeMarker {
 	}
 
 	@Override
-	public void draw(PGraphics pg, List<MapPosition> mapPositions) {	
-		MapPosition from = mapPositions.get(0);
-		MapPosition to = mapPositions.get(1);
-		
+	public void draw(PGraphics pg, List<MapPosition> mapPositions) {
 		pg.pushStyle();
 		pg.color(COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_ALPHA);
-		pg.line(from.x, from.y, to.x, to.y);
+		super.draw(pg, mapPositions);
 		pg.popStyle();
 	}
 

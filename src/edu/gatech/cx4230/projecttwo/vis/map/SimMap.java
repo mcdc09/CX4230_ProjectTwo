@@ -7,6 +7,7 @@ import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.MarkerManager;
+import de.fhpotsdam.unfolding.marker.SimpleLinesMarker;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import de.fhpotsdam.unfolding.utils.ScreenPosition;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
@@ -21,6 +22,7 @@ public class SimMap {
 	public static final int MAP_X = 25, MAP_Y = 25, MAP_WIDTH = 600, MAP_HEIGHT = 500;
 	private static final Location initialLoc = new Location(39.861667, -107);
 	private MarkerManager<Marker> manager;
+	private MarkerManager<Marker> airportManager;
 	private List<Marker> airportMarkers;
 	private List<Marker> flightMarkers;
 	private List<Marker> planeMarkers;
@@ -28,10 +30,15 @@ public class SimMap {
 	public SimMap(VisPApplet vis) {
 		this.vis = vis;
 		map = new UnfoldingMap(vis, MAP_X, MAP_Y, MAP_WIDTH, MAP_HEIGHT);
+		MapUtils.createDefaultEventDispatcher(vis, map);
 		map.zoomAndPanTo(initialLoc, 3);
 		manager = map.getDefaultMarkerManager();
+		
+		airportManager = new MarkerManager<Marker>();
+		airportManager.setMap(map);
+		map.addMarkerManager(airportManager);
 
-		MapUtils.createDefaultEventDispatcher(vis, map);
+		
 
 		airportMarkers = new ArrayList<Marker>();
 		flightMarkers = new ArrayList<Marker>();
@@ -40,13 +47,13 @@ public class SimMap {
 
 	public void createAirportMarkers(List<Airport> airports) {
 		AirportMarkerCreator amc = new AirportMarkerCreator(airports);
-		airportMarkers = amc.getAirportMarkers();
-		manager.addMarkers(airportMarkers);
+		List<Marker> airportMarkers = amc.getAirportMarkers();
+		airportManager.addMarkers(airportMarkers);
 	}
 
 	public void createAirplaneAndFlightMarkers(List<Flight> flights) {
-		createFlightMarkers(flights);
-		createAircraftMarkers(flights);
+		//createFlightMarkers(flights);
+		//createAircraftMarkers(flights);
 	}
 
 	private void createFlightMarkers(List<Flight> flights) {
@@ -62,20 +69,28 @@ public class SimMap {
 	}
 
 	public void draw() {	
-		checkMarkers();
+		//checkMarkers();
 		map.draw();
 	}
 
 	private void checkMarkers() {
-		for(Marker a: airportMarkers) {
-			if(isLocationOnMap(a.getLocation())) {
-				manager.addMarker(a);
-			} else {
-				manager.removeMarker(a);
-			}
-		}
+//		for(Marker a: airportMarkers) {
+//			if(isLocationOnMap(a.getLocation())) {
+//				manager.addMarker(a);
+//			} else {
+//				manager.removeMarker(a);
+//			}
+//		}
 		for(Marker f: flightMarkers) {
-			if(isLocationOnMap(f.getLocation())) {
+			SimpleLinesMarker fS = (SimpleLinesMarker) f;
+			boolean on = true;
+			for(Location l: fS.getLocations()) {
+				if(!isLocationOnMap(l)) {
+					on = false;
+					break;
+				}
+			}
+			if(on) {
 				manager.addMarker(f);
 			} else {
 				manager.removeMarker(f);
@@ -100,16 +115,16 @@ public class SimMap {
 		if(isInMapBounds(mouseX, mouseY)) {
 
 			boolean found = false;
-			for(Marker a: airportMarkers) {
-				if(a.isInside(map, mouseX, mouseY) && !found) {
-					a.setSelected(true);
-					String code = a.getStringProperty("icaoCode");
-					vis.updateDisplayInfo(code);
-					found = true;
-				} else {
-					a.setSelected(false);
-				}
-			}
+//			for(Marker a: airportMarkers) {
+//				if(a.isInside(map, mouseX, mouseY) && !found) {
+//					a.setSelected(true);
+//					String code = a.getStringProperty("icaoCode");
+//					vis.updateDisplayInfo(code);
+//					found = true;
+//				} else {
+//					a.setSelected(false);
+//				}
+//			}
 			if(!found) {
 				for(Marker m: planeMarkers) {
 					if(m.isInside(map, mouseX, mouseY) && !found) {
