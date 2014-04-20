@@ -22,7 +22,7 @@ public class AircraftMarker extends AbstractMarker {
 	private static PImage imgReg, imgShort, imgMed, imgCross;
 	private int type;
 	private int heading; // degrees from North
-	private static final double SCALING = 0.075;
+	private static final double SCALING = 0.1;
 	private static int width, height;
 	
 	public AircraftMarker(int fn, Location location, int type, int heading, PApplet p) {
@@ -61,8 +61,12 @@ public class AircraftMarker extends AbstractMarker {
 		// The image is drawn in object coordinates, i.e. the marker's origin (0,0) is at its geo-location.
 		pg.rotate((heading + 90)*(PConstants.TWO_PI/360));
 		//pg.translate(x - width/2, y - height / 2);
-		//pg.ellipse(0, 0, width, height);
-		pg.image(getImageForType(type), x - width/2, y - height / 2, width, height);
+		pg.ellipse(x-width/2, y-height/2, width, height);
+		//pg.image(getImageForType(type), x - width/2, y - height / 2, width, height);
+		if(selected) {
+			pg.color(200, 200, 0, 255);
+			pg.ellipse(x - width/2, y - height / 2, width, height);
+		}
 		pg.popStyle();
 		
 	}

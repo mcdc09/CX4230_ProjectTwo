@@ -54,6 +54,7 @@ public class SimMap {
 	public void createAirportMarkers(List<Airport> airports) {
 		AirportMarkerCreator amc = new AirportMarkerCreator(airports);
 		airportMarkers = amc.getAirportMarkers();
+		airportManager.clearMarkers();
 		airportManager.addMarkers(airportMarkers);
 	}
 
@@ -97,11 +98,11 @@ public class SimMap {
 					break;
 				}
 			}
-			//if(on) {
+			if(on) {
 				flightRouteManager.addMarker(f);
-			//} else {
-			//	manager.removeMarker(f);
-			//}
+			} else {
+				flightRouteManager.removeMarker(f);
+			}
 		}
 		for(Marker p: planeMarkers) {
 			if(isLocationOnMap(p.getLocation())) {

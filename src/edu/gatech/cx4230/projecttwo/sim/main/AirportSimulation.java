@@ -48,7 +48,7 @@ public class AirportSimulation {
 		}
 		
 		
-		simThread = new SimulationThread(this, 10, "Sim Thread");
+		simThread = new SimulationThread(this, 50, "Sim Thread");
 		simThread.start();
 	}
 	
