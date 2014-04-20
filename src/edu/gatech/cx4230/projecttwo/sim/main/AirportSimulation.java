@@ -13,7 +13,6 @@ import edu.gatech.cx4230.projecttwo.sim.testing.SimulationScenario;
 import edu.gatech.cx4230.projecttwo.vis.map.VisPApplet;
 
 public class AirportSimulation {
-	private int flightCount;
 	private World world;
 	boolean timeChanged;
 	private static boolean flightCountChanged;
@@ -94,14 +93,7 @@ public class AirportSimulation {
 	 */
 	public int getFlightCount() {
 		flightCountChanged = false;
-		return flightCount;
-	}
-
-	/**
-	 * @param flightCount the flightCount to set
-	 */
-	public void setFlightCount(int flightCount) {
-		this.flightCount = flightCount;
+		return flights.size();
 	}
 
 	/**
@@ -143,6 +135,7 @@ public class AirportSimulation {
 	 * @return the flights
 	 */
 	public List<Flight> getFlights() {
+		flightCountChanged = false;
 		return flights;
 	}
 	
