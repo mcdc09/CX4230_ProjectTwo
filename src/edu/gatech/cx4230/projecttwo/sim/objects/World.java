@@ -76,7 +76,7 @@ public class World {
 		aircraftDistr[1] = (double)sml / total;
 		aircraftDistr[2] = (double)med / total;
 		aircraftDistr[3] = (double)lrg / total;
-		System.out.println("Total flights:  " + total);
+		System.out.println("Total flights:  " + (int)total);
 		System.out.println((aircraftDistr[0] * 100) + "% regional");
 		System.out.println((aircraftDistr[1] * 100) + "% small");
 		System.out.println((aircraftDistr[2] * 100) + "% medium");
@@ -87,6 +87,4 @@ public class World {
 		// Don't forget to typecast your final aircraft count!
 		return aircraftDistr;
 	}
-	
-	
 }
