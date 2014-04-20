@@ -32,29 +32,29 @@ public class SimMap {
 		manager = map.getDefaultMarkerManager();
 
 		MapUtils.createDefaultEventDispatcher(vis, map);
-		
+
 		airportMarkers = new ArrayList<Marker>();
 		flightMarkers = new ArrayList<Marker>();
 		planeMarkers = new ArrayList<Marker>();
 	}
-	
+
 	public void createAirportMarkers(List<Airport> airports) {
 		AirportMarkerCreator amc = new AirportMarkerCreator(airports);
 		airportMarkers = amc.getAirportMarkers();
 		manager.addMarkers(airportMarkers);
 	}
-	
+
 	public void createAirplaneAndFlightMarkers(List<Flight> flights) {
 		createFlightMarkers(flights);
 		createAircraftMarkers(flights);
 	}
-	
+
 	private void createFlightMarkers(List<Flight> flights) {
 		FlightMarkerCreator fmc = new FlightMarkerCreator(flights);
 		flightMarkers = fmc.getFlightMarkers();
 		manager.addMarkers(flightMarkers);
 	}
-	
+
 	private void createAircraftMarkers(List<Flight> flights) {
 		AircraftMarkerCreator amc = new AircraftMarkerCreator(flights, vis, vis.getTimeStep());
 		planeMarkers = amc.getAirplaneMarkers();
@@ -114,9 +114,13 @@ public class SimMap {
 				for(Marker m: planeMarkers) {
 					if(m.isInside(map, mouseX, mouseY) && !found) {
 						m.setSelected(true);
-						int flightNumber = Integer.parseInt(m.getStringProperty("flightNumber"));
-						vis.updateDisplayInfo(flightNumber);
-						found = true;
+						String flightString = m.getStringProperty("flightNumber");
+						System.out.println("SimMap.mouseClicked:118 " + flightString);
+						if(flightString != null && !flightString.isEmpty()) {
+							int flightNumber = Integer.parseInt(flightString);
+							vis.updateDisplayInfo(flightNumber);
+							found = true;
+						}
 					} else {
 						m.setSelected(false);
 					} // close else
