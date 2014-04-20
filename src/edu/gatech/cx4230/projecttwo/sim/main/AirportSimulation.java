@@ -35,25 +35,14 @@ public class AirportSimulation {
 		Timetable timetable = fg.getTimetable();
 		World.setTimetable(timetable);
 		
-		// TODO create list of initial Aircrafts onTheGround for each airport
-		
 		// Load simulation scenario events
-		List<AirportEvent> events = scenario.getEvents();
-		
-		System.out.println("BEGIN");
 		for(Airport a : World.getAirports()){
 			int cap = a.getMaxAircraftCapacity();
 			int rgl = (int)(cap * World.getAircraftDistr()[0]);
 			int sml = (int)(cap * World.getAircraftDistr()[1]);
 			int med = (int)(cap * World.getAircraftDistr()[2]);
 			int lrg = (int)(cap * World.getAircraftDistr()[3]);
-			events.add(new AircraftCreationEvent(a, rgl, sml, med, lrg));
-		}
-		System.out.println("END");
-		
-		for(AirportEvent e: events) {
-			String id = e.getAirport().getIcaoCode();
-			World.getAirport(id).addPendingEvent(e);
+			a.addPendingEvent(new AircraftCreationEvent(a, rgl, sml, med, lrg));
 		}
 		
 		// Handle the visualization
