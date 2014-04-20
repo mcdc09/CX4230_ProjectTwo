@@ -60,12 +60,16 @@ public class AircraftCreationEvent extends AirportEvent {
 			// add aircraft to onTheGround at destination airport
 			airport.addAircraftOnTheGround(a);
 			
-			// consult timetable to get new flight for this aircraft
-			Flight newFlight = World.getTimetable().scheduleFlight(airport, a);
-			// schedule DepartureEvent with destination airport as new origin airport
-			DepartureEvent departEvent = new DepartureEvent(newFlight);
-			airport.addPendingEvent(departEvent);
-			AirportSimulation.addActiveFlight(newFlight);
+			try{
+				// consult timetable to get new flight for this aircraft
+				Flight newFlight = World.getTimetable().scheduleFlight(airport, a);
+				// schedule DepartureEvent with destination airport as new origin airport
+				DepartureEvent departEvent = new DepartureEvent(newFlight);
+				airport.addPendingEvent(departEvent);
+				AirportSimulation.addActiveFlight(newFlight);
+			}catch(NullPointerException e){
+				continue;
+			}
 		}
 
 	}

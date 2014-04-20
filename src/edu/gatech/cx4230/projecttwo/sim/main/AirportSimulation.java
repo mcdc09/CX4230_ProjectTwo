@@ -1,6 +1,7 @@
 package edu.gatech.cx4230.projecttwo.sim.main;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import edu.gatech.cx4230.projecttwo.sim.creation.FlightGenerator;
@@ -36,15 +37,20 @@ public class AirportSimulation {
 		
 		// TODO create list of initial Aircrafts onTheGround for each airport
 		
-		// TODO Brief test...delete in real
-		Airport atl = World.getAirport("KATL");
-		Airport ord = World.getAirport("KORD");
-		AircraftCreationEvent atlE = new AircraftCreationEvent(atl, 10,10,10,10);
-		AircraftCreationEvent ordE = new AircraftCreationEvent(ord,20,20,20,20);
-		
 		// Load simulation scenario events
 		List<AirportEvent> events = scenario.getEvents();
-		events.add(atlE); events.add(ordE); // TODO Delete
+		
+		System.out.println("BEGIN");
+		for(Airport a : World.getAirports()){
+			int cap = a.getMaxAircraftCapacity();
+			int rgl = (int)(cap * World.getAircraftDistr()[0]);
+			int sml = (int)(cap * World.getAircraftDistr()[1]);
+			int med = (int)(cap * World.getAircraftDistr()[2]);
+			int lrg = (int)(cap * World.getAircraftDistr()[3]);
+			events.add(new AircraftCreationEvent(a, rgl, sml, med, lrg));
+		}
+		System.out.println("END");
+		
 		for(AirportEvent e: events) {
 			String id = e.getAirport().getIcaoCode();
 			World.getAirport(id).addPendingEvent(e);

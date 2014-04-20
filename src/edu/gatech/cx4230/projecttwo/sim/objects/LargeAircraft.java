@@ -1,7 +1,7 @@
 package edu.gatech.cx4230.projecttwo.sim.objects;
 
 public class LargeAircraft extends Aircraft{
-	private static final String TYPE = Aircraft.TYPE_REGIONAL;
+	private static final String TYPE = Aircraft.TYPE_LARGE;
 	private static final int PASS = 300;
 	private static final int SPEED = 850;
 	private static final int RUNWAY_L = 0; // TODO
