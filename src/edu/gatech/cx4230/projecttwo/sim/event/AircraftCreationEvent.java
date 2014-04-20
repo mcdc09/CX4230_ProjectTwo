@@ -19,7 +19,6 @@ import edu.gatech.cx4230.projecttwo.sim.objects.World;
  *
  */
 public class AircraftCreationEvent extends AirportEvent {
-	private Airport airport;
 	private int regionalCount;
 	private int smallCount;
 	private int mediumCount;

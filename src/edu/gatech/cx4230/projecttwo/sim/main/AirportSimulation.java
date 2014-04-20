@@ -5,8 +5,10 @@ import java.util.List;
 
 import edu.gatech.cx4230.projecttwo.sim.creation.FlightGenerator;
 import edu.gatech.cx4230.projecttwo.sim.creation.WorldBuilder;
+import edu.gatech.cx4230.projecttwo.sim.event.AircraftCreationEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
+import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
 import edu.gatech.cx4230.projecttwo.sim.testing.SimulationScenario;
@@ -34,8 +36,15 @@ public class AirportSimulation {
 		
 		// TODO create list of initial Aircrafts onTheGround for each airport
 		
+		// TODO Brief test...delete in real
+		Airport atl = World.getAirport("KATL");
+		Airport ord = World.getAirport("KORD");
+		AircraftCreationEvent atlE = new AircraftCreationEvent(atl, 10,10,10,10);
+		AircraftCreationEvent ordE = new AircraftCreationEvent(ord,20,20,20,20);
+		
 		// Load simulation scenario events
 		List<AirportEvent> events = scenario.getEvents();
+		events.add(atlE); events.add(ordE); // TODO Delete
 		for(AirportEvent e: events) {
 			String id = e.getAirport().getIcaoCode();
 			World.getAirport(id).addPendingEvent(e);
