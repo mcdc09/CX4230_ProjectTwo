@@ -1,17 +1,11 @@
 package edu.gatech.cx4230.projecttwo.sim.creation;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-
-import sun.security.util.Length;
-import edu.gatech.cx4230.projecttwo.database.operation.AirportsDBOperator;
 import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
 import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
-import edu.gatech.cx4230.projecttwo.utilities.CSVRow;
 
 public class FlightGenerator {
 	private Timetable t;

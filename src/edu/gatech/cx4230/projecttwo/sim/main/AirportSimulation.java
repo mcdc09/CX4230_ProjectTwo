@@ -1,13 +1,11 @@
 package edu.gatech.cx4230.projecttwo.sim.main;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import edu.gatech.cx4230.projecttwo.sim.creation.FlightGenerator;
 import edu.gatech.cx4230.projecttwo.sim.creation.WorldBuilder;
 import edu.gatech.cx4230.projecttwo.sim.event.AircraftCreationEvent;
-import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
