@@ -21,8 +21,9 @@ public class SimMap {
 	private VisPApplet vis;
 	public static final int MAP_X = 25, MAP_Y = 25, MAP_WIDTH = 600, MAP_HEIGHT = 500;
 	private static final Location initialLoc = new Location(39.861667, -107);
-	private MarkerManager<Marker> manager;
+	private MarkerManager<Marker> flightRouteManager;
 	private MarkerManager<Marker> airportManager;
+	private MarkerManager<Marker> aircraftManager;
 	private List<Marker> airportMarkers;
 	private List<Marker> flightMarkers;
 	private List<Marker> planeMarkers;
@@ -32,13 +33,18 @@ public class SimMap {
 		map = new UnfoldingMap(vis, MAP_X, MAP_Y, MAP_WIDTH, MAP_HEIGHT);
 		MapUtils.createDefaultEventDispatcher(vis, map);
 		map.zoomAndPanTo(initialLoc, 3);
-		manager = map.getDefaultMarkerManager();
+		
+		flightRouteManager = new MarkerManager<Marker>();
+		flightRouteManager.setMap(map);
+		map.addMarkerManager(flightRouteManager);
 		
 		airportManager = new MarkerManager<Marker>();
 		airportManager.setMap(map);
 		map.addMarkerManager(airportManager);
 
-		
+		aircraftManager = new MarkerManager<Marker>();
+		aircraftManager.setMap(map);
+		map.addMarkerManager(aircraftManager);
 
 		airportMarkers = new ArrayList<Marker>();
 		flightMarkers = new ArrayList<Marker>();
@@ -47,40 +53,41 @@ public class SimMap {
 
 	public void createAirportMarkers(List<Airport> airports) {
 		AirportMarkerCreator amc = new AirportMarkerCreator(airports);
-		List<Marker> airportMarkers = amc.getAirportMarkers();
+		airportMarkers = amc.getAirportMarkers();
 		airportManager.addMarkers(airportMarkers);
 	}
 
 	public void createAirplaneAndFlightMarkers(List<Flight> flights) {
-		//createFlightMarkers(flights);
-		//createAircraftMarkers(flights);
+		createFlightMarkers(flights);
+		createAircraftMarkers(flights);
 	}
 
 	private void createFlightMarkers(List<Flight> flights) {
 		FlightMarkerCreator fmc = new FlightMarkerCreator(flights);
 		flightMarkers = fmc.getFlightMarkers();
-		manager.addMarkers(flightMarkers);
+		flightRouteManager.addMarkers(flightMarkers);
 	}
 
 	private void createAircraftMarkers(List<Flight> flights) {
 		AircraftMarkerCreator amc = new AircraftMarkerCreator(flights, vis, vis.getTimeStep());
 		planeMarkers = amc.getAirplaneMarkers();
-		manager.addMarkers(planeMarkers);
+		aircraftManager.clearMarkers();
+		aircraftManager.addMarkers(planeMarkers);
 	}
 
 	public void draw() {	
-		//checkMarkers();
+		checkMarkers();
 		map.draw();
 	}
 
 	private void checkMarkers() {
-//		for(Marker a: airportMarkers) {
-//			if(isLocationOnMap(a.getLocation())) {
-//				manager.addMarker(a);
-//			} else {
-//				manager.removeMarker(a);
-//			}
-//		}
+		for(Marker a: airportMarkers) {
+			if(isLocationOnMap(a.getLocation())) {
+				airportManager.addMarker(a);
+			} else {
+				airportManager.removeMarker(a);
+			}
+		}
 		for(Marker f: flightMarkers) {
 			SimpleLinesMarker fS = (SimpleLinesMarker) f;
 			boolean on = true;
@@ -90,17 +97,17 @@ public class SimMap {
 					break;
 				}
 			}
-			if(on) {
-				manager.addMarker(f);
-			} else {
-				manager.removeMarker(f);
-			}
+			//if(on) {
+				flightRouteManager.addMarker(f);
+			//} else {
+			//	manager.removeMarker(f);
+			//}
 		}
 		for(Marker p: planeMarkers) {
 			if(isLocationOnMap(p.getLocation())) {
-				manager.addMarker(p);
+				aircraftManager.addMarker(p);
 			} else {
-				manager.removeMarker(p);
+				aircraftManager.removeMarker(p);
 			}
 		}
 	}
@@ -115,24 +122,23 @@ public class SimMap {
 		if(isInMapBounds(mouseX, mouseY)) {
 
 			boolean found = false;
-//			for(Marker a: airportMarkers) {
-//				if(a.isInside(map, mouseX, mouseY) && !found) {
-//					a.setSelected(true);
-//					String code = a.getStringProperty("icaoCode");
-//					vis.updateDisplayInfo(code);
-//					found = true;
-//				} else {
-//					a.setSelected(false);
-//				}
-//			}
+			for(Marker a: airportMarkers) {
+				if(a.isInside(map, mouseX, mouseY) && !found) {
+					a.setSelected(true);
+					String code = a.getStringProperty("icaoCode");
+					vis.updateDisplayInfo(code);
+					found = true;
+				} else {
+					a.setSelected(false);
+				}
+			}
 			if(!found) {
 				for(Marker m: planeMarkers) {
 					if(m.isInside(map, mouseX, mouseY) && !found) {
 						m.setSelected(true);
-						String flightString = m.getStringProperty("flightNumber");
-						System.out.println("SimMap.mouseClicked:118 " + flightString);
-						if(flightString != null && !flightString.isEmpty()) {
-							int flightNumber = Integer.parseInt(flightString);
+						Object flightObject = m.getProperty("flightNumber");
+						if(flightObject != null) {
+							int flightNumber = Integer.parseInt(flightObject.toString());
 							vis.updateDisplayInfo(flightNumber);
 							found = true;
 						}
