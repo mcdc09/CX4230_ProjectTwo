@@ -1,11 +1,13 @@
 package edu.gatech.cx4230.projecttwo.sim.creation;
 
 import java.util.ArrayList;
+
 import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
 import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
+import edu.gatech.cx4230.projecttwo.utilities.GeoHelper;
 
 public class FlightGenerator {
 	private Timetable t;
@@ -76,8 +78,7 @@ public class FlightGenerator {
 		int[][] dists = new int[airports.length][airports.length];
 		for(int i = 0; i < airports.length; i++)
 			for(int j = 0; j < airports.length; j++)
-				dists[i][j] = (int)World.calculateDistance(airports[i].getLatitude(), airports[i].getLongitude(), 
-								airports[j].getLatitude(), airports[j].getLongitude());
+				dists[i][j] = (int)GeoHelper.calcDistance(airports[i].getLocation(), airports[j].getLocation());
 		return dists;
 	}
 	

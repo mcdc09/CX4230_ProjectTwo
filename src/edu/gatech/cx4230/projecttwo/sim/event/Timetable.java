@@ -10,6 +10,7 @@ import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.sim.objects.ScheduledFlight;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
+import edu.gatech.cx4230.projecttwo.utilities.GeoHelper;
 
 public class Timetable {
 	private Map<String, HashMap<String, PriorityQueue<ScheduledFlight>>> timetable;
@@ -53,8 +54,7 @@ public class Timetable {
 	public Flight scheduleFlight(Airport origin, Aircraft a){
 		ScheduledFlight f = timetable.get(origin.getIcaoCode()).get(a.getAircraftType()).poll();
 		Airport destination = World.getAirport(f.getDestination());
-		int distance = (int)World.calculateDistance(origin.getLatitude(), origin.getLongitude(), 
-						destination.getLatitude(), destination.getLongitude());
+		int distance = (int) GeoHelper.calcDistance(origin.getLocation(), destination.getLocation());
 		int TOD = SimulationThread.getCurrTimeStep() + 2400 / SimulationThread.timeStep; // schedule take-off in 40 minutes
 		int ETA = TOD + distance * a.getSpeed();
 		return new Flight(a, origin, destination, distance, TOD, ETA);
