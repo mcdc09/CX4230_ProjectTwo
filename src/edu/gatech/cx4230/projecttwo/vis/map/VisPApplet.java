@@ -93,9 +93,7 @@ public class VisPApplet extends PApplet {
 	}
 	
 	private void checkFlightCount() {
-		if(sim.isFlightCountChanged()) {
-			flightCount = sim.getFlightCount();
-		}
+		flightCount = flights.size();
 	}
 	
 	public void updateDisplayInfo(Airport a) {
