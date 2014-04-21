@@ -139,17 +139,22 @@ public class SimMap {
 					vis.updateDisplayInfo(airport);
 				}
 
-				// Try Aircraft
-				if(!found) {
-					Flight flight = (Flight) hit.getProperty("flight");
-					if(flight != null) {
-						vis.updateDisplayInfo(flight);
-						found = true;
-					}
-				}
+				
 
 				lastHitMarker = hit;
 			} else {
+				// Try Aircraft
+				if(!found) {
+					Marker hit2 = aircraftManager.getFirstHitMarker(mouseX, mouseY);
+					if(hit2 != null) {
+						Flight flight = (Flight) hit2.getProperty("flight");
+						if(flight != null) {
+							vis.updateDisplayInfo(flight);
+							found = true;
+						}
+					} // close hit2 null
+				}
+				
 				if(lastHitMarker != null) lastHitMarker.setSelected(false);
 			}
 		} // close if

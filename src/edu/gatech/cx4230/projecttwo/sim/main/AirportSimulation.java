@@ -142,13 +142,13 @@ public class AirportSimulation {
 	}
 	
 	public static void addActiveFlight(Flight f) {
-		System.out.println("Flight added: " + f);
+//		System.out.println("Flight added: " + f);
 		flights.add(f);
 		flightCountChanged = true;
 	}
 	
 	public static void removeActiveFlight(Flight f) {
-		System.out.println("Flight removed: " + f);
+//		System.out.println("Flight removed: " + f);
 		flights.remove(f);
 		flightCountChanged = true;
 	}

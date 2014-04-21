@@ -107,14 +107,10 @@ public class AircraftMarker extends AbstractMarker {
 		// The image is drawn in object coordinates, i.e. the marker's origin (0,0) is at its geo-location.
 		
 		// Drawing Rotated Image
-//		pg.translate(x, y);
-//		pg.rotate((float) GeoHelper.convertDegreeToRad(heading));
-//		pg.imageMode(PGraphics.CENTER);
-//		pg.image(getImageForType(type), 0, 0, width, height);
-		
-		// Draw Circle
-//		pg.color(175, 150, 150, 140);
-//		pg.ellipse(x, y, width, height);
+		//pg.translate(x, y);
+		//pg.rotate((float) GeoHelper.convertDegreeToRad(heading));
+		//pg.translate(-width/2, -height/2);
+		//pg.image(getImageForType(type), 0, 0, width, height);
 		
 		// Draw Vertical Image
 		pg.image(getImageForType(type), x - width/2, y - height/2, width, height);
