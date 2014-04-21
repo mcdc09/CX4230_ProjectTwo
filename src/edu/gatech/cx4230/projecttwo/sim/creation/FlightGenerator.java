@@ -57,7 +57,7 @@ public class FlightGenerator {
 				while(fm[i][j] > 0){
 					// Allow non-uniform spacing of flights to common destinations (multi airlines).
 					// Also prevent flights from necessarily leaving at the same time (t=0).
-					int tzOffset = tzm[i][j] * 60 * (60 / SimulationThread.timeStep);
+					int tzOffset = tzm[i][j] * 60 * (60 / SimulationThread.TIME_PER_STEP);
 					int departureTime = tzOffset + World.chance().nextInt(flightInterval) + flightInterval * k;
 					t.addScheduledFlight(airports[i].getIcaoCode(), airports[j].getIcaoCode(),
 							aircraftType, departureTime);

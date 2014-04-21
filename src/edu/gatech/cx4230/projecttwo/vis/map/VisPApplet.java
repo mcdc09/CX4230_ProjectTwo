@@ -15,7 +15,7 @@ import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
 
 public class VisPApplet extends PApplet {
 	private AirportSimulation sim;
-	public static final int STEPS_FLIGHT_UPDATE = 60 / SimulationThread.timeStep; // How often the flight markers are updated
+	public static final int STEPS_FLIGHT_UPDATE = 60 / SimulationThread.TIME_PER_STEP; // How often the flight markers are updated
 	private static final int WIDTH = 1000, HEIGHT = 500;
 	public static int NUM_AIRCRAFT_FOR_VIS = 4000; // TODO change to be intelligent
 	private SimMap simMap;

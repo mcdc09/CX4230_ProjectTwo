@@ -10,7 +10,7 @@ public class SimulationThread extends Thread {
 	private AirportSimulation as;
 	private boolean running;
 	private static int currTimeStep;
-	public static final int timeStep = 10; // seconds per time step
+	public static final int TIME_PER_STEP = 10; // seconds per time step
 	public static final int START_TIME = 600; // Time of day in military time (0600 = 6AM, 2100 = 9PM) for the Eastern Time Zone 
 	private static boolean DEBUG = false;
 	private int wait;
@@ -57,7 +57,7 @@ public class SimulationThread extends Thread {
 	public static String getRealTime(int time) {
 		String out = "";
 		int startSec = START_TIME * 36;
-		int curSec = startSec + time * timeStep;  // current time of day in seconds
+		int curSec = startSec + time * TIME_PER_STEP;  // current time of day in seconds
 		int hour = curSec / 3600;
 		int minute = (curSec - hour*3600) / 60;
 		int sec = (curSec - hour*3600 - minute*60);
