@@ -62,7 +62,10 @@ public class ControlsView {
 					p.text(r.getLength() + " ft  Available at: " + r.getTimeNextAvailable(), x+offset, yStart);
 					yStart += 15;
 					
-				}
+				} // close runway for
+				
+				p.text("Events", x + offset, yStart+=25);
+				p.text(airport.getPendingEvents().toString(), x + offset, yStart+=15);
 			}
 			break;
 		case V_AIRCRAFT:
