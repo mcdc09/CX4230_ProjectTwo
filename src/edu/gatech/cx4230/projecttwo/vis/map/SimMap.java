@@ -15,6 +15,7 @@ import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.vis.creation.AircraftMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.creation.AirportMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.creation.FlightMarkerCreator;
+import edu.gatech.cx4230.projecttwo.vis.markers.AircraftMarker;
 
 public class SimMap {
 	private UnfoldingMap map;
@@ -26,7 +27,7 @@ public class SimMap {
 	private MarkerManager<Marker> aircraftManager;
 	private List<Marker> airportMarkers;
 	private List<Marker> flightMarkers;
-	private List<Marker> planeMarkers;
+	private List<AircraftMarker> aircraftMarkers;
 
 	public SimMap(VisPApplet vis) {
 		this.vis = vis;
@@ -48,7 +49,7 @@ public class SimMap {
 
 		airportMarkers = new ArrayList<Marker>();
 		flightMarkers = new ArrayList<Marker>();
-		planeMarkers = new ArrayList<Marker>();
+		aircraftMarkers = new ArrayList<AircraftMarker>();
 	}
 
 	public void createAirportMarkers(List<Airport> airports) {
@@ -71,9 +72,11 @@ public class SimMap {
 
 	private void createAircraftMarkers(List<Flight> flights) {
 		AircraftMarkerCreator amc = new AircraftMarkerCreator(flights, vis, vis.getTimeStep());
-		planeMarkers = amc.getAirplaneMarkers();
+		aircraftMarkers = amc.getAirplaneMarkers();
 		aircraftManager.clearMarkers();
-		aircraftManager.addMarkers(planeMarkers);
+		for(Marker m: aircraftMarkers) {
+			aircraftManager.addMarker(m);
+		}
 	}
 
 	public void draw() {	
@@ -104,7 +107,7 @@ public class SimMap {
 				flightRouteManager.removeMarker(f);
 			}
 		}
-		for(Marker p: planeMarkers) {
+		for(Marker p: aircraftMarkers) {
 			if(isLocationOnMap(p.getLocation())) {
 				aircraftManager.addMarker(p);
 			} else {
@@ -134,7 +137,7 @@ public class SimMap {
 				}
 			}
 			if(!found) {
-				for(Marker m: planeMarkers) {
+				for(Marker m: aircraftMarkers) {
 					if(m.isInside(map, mouseX, mouseY) && !found) {
 						m.setSelected(true);
 						Object flightObject = m.getProperty("flightNumber");

@@ -41,7 +41,7 @@ public class TestVis extends PApplet {
 		List<Airport> airports = new ArrayList<Airport>();
 		airports.add(atl); airports.add(ord);
 		
-		AirportMarkerCreator amc = new AirportMarkerCreator(airports, null);
+		AirportMarkerCreator amc = new AirportMarkerCreator(airports);
 		map.addMarkers(amc.getAirportMarkers());
 		
 		List<Aircraft> atlAircraft = new ArrayList<Aircraft>();
