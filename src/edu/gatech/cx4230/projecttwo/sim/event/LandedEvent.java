@@ -42,6 +42,7 @@ public class LandedEvent extends FlightEvent {
 		
 		// remove flight from list of active flights
 		AirportSimulation.removeActiveFlight(flight);
+		System.out.println("Aircraft Landed at " + destination.getIcaoCode() + " at " + currSimTime);
 	}
 
 }
