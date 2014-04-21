@@ -38,7 +38,7 @@ public class SimulationThread extends Thread {
 				currTimeStep++;
 				as.setTimeChanged(true);
 
-				as.processEventsForTimeStep(timeStep);
+				as.processEventsForTimeStep(currTimeStep);
 
 				if(wait > 0) {
 					try {
