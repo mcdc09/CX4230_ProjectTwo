@@ -155,6 +155,7 @@ public class Airport {
 	}
 
 	public void addPendingEvent(Event event) {
+		System.out.println(icaoCode + ": " + event.toString());
 		pendingEvents.addInOrder(event);
 	}
 
