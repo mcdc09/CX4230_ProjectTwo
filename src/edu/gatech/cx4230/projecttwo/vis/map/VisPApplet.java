@@ -35,7 +35,7 @@ public class VisPApplet extends PApplet {
 	private static final long serialVersionUID = -5277061984985043214L;
 
 	public void setup() {
-		size(WIDTH, HEIGHT);
+		size(WIDTH, HEIGHT, OPENGL);
 		
 		f = createFont("Arial", 25, true);
 		
