@@ -100,8 +100,8 @@ public class VisPApplet extends PApplet {
 		cview.updateForAirport(a);
 	}
 	
-	public void updateDisplayInfo(int flightNumber) {
-		cview.updateForFlight(flights.get(flightNumber));
+	public void updateDisplayInfo(Flight flight) {
+		cview.updateForFlight(flight);
 	}
 	
 	public void sendAirports(Collection<Airport> airportsC) {
