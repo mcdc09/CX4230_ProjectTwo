@@ -27,7 +27,6 @@ public class SimMap {
 	private static final Location initialLoc = new Location(39.861667, -107);
 	private MarkerManager<Marker> airportManager;
 	private MarkerManager<Marker> aircraftManager;
-	private List<Marker> airportMarkers;
 	private List<AircraftMarker> aircraftMarkers;
 	private Marker lastHitMarker;
 
@@ -45,7 +44,6 @@ public class SimMap {
 		aircraftManager.setMap(map);
 		map.addMarkerManager(aircraftManager);
 
-		airportMarkers = new ArrayList<Marker>();
 		aircraftMarkers = new ArrayList<AircraftMarker>();
 	}
 
@@ -55,9 +53,8 @@ public class SimMap {
 	 */
 	public void createAirportMarkers(List<Airport> airports) {
 		AirportMarkerCreator amc = new AirportMarkerCreator(airports);
-		airportMarkers = amc.getAirportMarkers();
 		airportManager.clearMarkers();
-		airportManager.addMarkers(airportMarkers);
+		airportManager.addMarkers(amc.getAirportMarkers());
 		map.addMarkerManager(airportManager);
 	}
 
@@ -86,29 +83,8 @@ public class SimMap {
 	/**
 	 * Draws the map and markers
 	 */
-	public void draw() {	
-		checkMarkers();
+	public void draw() {
 		map.draw();
-	}
-
-	/**
-	 * Checks to make sure to only draw Markers that are on the map
-	 */
-	private void checkMarkers() {
-		for(Marker a: airportMarkers) {
-			if(isLocationOnMap(a.getLocation())) {
-				airportManager.addMarker(a);
-			} else {
-				airportManager.removeMarker(a);
-			}
-		}
-		for(Marker p: aircraftMarkers) {
-			if(isLocationOnMap(p.getLocation())) {
-				aircraftManager.addMarker(p);
-			} else {
-				aircraftManager.removeMarker(p);
-			}
-		}
 	}
 
 	/**
@@ -116,8 +92,7 @@ public class SimMap {
 	 * @param loc
 	 * @return
 	 */
-	private boolean isLocationOnMap(Location loc) {
-
+	public boolean isLocationOnMap(Location loc) {
 		ScreenPosition pos = map.getScreenPosition(loc);
 		return isInMapBounds(pos.x, pos.y);
 	}
@@ -165,7 +140,7 @@ public class SimMap {
 	 * @param y
 	 * @return
 	 */
-	private boolean isInMapBounds(float x, float y) {
+	public boolean isInMapBounds(float x, float y) {
 		return ((MAP_X < x) && (x < (MAP_X+MAP_WIDTH))) && ((MAP_Y < y) && (y < (MAP_Y + MAP_HEIGHT)));
 	}
 
