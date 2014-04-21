@@ -54,9 +54,10 @@ public class Timetable {
 	public Flight scheduleFlight(Airport origin, Aircraft a){
 		ScheduledFlight f = timetable.get(origin.getIcaoCode()).get(a.getAircraftType()).poll();
 		Airport destination = World.getAirport(f.getDestination());
-		int distance = (int) GeoHelper.calcDistance(origin.getLocation(), destination.getLocation());
-		int TOD = SimulationThread.getCurrTimeStep() + 2400 / SimulationThread.timeStep; // schedule take-off in 40 minutes
-		int ETA = TOD + distance * a.getSpeed();
+		double distance = GeoHelper.calcDistance(origin.getLocation(), destination.getLocation()); // km
+		int TOD = SimulationThread.getCurrTimeStep() + 2400 / SimulationThread.timeStep; // (steps) schedule take-off in 40 minutes
+		double t = (distance / a.getSpeed()) * 3600.0; // seconds
+		int ETA = TOD + (int) (t / SimulationThread.timeStep); // steps
 		return new Flight(a, origin, destination, distance, TOD, ETA);
 	}
 	
