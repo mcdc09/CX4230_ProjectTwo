@@ -14,16 +14,16 @@ public class GeoHelper {
 	public static final int R = 6371; // km
 
 	public static double calcHeading(Location origin, Location destination) {
-		float lon1 = origin.getLon();
-		float lat1 = origin.getLat();
-		float lon2 = destination.getLon();
-		float lat2 = destination.getLat();
-		float dLon = lon2 - lon1;
+		double lon1 = convertDegreeToRad(origin.getLon());
+		double lat1 = convertDegreeToRad(origin.getLat());
+		double lon2 = convertDegreeToRad(destination.getLon());
+		double lat2 = convertDegreeToRad(destination.getLat());
+		double dLon = lon2 - lon1;
 
 		double y = Math.sin(dLon) * Math.cos(lat2);
 		double x = Math.cos(lat1)*Math.sin(lat2) -
 				Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
-		return convertRadToDegree(Math.atan2(y, x));
+		return (convertRadToDegree(Math.atan2(y, x))+360) % 360.0;
 	}
 
 	public static double calcDistance(Location a, Location b) {
@@ -46,8 +46,6 @@ public class GeoHelper {
 	public static Location calcDest(Location start, double bearing, double d) {
 		double lat1 = start.getLat();
 		double lon1 = start.getLon();
-		
-		double epsilon = 0.000001; // threshold for floating-point equality
 
 	    double rLat1 = convertDegreeToRad(lat1);
 	    double rLon1 = convertDegreeToRad(lon1);
@@ -55,11 +53,7 @@ public class GeoHelper {
 	    double rdistance = d / R;
 
 	    double rlat = Math.asin( Math.sin(rLat1) * Math.cos(rdistance) + Math.cos(rLat1) * Math.sin(rdistance) * Math.cos(rbearing) );
-	    double rlon;
-	    if (Math.cos(rlat) == 0 || Math.abs(Math.cos(rlat)) < epsilon) // Endpoint a pole
-	            rlon=rLon1;
-	    else
-	        rlon = ( (rLon1 - Math.asin( Math.sin(rbearing)* Math.sin(rdistance) / Math.cos(rlat) ) + Math.PI ) % (2*Math.PI) ) - Math.PI;
+	    double rlon = rLon1 + Math.atan2(Math.sin(rbearing)*Math.sin(d/R)*Math.cos(rLat1), Math.cos(d/R)-Math.sin(rLat1)*Math.sin(rlat));
 
 	    double lat = convertRadToDegree(rlat);
 	    double lon = convertRadToDegree(rlon);
@@ -68,11 +62,11 @@ public class GeoHelper {
 
 
 
-	private static double convertDegreeToRad(double in) {
+	public static double convertDegreeToRad(double in) {
 		return in * Math.PI / 180;
 	}
 
-	private static double convertRadToDegree(double in) {
+	public static double convertRadToDegree(double in) {
 		return in * 180 / Math.PI;
 	}
 
