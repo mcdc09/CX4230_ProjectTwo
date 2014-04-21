@@ -2,9 +2,7 @@ package edu.gatech.cx4230.projecttwo.vis.map;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import processing.core.PApplet;
 import processing.core.PFont;
@@ -21,7 +19,6 @@ public class VisPApplet extends PApplet {
 	private static final int WIDTH = 1000, HEIGHT = 500;
 	public static int NUM_AIRCRAFT_FOR_VIS = 4000; // TODO change to be intelligent
 	private SimMap simMap;
-	private Map<Integer, Flight> flights;
 	private int timeStep = 0;
 	private String timeString = "";
 	private int flightCount;
@@ -38,7 +35,6 @@ public class VisPApplet extends PApplet {
 		
 		f = createFont("Arial", 25, true);
 		
-		flights = new HashMap<Integer, Flight>();
 		simMap = new SimMap(this);
 		cview = new ControlsView(2*SimMap.MAP_X + SimMap.MAP_WIDTH, SimMap.MAP_Y, 350,  SimMap.MAP_HEIGHT);
 		sim = new AirportSimulation(this, new DefaultScenario(true, new ArrayList<AirportEvent>(), NUM_AIRCRAFT_FOR_VIS));	
@@ -68,10 +64,6 @@ public class VisPApplet extends PApplet {
 		}
 	}
 	
-	public void mouseMoved() {
-		
-	}
-	
 	public void mouseClicked() {
 		simMap.mouseClicked(mouseX, mouseY);
 	}
@@ -93,7 +85,7 @@ public class VisPApplet extends PApplet {
 	}
 	
 	private void checkFlightCount() {
-		flightCount = flights.size();
+		flightCount = sim.getFlightCount();
 	}
 	
 	public void updateDisplayInfo(Airport a) {
@@ -108,12 +100,8 @@ public class VisPApplet extends PApplet {
 		simMap.createAirportMarkers(new ArrayList<Airport>(airportsC));
 	}
 	
-	public void sendFlights(List<Flight> flightsL) {
-		flights = new HashMap<Integer, Flight>();
-		for(Flight flight: flightsL) {
-			flights.put(flight.getFlightNumber(), flight);
-		}
-		simMap.createAircraftMarkers(flightsL);
+	public void sendFlights(List<Flight> flights) {
+		simMap.createAircraftMarkers(flights);
 	}
 
 	/**
@@ -122,18 +110,4 @@ public class VisPApplet extends PApplet {
 	public int getTimeStep() {
 		return timeStep;
 	}
-
-	/**
-	 * @return the simMap
-	 */
-	public SimMap getSimMap() {
-		return simMap;
-	}
-
-	/**
-	 * @param simMap the simMap to set
-	 */
-	public void setSimMap(SimMap simMap) {
-		this.simMap = simMap;
-	}
-}
+} // close VisPApplet
