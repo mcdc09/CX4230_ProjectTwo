@@ -51,4 +51,8 @@ public class EventPriorityQueue<T> {
 	public String toString() {
 		return ListHelper.listToString(events);
 	}
+	
+	public int size() {
+		return events.size();
+	}
 }

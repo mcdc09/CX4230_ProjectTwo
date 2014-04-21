@@ -55,6 +55,7 @@ public class ControlsView {
 				p.text("Max capacity: " + airport.getMaxAircraftCapacity(), x + offset, y + 80);
 				p.text("In the air: " + airport.getInTheAir(), x + offset, y + 95);
 				p.text("On the ground: " + airport.getNumOnTheGround(), x + offset, y + 110);
+				p.text("Pending events: " + airport.getPendingEvents().size(), x+ offset, y + 125);
 				
 				p.text("Runways", x+offset, y + 150);
 				int yStart = y + 165;
@@ -64,7 +65,7 @@ public class ControlsView {
 					
 				} // close runway for
 				
-				p.text("Events", x + offset, yStart+=25);
+				p.text("Pending Events", x + offset, yStart+=25);
 				p.text(airport.getPendingEvents().toString(), x + offset, yStart+=15);
 			}
 			break;
