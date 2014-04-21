@@ -1,7 +1,9 @@
 package edu.gatech.cx4230.projecttwo.vis.map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.geo.Location;
@@ -27,7 +29,8 @@ public class SimMap {
 	private static final Location initialLoc = new Location(39.861667, -107);
 	private MarkerManager<Marker> airportManager;
 	private MarkerManager<Marker> aircraftManager;
-	private List<AircraftMarker> aircraftMarkers;
+	private List<Flight> flights;
+	private Map<Flight, AircraftMarker> aircraftMap;
 	private Marker lastHitMarker;
 
 	public SimMap(VisPApplet vis) {
@@ -44,7 +47,8 @@ public class SimMap {
 		aircraftManager.setMap(map);
 		map.addMarkerManager(aircraftManager);
 
-		aircraftMarkers = new ArrayList<AircraftMarker>();
+		flights = new ArrayList<Flight>();
+		aircraftMap = new HashMap<Flight, AircraftMarker>();
 	}
 
 	/**
@@ -63,13 +67,38 @@ public class SimMap {
 	 * @param flights
 	 */
 	public void createAircraftMarkers(List<Flight> flights) {
+		this.flights = flights;
 		AircraftMarkerCreator amc = new AircraftMarkerCreator(flights, vis, vis.getTimeStep());
-		aircraftMarkers = amc.getAirplaneMarkers();
+		aircraftMap = amc.getAircraftMarkerMap();
+		List<AircraftMarker> aircraftMarkers = amc.getAirplaneMarkers();
 		aircraftManager.clearMarkers();
 		for(Marker m: aircraftMarkers) {
 			aircraftManager.addMarker(m);
 		}
 		map.addMarkerManager(aircraftManager);
+	}
+
+	public void updateAircraftMarkers(int time) {
+		List<Flight> fAMs = new ArrayList<Flight>(aircraftMap.keySet());
+
+		for(Flight f: fAMs) {
+			if(f.getEstimatedTimeArrival() >= time) {
+				if(flights.contains(f)) { // Update time
+					aircraftMap.get(f).updateLocation(time);
+				} else { // Remove
+					AircraftMarker am = aircraftMap.remove(f);
+					aircraftManager.removeMarker(am);
+				}
+			}
+		}
+
+		for(Flight f: flights) {
+			if(!fAMs.contains(f) && time >= f.getTimeOfDeparture()) {
+				AircraftMarker am = new AircraftMarker(f, time, vis);
+				aircraftMap.put(f, am);
+				aircraftManager.addMarker(am);
+			}
+		}
 	}
 
 	/**
@@ -134,6 +163,10 @@ public class SimMap {
 	 */
 	public boolean isInMapBounds(float x, float y) {
 		return ((MAP_X < x) && (x < (MAP_X+MAP_WIDTH))) && ((MAP_Y < y) && (y < (MAP_Y + MAP_HEIGHT)));
+	}
+
+	public int getFlightMarkerCount() {
+		return aircraftMap.size();
 	}
 
 }
