@@ -21,6 +21,7 @@ public class AirportMarkerCreator {
 			m.setRadius(RAD);
 			m.setColor(-12016464);
 			properties.put("icaoCode", a.getIcaoCode());
+			properties.put("airport", a);
 			m.setProperties(properties);
 			airportMarkers.add(m);
 		}

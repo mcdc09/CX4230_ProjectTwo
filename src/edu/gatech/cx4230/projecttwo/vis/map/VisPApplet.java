@@ -21,7 +21,6 @@ public class VisPApplet extends PApplet {
 	private static final int WIDTH = 1000, HEIGHT = 500;
 	public static int NUM_AIRCRAFT_FOR_VIS = 4000; // TODO change to be intelligent
 	private SimMap simMap;
-	private Map<String, Airport> airports;
 	private Map<Integer, Flight> flights;
 	private int timeStep = 0;
 	private String timeString = "";
@@ -39,7 +38,6 @@ public class VisPApplet extends PApplet {
 		
 		f = createFont("Arial", 25, true);
 		
-		airports = new HashMap<String, Airport>();
 		flights = new HashMap<Integer, Flight>();
 		simMap = new SimMap(this);
 		cview = new ControlsView(2*SimMap.MAP_X + SimMap.MAP_WIDTH, SimMap.MAP_Y, 350,  SimMap.MAP_HEIGHT);
@@ -100,8 +98,8 @@ public class VisPApplet extends PApplet {
 		}
 	}
 	
-	public void updateDisplayInfo(String airportCode) {
-		cview.updateForAirport(airports.get(airportCode));
+	public void updateDisplayInfo(Airport a) {
+		cview.updateForAirport(a);
 	}
 	
 	public void updateDisplayInfo(int flightNumber) {
@@ -109,10 +107,6 @@ public class VisPApplet extends PApplet {
 	}
 	
 	public void sendAirports(Collection<Airport> airportsC) {
-		airports = new HashMap<String, Airport>();
-		for(Airport a: airportsC) {
-			airports.put(a.getIcaoCode(), a);
-		}
 		simMap.createAirportMarkers(new ArrayList<Airport>(airportsC));
 	}
 	

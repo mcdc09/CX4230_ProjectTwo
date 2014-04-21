@@ -162,8 +162,8 @@ public class SimMap {
 			for(Marker a: airportMarkers) {
 				if(a.isInside(map, mouseX, mouseY) && !found) {
 					a.setSelected(true);
-					String code = a.getStringProperty("icaoCode");
-					vis.updateDisplayInfo(code);
+					Airport airport = (Airport) a.getProperty("airport");
+					vis.updateDisplayInfo(airport);
 					found = true;
 				} else {
 					a.setSelected(false);
