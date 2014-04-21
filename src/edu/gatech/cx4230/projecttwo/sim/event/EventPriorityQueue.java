@@ -2,6 +2,8 @@ package edu.gatech.cx4230.projecttwo.sim.event;
 
 import java.util.ArrayList;
 
+import edu.gatech.cx4230.projecttwo.utilities.ListHelper;
+
 public class EventPriorityQueue<T> {
 	
 	ArrayList<Event> events;
@@ -44,5 +46,9 @@ public class EventPriorityQueue<T> {
 			out = minEvent.getProcessTime();
 		}
 		return out;
+	}
+	
+	public String toString() {
+		return ListHelper.listToString(events);
 	}
 }

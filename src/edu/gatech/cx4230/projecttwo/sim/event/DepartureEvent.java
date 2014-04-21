@@ -32,7 +32,6 @@ public class DepartureEvent extends FlightEvent {
 		
 		// add flight to list of active flights
 		AirportSimulation.addActiveFlight(flight);
-		System.out.println("Aircraft Departed from " + origin.getIcaoCode() + " to " + destination.getIcaoCode() + "at " + processTime);
 	}
 	
 	public String toString() {

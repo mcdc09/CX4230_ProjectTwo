@@ -27,7 +27,10 @@ public class ArrivalEvent extends FlightEvent {
 		// and let the airport handle when to process the LandedEvent 
 		LandedEvent landEvent = new LandedEvent(flight);
 		destination.addPendingEvent(landEvent);
-		System.out.println("Aircraft Arrived at " + destination.getIcaoCode());
+	}
+	
+	public String toString() {
+		return "Arrival " + flight.getOrigin().getIcaoCode() + " to " + flight.getDestination().getIcaoCode() + " at " + processTime;
 	}
 
 }

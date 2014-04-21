@@ -14,14 +14,14 @@ import edu.gatech.cx4230.projecttwo.utilities.GeoHelper;
 
 public class Timetable {
 	private Map<String, HashMap<String, PriorityQueue<ScheduledFlight>>> timetable;
-	
+
 	/**
 	 * 
 	 */
 	public Timetable() {
 		timetable = new HashMap<String, HashMap<String, PriorityQueue<ScheduledFlight>>>();
 	}
-	
+
 	/**
 	 * 
 	 * @param origin
@@ -38,7 +38,7 @@ public class Timetable {
 		ScheduledFlight f = new ScheduledFlight(origin, destination, aircraftType, departureTime);
 		timetable.get(origin).get(aircraftType).add(f);
 	}
-	
+
 	/**
 	 * Get the next scheduled flight departing the airport that uses a particular type of aircraft,
 	 * presumably one that is already on the ground at that airport.  This allows the simulation to
@@ -52,16 +52,20 @@ public class Timetable {
 	 * @return
 	 */
 	public Flight scheduleFlight(Airport origin, Aircraft a){
+		Flight out = null;
 		ScheduledFlight f = timetable.get(origin.getIcaoCode()).get(a.getAircraftType()).poll();
-		Airport destination = World.getAirport(f.getDestination());
-		double distance = GeoHelper.calcDistance(origin.getLocation(), destination.getLocation()); // km
-		int TOD = SimulationThread.getCurrTimeStep() + 2400 / SimulationThread.timeStep; // (steps) schedule take-off in 40 minutes
-		double t = (distance / a.getSpeed()) * 3600.0; // seconds
-		int ETA = TOD + (int) (t / SimulationThread.timeStep); // steps
-		return new Flight(a, origin, destination, distance, TOD, ETA);
+		if(f!= null) {
+			Airport destination = World.getAirport(f.getDestination());
+			double distance = GeoHelper.calcDistance(origin.getLocation(), destination.getLocation()); // km
+			int TOD = SimulationThread.getCurrTimeStep() + 2400 / SimulationThread.timeStep; // (steps) schedule take-off in 40 minutes
+			double t = (distance / a.getSpeed()) * 3600.0; // seconds
+			int ETA = TOD + (int) (t / SimulationThread.timeStep); // steps
+			out =  new Flight(a, origin, destination, distance, TOD, ETA);
+		}
+		return out;
 	}
-	
+
 	public void timetableStatus(){
-		
+
 	}
 }

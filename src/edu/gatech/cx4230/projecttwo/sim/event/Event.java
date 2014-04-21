@@ -24,4 +24,8 @@ public abstract class Event {
 	public void setProcessTime(int processTime) {
 		this.processTime = processTime;
 	}
+	
+	public String toString() {
+		return "Event to process at: " + processTime;
+	}
 }

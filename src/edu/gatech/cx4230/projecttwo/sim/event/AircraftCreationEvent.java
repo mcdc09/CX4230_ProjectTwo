@@ -72,4 +72,8 @@ public class AircraftCreationEvent extends AirportEvent {
 			}
 		}
 	}
+	
+	public String toString() {
+		return airport.getIcaoCode() + " Reg: " + regionalCount + " Sml: " + smallCount + " Med: " + mediumCount + " Lrg: " + largeCount;
+	}
 }

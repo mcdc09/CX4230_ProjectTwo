@@ -11,38 +11,43 @@ public class LandedEvent extends FlightEvent {
 
 	public LandedEvent(Flight flight) {
 		this.flight = flight;
-		
+
 		int currSimTime = SimulationThread.getCurrTimeStep();
 
 		this.creationTime = currSimTime;
 		this.processTime = flight.getEstimatedTimeArrival();
 	}
-	
+
 	@Override
 	public void process() {
 		Airport destination = flight.getDestination();
 		Aircraft aircraft = flight.getAircraft();
-		
+
 		// decrement inTheAir counter for destination airport
 		int inAir = destination.getInTheAir();
 		destination.setInTheAir(--inAir);
-				
+
 		// add aircraft to onTheGround at destination airport
 		destination.addAircraftOnTheGround(aircraft);
-				
+
 		// update flight
 		int currSimTime = SimulationThread.getCurrTimeStep();
 		flight.setActualTimeArrival(currSimTime);
-		
+
 		// consult timetable to get new flight for this aircraft
 		Flight newFlight = World.getTimetable().scheduleFlight(destination, aircraft);
 		// schedule DepartureEvent with destination airport as new origin airport
-		DepartureEvent departEvent = new DepartureEvent(newFlight);
-		destination.addPendingEvent(departEvent);
-		
+		if(newFlight != null) {
+			DepartureEvent departEvent = new DepartureEvent(newFlight);
+			destination.addPendingEvent(departEvent);
+		}
+
 		// remove flight from list of active flights
 		AirportSimulation.removeActiveFlight(flight);
-		System.out.println("Aircraft Landed at " + destination.getIcaoCode() + " at " + currSimTime);
+	}
+
+	public String toString() {
+		return "Landed at " + flight.getDestination().getIcaoCode() + " at " + processTime;
 	}
 
 }
