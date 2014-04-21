@@ -68,7 +68,9 @@ public class ControlsView {
 		case V_AIRCRAFT:
 			if(f != null) {
 				p.text("Aircraft Flight: " + flight.getFlightNumber(), x + offset, y + 20);
-				String originDest = flight.getOrigin().getIcaoCode() + " => " + flight.getDestination().getIcaoCode();
+				String originName = flight.getOrigin().getName();
+				String destName = flight.getDestination().getName();
+				String originDest = originName.substring(0, Math.min(20, originName.length())) + " => " + destName.substring(0, Math.min(20, destName.length()));
 				p.text(originDest, x + offset, y + 35);
 				p.text("Time of Departure: " + flight.getTimeOfDeparture(), x+offset, y+50);
 				p.text("ETA: " + flight.getEstimatedTimeArrival(), x+offset, y+65);
