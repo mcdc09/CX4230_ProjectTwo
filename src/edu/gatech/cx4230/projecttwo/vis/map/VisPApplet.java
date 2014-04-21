@@ -18,8 +18,8 @@ import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
 public class VisPApplet extends PApplet {
 	private AirportSimulation sim;
 	public static final int STEPS_FLIGHT_UPDATE = 3; // How often the flight markers are updated
-	private static final int WIDTH = 1100, HEIGHT = 550;
-	public static int NUM_AIRCRAFT_FOR_VIS = 3000; // TODO change to be intelligent
+	private static final int WIDTH = 1000, HEIGHT = 500;
+	public static int NUM_AIRCRAFT_FOR_VIS = 4000; // TODO change to be intelligent
 	private SimMap simMap;
 	private Map<String, Airport> airports;
 	private Map<Integer, Flight> flights;
@@ -48,20 +48,18 @@ public class VisPApplet extends PApplet {
 	
 	public void draw() {
 		background(175);
+		updateFlightMarkers();
+		simMap.draw();
+		cview.draw(this);
 		
 		// Draw Time and Flight Count
 		fill(207, 14, 14);
 		textFont(f);
 		updateTime();
-		checkFlightCount();
 		text("Time Step: " + timeStep, 5,20);
 		text(timeString, 225, 20);
 		checkFlightCount();
 		text("Flight Count: " + flightCount, 350, 20);
-		
-		updateFlightMarkers();
-		simMap.draw();
-		cview.draw(this);
 	}
 	
 	public void keyPressed() {

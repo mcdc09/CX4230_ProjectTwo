@@ -25,7 +25,7 @@ import edu.gatech.cx4230.projecttwo.vis.markers.AircraftMarker;
 public class SimMap {
 	private UnfoldingMap map;
 	private VisPApplet vis;
-	public static final int MAP_X = 25, MAP_Y = 25, MAP_WIDTH = 600, MAP_HEIGHT = 500;
+	public static final int MAP_X = 0, MAP_Y = 0, MAP_WIDTH = 600, MAP_HEIGHT = 500;
 	private static final Location initialLoc = new Location(39.861667, -107);
 	private MarkerManager<Marker> flightRouteManager;
 	private MarkerManager<Marker> airportManager;
