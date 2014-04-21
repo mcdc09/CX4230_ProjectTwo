@@ -17,6 +17,11 @@ import edu.gatech.cx4230.projecttwo.vis.creation.AirportMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.creation.FlightMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.markers.AircraftMarker;
 
+/**
+ * Map that shows the aircraft and airports of the visualization
+ * @author tbowling3
+ *
+ */
 public class SimMap {
 	private UnfoldingMap map;
 	private VisPApplet vis;
@@ -52,6 +57,10 @@ public class SimMap {
 		aircraftMarkers = new ArrayList<AircraftMarker>();
 	}
 
+	/**
+	 * Creates the Airport Markers for the visualization
+	 * @param airports
+	 */
 	public void createAirportMarkers(List<Airport> airports) {
 		AirportMarkerCreator amc = new AirportMarkerCreator(airports);
 		airportMarkers = amc.getAirportMarkers();
@@ -59,6 +68,10 @@ public class SimMap {
 		airportManager.addMarkers(airportMarkers);
 	}
 
+	/**
+	 * Creates the Aircraft Markers for the visualization
+	 * @param flights
+	 */
 	public void createAirplaneAndFlightMarkers(List<Flight> flights) {
 		createFlightMarkers(flights);
 		createAircraftMarkers(flights);
@@ -70,6 +83,10 @@ public class SimMap {
 		flightRouteManager.addMarkers(flightMarkers);
 	}
 
+	/**
+	 * Creates the Aircraft Markers for the visualization
+	 * @param flights
+	 */
 	private void createAircraftMarkers(List<Flight> flights) {
 		AircraftMarkerCreator amc = new AircraftMarkerCreator(flights, vis, vis.getTimeStep());
 		aircraftMarkers = amc.getAirplaneMarkers();
@@ -79,11 +96,17 @@ public class SimMap {
 		}
 	}
 
+	/**
+	 * Draws the map and markers
+	 */
 	public void draw() {	
 		checkMarkers();
 		map.draw();
 	}
 
+	/**
+	 * Checks to make sure to only draw Markers that are on the map
+	 */
 	private void checkMarkers() {
 		for(Marker a: airportMarkers) {
 			if(isLocationOnMap(a.getLocation())) {
@@ -116,12 +139,22 @@ public class SimMap {
 		}
 	}
 
+	/**
+	 * Checks if a location is in the displayed bounds of the map
+	 * @param loc
+	 * @return
+	 */
 	private boolean isLocationOnMap(Location loc) {
 
 		ScreenPosition pos = map.getScreenPosition(loc);
 		return isInMapBounds(pos.x, pos.y);
 	}
 
+	/**
+	 * Detects if a mouse click has hit a Marker
+	 * @param mouseX
+	 * @param mouseY
+	 */
 	public void mouseClicked(int mouseX, int mouseY) {
 		if(isInMapBounds(mouseX, mouseY)) {
 
@@ -154,6 +187,12 @@ public class SimMap {
 		} // close if
 	} // close mouseClicked(...)
 
+	/**
+	 * Checks if a screen position is in the bounds of the map area
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private boolean isInMapBounds(float x, float y) {
 		return ((MAP_X < x) && (x < (MAP_X+MAP_WIDTH))) && ((MAP_Y < y) && (y < (MAP_Y + MAP_HEIGHT)));
 	}
