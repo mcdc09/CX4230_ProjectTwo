@@ -17,6 +17,7 @@ public class AirportSimulation {
 	boolean timeChanged;
 	private static boolean flightCountChanged;
 	private SimulationThread simThread;
+	public static final int THREAD_WAIT = 250;
 	private SimulationScenario scenario;
 	private static List<Flight> flights = new ArrayList<Flight>();
 	
@@ -48,7 +49,7 @@ public class AirportSimulation {
 		}
 		
 		
-		simThread = new SimulationThread(this, 50, "Sim Thread");
+		simThread = new SimulationThread(this, THREAD_WAIT, "Sim Thread");
 		simThread.start();
 	}
 	
@@ -147,5 +148,9 @@ public class AirportSimulation {
 	public static void removeActiveFlight(Flight f) {
 		flights.remove(f);
 		flightCountChanged = true;
+	}
+	
+	public boolean isRunning() {
+		return simThread.isRunning();
 	}
 }

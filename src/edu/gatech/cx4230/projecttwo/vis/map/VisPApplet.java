@@ -87,7 +87,7 @@ public class VisPApplet extends PApplet {
 	 * Updates the flight markers in the visualization.
 	 */
 	private void updateFlightMarkers() {
-		if(timeStep % STEPS_FLIGHT_UPDATE == 0) {
+		if(timeStep % STEPS_FLIGHT_UPDATE == 0  && sim.isRunning()) {
 			sendFlights(sim.getFlights());
 		}
 	}
@@ -113,7 +113,7 @@ public class VisPApplet extends PApplet {
 		for(Flight flight: flightsL) {
 			flights.put(flight.getFlightNumber(), flight);
 		}
-		simMap.createAirplaneAndFlightMarkers(flightsL);
+		simMap.createAircraftMarkers(flightsL);
 	}
 
 	/**
