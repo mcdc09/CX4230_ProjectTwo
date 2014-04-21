@@ -7,14 +7,12 @@ import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.MarkerManager;
-import de.fhpotsdam.unfolding.marker.SimpleLinesMarker;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import de.fhpotsdam.unfolding.utils.ScreenPosition;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.vis.creation.AircraftMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.creation.AirportMarkerCreator;
-import edu.gatech.cx4230.projecttwo.vis.creation.FlightMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.markers.AircraftMarker;
 
 /**
@@ -27,11 +25,9 @@ public class SimMap {
 	private VisPApplet vis;
 	public static final int MAP_X = 0, MAP_Y = 0, MAP_WIDTH = 600, MAP_HEIGHT = 500;
 	private static final Location initialLoc = new Location(39.861667, -107);
-	private MarkerManager<Marker> flightRouteManager;
 	private MarkerManager<Marker> airportManager;
 	private MarkerManager<Marker> aircraftManager;
 	private List<Marker> airportMarkers;
-	private List<Marker> flightMarkers;
 	private List<AircraftMarker> aircraftMarkers;
 
 	public SimMap(VisPApplet vis) {
@@ -39,10 +35,6 @@ public class SimMap {
 		map = new UnfoldingMap(vis, MAP_X, MAP_Y, MAP_WIDTH, MAP_HEIGHT);
 		MapUtils.createDefaultEventDispatcher(vis, map);
 		map.zoomAndPanTo(initialLoc, 3);
-		
-		flightRouteManager = new MarkerManager<Marker>();
-		flightRouteManager.setMap(map);
-		map.addMarkerManager(flightRouteManager);
 		
 		airportManager = new MarkerManager<Marker>();
 		airportManager.setMap(map);
@@ -53,7 +45,6 @@ public class SimMap {
 		map.addMarkerManager(aircraftManager);
 
 		airportMarkers = new ArrayList<Marker>();
-		flightMarkers = new ArrayList<Marker>();
 		aircraftMarkers = new ArrayList<AircraftMarker>();
 	}
 
@@ -73,14 +64,7 @@ public class SimMap {
 	 * @param flights
 	 */
 	public void createAirplaneAndFlightMarkers(List<Flight> flights) {
-		createFlightMarkers(flights);
 		createAircraftMarkers(flights);
-	}
-
-	private void createFlightMarkers(List<Flight> flights) {
-		FlightMarkerCreator fmc = new FlightMarkerCreator(flights);
-		flightMarkers = fmc.getFlightMarkers();
-		flightRouteManager.addMarkers(flightMarkers);
 	}
 
 	/**
@@ -113,21 +97,6 @@ public class SimMap {
 				airportManager.addMarker(a);
 			} else {
 				airportManager.removeMarker(a);
-			}
-		}
-		for(Marker f: flightMarkers) {
-			SimpleLinesMarker fS = (SimpleLinesMarker) f;
-			boolean on = true;
-			for(Location l: fS.getLocations()) {
-				if(!isLocationOnMap(l)) {
-					on = false;
-					break;
-				}
-			}
-			if(on) {
-				flightRouteManager.addMarker(f);
-			} else {
-				flightRouteManager.removeMarker(f);
 			}
 		}
 		for(Marker p: aircraftMarkers) {
