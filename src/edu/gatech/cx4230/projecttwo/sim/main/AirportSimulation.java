@@ -2,6 +2,7 @@ package edu.gatech.cx4230.projecttwo.sim.main;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import edu.gatech.cx4230.projecttwo.sim.creation.FlightGenerator;
 import edu.gatech.cx4230.projecttwo.sim.creation.WorldBuilder;
 import edu.gatech.cx4230.projecttwo.sim.event.AircraftCreationEvent;
@@ -17,7 +18,7 @@ public class AirportSimulation {
 	boolean timeChanged;
 	private static boolean flightCountChanged;
 	private SimulationThread simThread;
-	public static final int THREAD_WAIT = 250;
+	public static final int THREAD_WAIT = 25;
 	private SimulationScenario scenario;
 	private static List<Flight> flights = new ArrayList<Flight>();
 	
@@ -141,11 +142,13 @@ public class AirportSimulation {
 	}
 	
 	public static void addActiveFlight(Flight f) {
+		System.out.println("Flight added: " + f);
 		flights.add(f);
 		flightCountChanged = true;
 	}
 	
 	public static void removeActiveFlight(Flight f) {
+		System.out.println("Flight removed: " + f);
 		flights.remove(f);
 		flightCountChanged = true;
 	}

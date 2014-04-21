@@ -15,7 +15,7 @@ import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
 
 public class VisPApplet extends PApplet {
 	private AirportSimulation sim;
-	public static final int STEPS_FLIGHT_UPDATE = 3; // How often the flight markers are updated
+	public static final int STEPS_FLIGHT_UPDATE = 60 / SimulationThread.timeStep; // How often the flight markers are updated
 	private static final int WIDTH = 1000, HEIGHT = 500;
 	public static int NUM_AIRCRAFT_FOR_VIS = 4000; // TODO change to be intelligent
 	private SimMap simMap;
@@ -80,12 +80,12 @@ public class VisPApplet extends PApplet {
 	 */
 	private void updateFlightMarkers() {
 		if(timeStep % STEPS_FLIGHT_UPDATE == 0  && sim.isRunning()) {
-			sendFlights(sim.getFlights());
+			simMap.updateAircraftMarkers(timeStep);
 		}
 	}
 	
 	private void checkFlightCount() {
-		flightCount = sim.getFlightCount();
+		flightCount = simMap.getFlightMarkerCount();
 	}
 	
 	public void updateDisplayInfo(Airport a) {

@@ -79,7 +79,7 @@ public class Flight {
 	public String toString() {
 		String out = "Flight:  " + flightNumber + " ";
 		out += origin.getIcaoCode() + " to " + destination.getIcaoCode();
-		out += "ATD: " + timeOfDeparture + " ETA: " + estimatedTimeArrival;
+		out += " ATD: " + timeOfDeparture + " ETA: " + estimatedTimeArrival;
 		return out;
 	}
 }
