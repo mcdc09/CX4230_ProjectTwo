@@ -51,14 +51,16 @@ public class FlightGenerator {
 				int lengthOfDay = 18 - tzm[i][j]; // hours
 				if(fm[i][j] == 0)
 					continue;
-				int flightInterval = lengthOfDay * 3600 / fm[i][j];
+				int flightInterval = lengthOfDay * 3600 / (fm[i][j] + 1);
+				// System.out.println(airports[i].getIcaoCode() + "-" + airports[j].getIcaoCode() + " " + flightInterval);
 				
 				int k = 0;
 				while(fm[i][j] > 0){
 					// Allow non-uniform spacing of flights to common destinations (multi airlines).
 					// Also prevent flights from necessarily leaving at the same time (t=0).
-					int tzOffset = tzm[i][j] * 60 * (60 / SimulationThread.TIME_PER_STEP);
+					int tzOffset = airports[i].getTimeZone() * 60 * (60 / SimulationThread.TIME_PER_STEP);
 					int departureTime = tzOffset + World.chance().nextInt(flightInterval) + flightInterval * k;
+					// System.out.println(airports[i].getIcaoCode() + "-" + airports[j].getIcaoCode() + " " + departureTime);
 					t.addScheduledFlight(airports[i].getIcaoCode(), airports[j].getIcaoCode(),
 							aircraftType, departureTime);
 					fm[i][j]--;

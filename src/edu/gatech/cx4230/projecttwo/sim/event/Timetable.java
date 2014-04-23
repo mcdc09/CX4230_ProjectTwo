@@ -37,6 +37,7 @@ public class Timetable {
 		}
 		ScheduledFlight f = new ScheduledFlight(origin, destination, aircraftType, departureTime);
 		timetable.get(origin).get(aircraftType).add(f);
+		System.out.println("Added " + origin + " to " + destination + " for " + departureTime);
 	}
 
 	/**
