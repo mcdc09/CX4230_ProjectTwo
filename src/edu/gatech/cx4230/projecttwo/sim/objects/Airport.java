@@ -11,6 +11,7 @@ import edu.gatech.cx4230.projecttwo.sim.event.Event;
 import edu.gatech.cx4230.projecttwo.sim.event.EventPriorityQueue;
 import edu.gatech.cx4230.projecttwo.sim.event.FlightEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.LandedEvent;
+import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
 
 
 public class Airport {
@@ -187,6 +188,10 @@ public class Airport {
 		}
 		else {
 			// if the event could not be processed, add it back to the pending event queue 
+			// for next time step
+			String line = "Airport<processNextEvent> " + currSimTime + " " + event.toString() + " not processed";
+			AirportSimulationLoggerMaster.logLineEvent(line);
+			event.setProcessTime(event.getProcessTime() + 1);
 			addPendingEvent(event);
 		}
 	}

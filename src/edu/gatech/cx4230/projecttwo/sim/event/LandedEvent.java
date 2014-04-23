@@ -47,7 +47,7 @@ public class LandedEvent extends FlightEvent {
 	}
 
 	public String toString() {
-		return "Landing at " + flight.getFlightNumber() + " " + flight.getDestination().getIcaoCode() + " at " + processTime;
+		return "Landing " + flight.getFlightNumber() + " at " + flight.getDestination().getIcaoCode() + " at " + processTime;
 	}
 
 }
