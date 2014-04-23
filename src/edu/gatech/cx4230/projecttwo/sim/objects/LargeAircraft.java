@@ -7,7 +7,7 @@ public class LargeAircraft extends Aircraft{
 	private static final int PASS = 300;
 	private static final int SPEED = 850;
 	private static final int RUNWAY_L = 0; // TODO
-	private static final int RUNWAY_T = 46 / SimulationThread.TIME_PER_STEP; // TODO
+	private static final int RUNWAY_T = 60 / SimulationThread.TIME_PER_STEP; // TODO
 	private static final int GROUND_T = 0; // TODO
 	
 	public LargeAircraft() {

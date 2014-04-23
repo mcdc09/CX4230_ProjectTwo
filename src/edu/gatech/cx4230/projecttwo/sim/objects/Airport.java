@@ -238,14 +238,14 @@ public class Airport {
 				// for the amount of time that it takes to clear the runway during takeoff
 				Runway r = getFreeRunway(minRunwayLength);
 				r.setAircraft(a);
-				r.setTimeNextAvailable(currSimTime + a.getGroundTime() + a.getRunwayTime());
+				r.setTimeNextAvailable(currSimTime + a.getRunwayTime());
 			}
 			else if(event instanceof LandedEvent) {
 				// get a free runway and make it occupied with this aircraft
 				// for the amount of time that it takes to clear the runway during landing
 				Runway r = getFreeRunway(minRunwayLength);
 				r.setAircraft(a);
-				r.setTimeNextAvailable(currSimTime + Math.max(a.getRunwayTime(),a.getGroundTime()));
+				r.setTimeNextAvailable(currSimTime + a.getRunwayTime());
 			}
 		}
 		else if(event instanceof AirportEvent) {
