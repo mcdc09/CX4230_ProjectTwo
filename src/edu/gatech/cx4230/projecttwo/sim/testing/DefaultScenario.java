@@ -15,7 +15,7 @@ public class DefaultScenario extends SimulationScenario {
 	/**
 	 * The total amount of time for the simulation to run in units of seconds
 	 */
-	public static final int TIME_RUN = 18*60*60;
+	public static final int TIME_RUN = 24*60*60;
 
 	public DefaultScenario(boolean vis, List<AirportEvent> failures, int totalAircraft) {
 		super(vis, failures, totalAircraft);
