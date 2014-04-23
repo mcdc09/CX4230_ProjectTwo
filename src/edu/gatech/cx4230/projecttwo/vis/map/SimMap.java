@@ -15,7 +15,6 @@ import de.fhpotsdam.unfolding.utils.ScreenPosition;
 import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
-import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
 import edu.gatech.cx4230.projecttwo.vis.creation.AircraftMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.creation.AirportMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.markers.AircraftMarker;
@@ -81,30 +80,32 @@ public class SimMap {
 		map.addMarkerManager(aircraftManager);
 	}
 
+	/**
+	 * Adds aircraft to the visualization, updates their position, and removed flights
+	 * that are over
+	 * @param time The current simulation time
+	 */
 	public void updateAircraftMarkers(int time) {
-		List<Flight> fAMs = new ArrayList<Flight>(aircraftMap.keySet());
 		List<Flight> removeAM = new ArrayList<Flight>();
 
-		for(Flight f: fAMs) {
-			if(f.getEstimatedTimeArrival() >= time) {
-				if(flights.contains(f)) { // Update time
-					aircraftMap.get(f).updateLocation(time);
-				} else { // Add to Remove
-					removeAM.add(f);
-				}
+		for(Flight f: aircraftMap.keySet()) {
+			if(flights.contains(f)) { // Update time
+				aircraftMap.get(f).updateLocation(time);
+			} else { // Add to Remove
+				removeAM.add(f);
 			}
 		}
 		for(Flight f: removeAM) { // Remove
-			AirportSimulationLoggerMaster.logLineVis("SimMap<updateAircraftMarkers> Remove flight " + f.toString());
 			AircraftMarker am = aircraftMap.remove(f);
 			aircraftManager.removeMarker(am);
 		}
-		
+
+		// Create Aircraft Marker
 		synchronized(flights) {
 			Iterator<Flight> it = flights.iterator();
 			while(it.hasNext()) {
 				Flight f = it.next();
-				if(!fAMs.contains(f) && time >= f.getTimeOfDeparture()) {
+				if(!aircraftMap.containsKey(f)) {
 					AircraftMarker am = new AircraftMarker(f, time, vis);
 					aircraftMap.put(f, am);
 					aircraftManager.addMarker(am);
@@ -183,7 +184,7 @@ public class SimMap {
 	}
 
 	public int getFlightMarkerCount() {
-		return aircraftMap.size();
+		return flights.size();
 	}
 
 }
