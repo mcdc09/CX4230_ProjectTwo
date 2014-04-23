@@ -48,10 +48,10 @@ public class FlightGenerator {
 					lrgCount += fm[i][j];
 				}
 				
-				int lengthOfDay = 18 - tzm[i][j]; // hours
+				int lengthOfDay = 18 + tzm[i][j]; // hours
 				if(fm[i][j] == 0)
 					continue;
-				int flightInterval = lengthOfDay * 3600 / (fm[i][j] + 1);
+				int flightInterval = lengthOfDay * 3600 / SimulationThread.TIME_PER_STEP / (fm[i][j] + 1);
 				// System.out.println(airports[i].getIcaoCode() + "-" + airports[j].getIcaoCode() + " " + flightInterval);
 				
 				int k = 0;
@@ -97,7 +97,7 @@ public class FlightGenerator {
 						k = z;
 						break;
 					}
-				flights[k][j] = ap.getWeightForAirport(airports[j].getIcaoCode().substring(1));
+				flights[k][j] = ap.getWeightForAirport(airports[j].getIcaoCode().substring(1)) / 10;
 				//System.out.println(airports[k].getIcaoCode() + "-" + airports[j].getIcaoCode() + ": " + flights[k][j]);
 			}
 		}
