@@ -12,6 +12,7 @@ import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
 import edu.gatech.cx4230.projecttwo.sim.testing.SimulationScenario;
+import edu.gatech.cx4230.projecttwo.sim.testing.TrialResult;
 import edu.gatech.cx4230.projecttwo.vis.map.VisPApplet;
 
 public class AirportSimulation {
@@ -19,7 +20,7 @@ public class AirportSimulation {
 	boolean timeChanged;
 	private static boolean flightCountChanged;
 	private SimulationThread simThread;
-	public static final int THREAD_WAIT = 25;
+	public static final int THREAD_WAIT_WITH_VIS = 25;
 	private SimulationScenario scenario;
 	private static List<Flight> flights = Collections.synchronizedList(new ArrayList<Flight>());
 	
@@ -44,15 +45,21 @@ public class AirportSimulation {
 			a.addPendingEvent(new AircraftCreationEvent(a, rgl, sml, med, lrg));
 		}
 		
+		int wait = 0;
 		// Handle the visualization
 		if(vis != null) {
 			vis.sendAirports(World.getAirports());
 			vis.sendFlights(flights);
+			wait = THREAD_WAIT_WITH_VIS;
 		}
 		
 		
-		simThread = new SimulationThread(this, THREAD_WAIT, "Sim Thread");
+		simThread = new SimulationThread(this, wait, "Sim Thread");
 		simThread.start();
+	} // close constructor
+	
+	public AirportSimulation(SimulationScenario scen) {
+		this(null, scen);
 	}
 	
 	public void processEventsForTimeStep(int timeStep) {
@@ -65,6 +72,14 @@ public class AirportSimulation {
 	
 	public void quitSimulation() {
 		// TODO handle closing of the simulation
+	}
+	
+	public TrialResult getSimulationResults() {
+		TrialResult out = null;
+		
+		// TODO
+		
+		return out;
 	}
 	
 	public void triggerThread() {
