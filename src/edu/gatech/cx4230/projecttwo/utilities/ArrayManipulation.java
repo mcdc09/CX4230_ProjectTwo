@@ -10,6 +10,28 @@ import java.util.ArrayList;
  *
  */
 public class ArrayManipulation {
+	
+	/**
+	 * Returns a string of the toString methods for each
+	 * of the objects in the array
+	 * @param objects
+	 * @return
+	 */
+	public String ArrayToString(Object[] objects) {
+		String out = "";
+		
+		for(int i = 0; i < objects.length; i++) {
+			out += i + " ";
+			Object o = objects[i];
+			if(o != null) {
+				out += o.toString();
+			} else {
+				out += "null";
+			}
+			out+= "\n";
+		} // close for
+		return out;
+	}
 
 	/**
 	 * Finds the minimum value from a 2D array
