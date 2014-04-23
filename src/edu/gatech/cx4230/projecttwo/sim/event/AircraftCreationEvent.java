@@ -3,7 +3,6 @@ package edu.gatech.cx4230.projecttwo.sim.event;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
@@ -66,7 +65,6 @@ public class AircraftCreationEvent extends AirportEvent {
 				// schedule DepartureEvent with destination airport as new origin airport
 				DepartureEvent departEvent = new DepartureEvent(newFlight);
 				airport.addPendingEvent(departEvent);
-				AirportSimulation.addActiveFlight(newFlight);
 			}catch(NullPointerException e){
 				continue;
 			}
