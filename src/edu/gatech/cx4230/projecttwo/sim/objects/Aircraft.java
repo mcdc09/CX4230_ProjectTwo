@@ -14,7 +14,7 @@ public class Aircraft {
 	public static final String TYPE_MEDIUM = "Medium";
 	public static final String TYPE_LARGE = "Large";
 	
-	public Aircraft(String aircraftType, int passengerCapacity, int speed,
+	protected Aircraft(String aircraftType, int passengerCapacity, int speed,
 			int minRunwayLength, int runwayTime, int groundTime) {
 		this.aircraftType = aircraftType;
 		this.passengerCapacity = passengerCapacity;
