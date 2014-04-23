@@ -40,13 +40,17 @@ public class LandedEvent extends FlightEvent {
 		flight.setActualTimeArrival(currSimTime);
 
 		// consult timetable to get new flight for this aircraft
-		Flight newFlight = World.getTimetable().scheduleFlight(destination, aircraft);
-		// schedule DepartureEvent with destination airport as new origin airport
-		if(newFlight != null) {
-			DepartureEvent departEvent = new DepartureEvent(newFlight);
-			destination.addPendingEvent(departEvent);
+		try {
+			Flight newFlight = World.getTimetable().scheduleFlight(destination, aircraft);
+			// schedule DepartureEvent with destination airport as new origin airport
+			if(newFlight != null) {
+				DepartureEvent departEvent = new DepartureEvent(newFlight);
+				destination.addPendingEvent(departEvent);
+			}
+		}catch(NullPointerException e){
+			// Do nothing
 		}
-
+		
 		// remove flight from list of active flights
 		AirportSimulation.removeActiveFlight(flight);
 	}
