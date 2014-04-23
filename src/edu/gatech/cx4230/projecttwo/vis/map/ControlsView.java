@@ -56,9 +56,10 @@ public class ControlsView {
 				p.text("In the air: " + airport.getInTheAir(), x + offset, y + 95);
 				p.text("On the ground: " + airport.getNumOnTheGround(), x + offset, y + 110);
 				p.text("Pending events: " + airport.getPendingEvents().size(), x+ offset, y + 125);
+				p.text("Processed events: " + airport.getProcessedEvents().size(), x+ offset, y + 140);
 				
-				p.text("Runways", x+offset, y + 150);
-				int yStart = y + 165;
+				p.text("Runways", x+offset, y + 165);
+				int yStart = y + 180;
 				for(Runway r: airport.getRunways()) {
 					p.text(r.getLength() + " ft  Available at: " + r.getTimeNextAvailable(), x+offset, yStart);
 					yStart += 15;
