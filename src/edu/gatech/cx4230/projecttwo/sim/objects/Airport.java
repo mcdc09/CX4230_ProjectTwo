@@ -133,19 +133,19 @@ public class Airport {
 		this.inTheAir = inTheAir;
 	}
 
-	public boolean hasFreeRunway() {
+	public boolean hasFreeRunway(int minLength) {
 		for(Runway r : runways) {
-			if(r.isRunwayFree(currSimTime)) {
+			if(r.isRunwayFree(currSimTime) && r.getLength() >= minLength) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public Runway getFreeRunway() {
+	public Runway getFreeRunway(int minLength) {
 		ArrayList<Runway> available = new ArrayList<Runway>();
 		for(Runway r : runways) {
-			if(r.isRunwayFree(currSimTime)) {
+			if(r.isRunwayFree(currSimTime) && r.getLength() >= minLength) {
 				//return r;
 				available.add(r);
 			}
@@ -207,42 +207,43 @@ public class Airport {
 	}
 	
 	public boolean canProcessEvent(Event e) {
-		return (e instanceof DepartureEvent && canProcessDeparture())
-				|| (e instanceof ArrivalEvent && canProcessArrival())
-				|| (e instanceof LandedEvent && canProcessLanding())
+		return (e instanceof DepartureEvent && canProcessDeparture((FlightEvent)e))
+				|| (e instanceof ArrivalEvent && canProcessArrival((FlightEvent)e))
+				|| (e instanceof LandedEvent && canProcessLanding((FlightEvent)e))
 				|| (e instanceof AirportEvent);
 	}
 	
-	public boolean canProcessDeparture() {
-		if(onTheGround.size() > 0 && hasFreeRunway()) {
+	public boolean canProcessDeparture(FlightEvent e) {
+		if(onTheGround.size() > 0 && hasFreeRunway(e.getFlight().getAircraft().getMinRunwayLength())) {
 			return true;
 		}
 		return false;
 	}
 		
-	public boolean canProcessArrival() {
+	public boolean canProcessArrival(FlightEvent e) {
 		return true;
 	}
 	
-	public boolean canProcessLanding() {
-		return onTheGround.size() < maxAircraftCapacity && hasFreeRunway();
+	public boolean canProcessLanding(FlightEvent e) {
+		return onTheGround.size() < maxAircraftCapacity && hasFreeRunway(e.getFlight().getAircraft().getMinRunwayLength());
 	}
 	
 	public void updateRunways(Event event) {
 		// runway management
 		if(event instanceof FlightEvent) {
 			Aircraft a = ((FlightEvent)event).getFlight().getAircraft();
+			int minRunwayLength = ((FlightEvent)event).getFlight().getAircraft().getMinRunwayLength();
 			if(event instanceof DepartureEvent) {
 				// get a free runway and make it occupied with this aircraft
 				// for the amount of time that it takes to clear the runway during takeoff
-				Runway r = getFreeRunway();
+				Runway r = getFreeRunway(minRunwayLength);
 				r.setAircraft(a);
 				r.setTimeNextAvailable(currSimTime + a.getGroundTime() + a.getRunwayTime());
 			}
 			else if(event instanceof LandedEvent) {
 				// get a free runway and make it occupied with this aircraft
 				// for the amount of time that it takes to clear the runway during landing
-				Runway r = getFreeRunway();
+				Runway r = getFreeRunway(minRunwayLength);
 				r.setAircraft(a);
 				r.setTimeNextAvailable(currSimTime + Math.max(a.getRunwayTime(),a.getGroundTime()));
 			}
