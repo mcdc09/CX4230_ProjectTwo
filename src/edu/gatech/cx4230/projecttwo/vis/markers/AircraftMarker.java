@@ -29,6 +29,7 @@ public class AircraftMarker extends AbstractMarker {
 	private static final double SCALING = 0.1;
 	private static int width, height;
 	private Flight flight;
+	private boolean delayed = false;
 	
 	public AircraftMarker(Flight f, int time, PApplet p) {
 		this.flight = f;
@@ -55,6 +56,13 @@ public class AircraftMarker extends AbstractMarker {
 		double dt = dtStep * SimulationThread.TIME_PER_STEP; // sec
 		dt = dt / 3600; // hr
 		double dist = speed * dt; // km
+		
+		// Prevent flights from flying past the airport if they get
+		// delayed and are unable to land
+		if(dist > flight.getDistance()) {
+			dist = flight.getDistance();
+			delayed = true;
+		}
 		
 		Location out = GeoHelper.calcDest(originLoc, heading, dist);
 		return out;
@@ -111,6 +119,12 @@ public class AircraftMarker extends AbstractMarker {
 		//pg.rotate((float) GeoHelper.convertDegreeToRad(heading));
 		//pg.translate(-width/2, -height/2);
 		//pg.image(getImageForType(type), 0, 0, width, height);
+		
+		if(delayed) {
+			pg.color(250, 20, 20, (int) (0.75*255));
+			pg.fill(10, 40);
+			pg.ellipse(x-width/2, y-height/2, width, height);
+		}
 		
 		// Draw Vertical Image
 		pg.image(getImageForType(type), x - width/2, y - height/2, width, height);
