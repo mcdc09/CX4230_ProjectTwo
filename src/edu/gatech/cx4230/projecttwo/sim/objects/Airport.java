@@ -1,7 +1,9 @@
 package edu.gatech.cx4230.projecttwo.sim.objects;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import de.fhpotsdam.unfolding.geo.Location;
 import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
@@ -141,10 +143,18 @@ public class Airport {
 	}
 	
 	public Runway getFreeRunway() {
+		ArrayList<Runway> available = new ArrayList<Runway>();
 		for(Runway r : runways) {
 			if(r.isRunwayFree(currSimTime)) {
-				return r;
+				//return r;
+				available.add(r);
 			}
+		}
+		int numAvailable = available.size();
+		if(numAvailable > 0) {
+			Random r = new Random();
+			int i = r.nextInt(numAvailable);
+			return available.get(i);
 		}
 		return null;
 	}
