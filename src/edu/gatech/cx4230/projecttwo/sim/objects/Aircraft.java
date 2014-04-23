@@ -7,7 +7,6 @@ public class Aircraft {
 	private final int speed;
 	private final int minRunwayLength;
 	private final int runwayTime;
-	private final int groundTime;
 	
 	public static final String TYPE_REGIONAL = "Regional";
 	public static final String TYPE_SMALL = "Small";
@@ -15,13 +14,12 @@ public class Aircraft {
 	public static final String TYPE_LARGE = "Large";
 	
 	protected Aircraft(String aircraftType, int passengerCapacity, int speed,
-			int minRunwayLength, int runwayTime, int groundTime) {
+			int minRunwayLength, int runwayTime) {
 		this.aircraftType = aircraftType;
 		this.passengerCapacity = passengerCapacity;
 		this.speed = speed;
 		this.minRunwayLength = minRunwayLength;
 		this.runwayTime = runwayTime;
-		this.groundTime = groundTime;
 	}
 
 	public String getAircraftType() {
@@ -42,10 +40,6 @@ public class Aircraft {
 
 	public int getRunwayTime() {
 		return runwayTime;
-	}
-
-	public int getGroundTime() {
-		return groundTime;
 	}
 	
 }

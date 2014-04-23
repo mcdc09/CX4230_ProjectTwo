@@ -8,9 +8,8 @@ public class SmallAircraft extends Aircraft {
 	private static final int SPEED = 780;
 	private static final int RUNWAY_L = 0; // TODO
 	private static final int RUNWAY_T = 60 / SimulationThread.TIME_PER_STEP; // TODO
-	private static final int GROUND_T = 0; // TODO
 	
 	public SmallAircraft() {
-		super(TYPE, PASS, SPEED, RUNWAY_L, RUNWAY_T, GROUND_T);
+		super(TYPE, PASS, SPEED, RUNWAY_L, RUNWAY_T);
 	}
 }
