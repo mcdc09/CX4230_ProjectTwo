@@ -40,6 +40,7 @@ public class SimMap {
 		map = new UnfoldingMap(vis, MAP_X, MAP_Y, MAP_WIDTH, MAP_HEIGHT);
 		MapUtils.createDefaultEventDispatcher(vis, map);
 		map.zoomAndPanTo(initialLoc, 3);
+		map.setZoomRange(3, 6);
 
 		airportManager = new MarkerManager<Marker>();
 		airportManager.setMap(map);
