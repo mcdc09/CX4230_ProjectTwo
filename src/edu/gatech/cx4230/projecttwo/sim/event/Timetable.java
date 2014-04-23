@@ -37,7 +37,6 @@ public class Timetable {
 		}
 		ScheduledFlight f = new ScheduledFlight(origin, destination, aircraftType, departureTime);
 		timetable.get(origin).get(aircraftType).add(f);
-		System.out.println("Added " + origin + " to " + destination + " for " + departureTime);
 	}
 
 	/**
@@ -54,15 +53,22 @@ public class Timetable {
 	 */
 	public Flight scheduleFlight(Airport origin, Aircraft a){
 		Flight out = null;
+		int ATA = 0;
+		
 		ScheduledFlight f = timetable.get(origin.getIcaoCode()).get(a.getAircraftType()).poll();
+		// System.out.println(f.getOrigin() + " to " + f.getDestination() + " " + f.getDepartureTime());
 		if(f!= null) {
 			Airport destination = World.getAirport(f.getDestination());
 			double distance = GeoHelper.calcDistance(origin.getLocation(), destination.getLocation()); // km
-			int TOD = SimulationThread.getCurrTimeStep() + 2400 / SimulationThread.TIME_PER_STEP; // (steps) schedule take-off in 40 minutes
+			int TOD = Math.max(SimulationThread.getCurrTimeStep(), f.getDepartureTime()) + 
+						2400 / SimulationThread.TIME_PER_STEP; // (steps) schedule take-off in 40 minutes
 			double t = (distance / a.getSpeed()) * 3600.0; // seconds
-			int ETA = TOD + (int) (t / SimulationThread.TIME_PER_STEP); // steps
+			int ETA = f.getDepartureTime() + 2400 / SimulationThread.TIME_PER_STEP + 
+						(int) (t / SimulationThread.TIME_PER_STEP);
+			ATA = TOD + (int) (t / SimulationThread.TIME_PER_STEP); // steps
 			out =  new Flight(a, origin, destination, distance, TOD, ETA);
 		}
+		out.setActualTimeArrival(ATA);
 		return out;
 	}
 

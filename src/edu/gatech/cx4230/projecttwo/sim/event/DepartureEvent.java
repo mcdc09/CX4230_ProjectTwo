@@ -23,6 +23,11 @@ public class DepartureEvent extends FlightEvent {
 		Airport destination = flight.getDestination();
 		Aircraft aircraft = flight.getAircraft();
 		
+		// Update new arrival time
+		int currSimTime = SimulationThread.getCurrTimeStep();
+		double t = (flight.getDistance() / aircraft.getSpeed()) * 3600.0;
+		flight.setActualTimeArrival(currSimTime + (int) (t / SimulationThread.TIME_PER_STEP));
+		
 		// remove aircraft from onTheGround at origin airport
 		origin.removeAircraftOnTheGround(aircraft);
 				
