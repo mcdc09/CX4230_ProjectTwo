@@ -46,7 +46,7 @@ public class AirportSimulationLogger {
 		try {
 			FileWriter fw = new FileWriter(out);
 			fw.write(this.toString());
-			
+
 			for(String line: lines) {
 				fw.write(line);
 			} // close for i
@@ -67,38 +67,46 @@ public class AirportSimulationLogger {
 	public String toString() {
 		return "ASLogger: " + name + " Line Count: " + lines.size() + "\n";
 	}
-	
-	
+
+
 	// Log methods
-		public void logLine(String line) {
-			if(line != null) {
-				if(print) System.out.println(line);
-				if(partialLine != null && !partialLine.isEmpty()) {
-					line += partialLine;
-					partialLine = null;
-				}
-				lines.add(line + "\n");
-
+	public void logLine(String line) {
+		if(line != null) {
+			if(print) System.out.println(line);
+			if(partialLine != null && !partialLine.isEmpty()) {
+				line += partialLine;
+				partialLine = null;
 			}
-		}
+			lines.add(line + "\n");
 
-		public void log(String partial) {
-			if(partial != null) {
-				partialLine += partial;
-				System.out.print(partial);
-			}
 		}
+	}
 
-		public void logLine(Object o) {
-			if(o != null) {
-				logLine(o.toString());
-			}
+	public void log(String partial) {
+		if(partial != null) {
+			partialLine += partial;
+			System.out.print(partial);
 		}
+	}
 
-		public void log(Object o) {
-			if(o != null) {
-				log(o.toString());
-			}
+	public void logLine(Object o) {
+		if(o != null) {
+			logLine(o.toString());
 		}
+	}
+
+	public void log(Object o) {
+		if(o != null) {
+			log(o.toString());
+		}
+	}
+	
+	public boolean isPrint() {
+		return print;
+	}
+	
+	public void setPrint(boolean bool) {
+		this.print = bool;
+	}
 
 }

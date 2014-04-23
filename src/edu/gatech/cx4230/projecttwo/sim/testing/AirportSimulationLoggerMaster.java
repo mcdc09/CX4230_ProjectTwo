@@ -83,5 +83,11 @@ public class AirportSimulationLoggerMaster {
 	public static void save() {
 		save(true);
 	}
+	
+	public static void setPrint(boolean bool) {
+		simulationLogger.setPrint(bool);
+		flightEventLogger.setPrint(bool);
+		visLogger.setPrint(bool);
+	}
 
 }

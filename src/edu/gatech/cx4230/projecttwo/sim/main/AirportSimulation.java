@@ -75,7 +75,7 @@ public class AirportSimulation {
 	}
 	
 	public TrialResult getSimulationResults() {
-		TrialResult out = null;
+		TrialResult out = new TrialResult();
 		
 		// TODO
 		

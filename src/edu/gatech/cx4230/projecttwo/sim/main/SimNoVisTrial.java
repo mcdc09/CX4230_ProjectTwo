@@ -1,6 +1,7 @@
 package edu.gatech.cx4230.projecttwo.sim.main;
 
 import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
+import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
 import edu.gatech.cx4230.projecttwo.sim.testing.SimulationScenario;
 import edu.gatech.cx4230.projecttwo.sim.testing.TrialResult;
 import edu.gatech.cx4230.projecttwo.sim.testing.TrialResultList;
@@ -72,12 +73,14 @@ public class SimNoVisTrial {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SimulationScenario scenario = null; // TODO
-		int trials = 10;
+		AirportSimulationLoggerMaster.setPrint(false);
+		SimulationScenario scenario = new DefaultScenario(false, null, 1); // TODO
+		int trials = 1;
 		
 		
 		SimNoVisTrial snvt = new SimNoVisTrial(scenario);
 		TrialResultList trialRL = snvt.runTrials(trials);
+		System.out.println("Trial run in: " + trialRL.getTotalTime());
 		// TODO
 		
 	}
