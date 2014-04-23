@@ -15,6 +15,7 @@ import de.fhpotsdam.unfolding.utils.ScreenPosition;
 import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
+import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
 import edu.gatech.cx4230.projecttwo.vis.creation.AircraftMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.creation.AirportMarkerCreator;
 import edu.gatech.cx4230.projecttwo.vis.markers.AircraftMarker;
@@ -94,6 +95,7 @@ public class SimMap {
 			}
 		}
 		for(Flight f: removeAM) { // Remove
+			AirportSimulationLoggerMaster.logLineVis("SimMap<updateAircraftMarkers> Remove flight " + f.toString());
 			AircraftMarker am = aircraftMap.remove(f);
 			aircraftManager.removeMarker(am);
 		}
