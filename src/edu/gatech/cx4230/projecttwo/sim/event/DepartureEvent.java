@@ -35,7 +35,7 @@ public class DepartureEvent extends FlightEvent {
 	}
 	
 	public String toString() {
-		return "Departure " + flight.getOrigin().getIcaoCode() + " to " + flight.getDestination().getIcaoCode() + " at " + processTime;
+		return "Departure " + flight.getFlightNumber() +" " + flight.getOrigin().getIcaoCode() + " to " + flight.getDestination().getIcaoCode() + " at " + processTime;
 	}
 
 }

@@ -30,7 +30,7 @@ public class ArrivalEvent extends FlightEvent {
 	}
 	
 	public String toString() {
-		return "Arrival " + flight.getOrigin().getIcaoCode() + " to " + flight.getDestination().getIcaoCode() + " at " + processTime;
+		return "Arrival " + flight.getFlightNumber() +" " + flight.getOrigin().getIcaoCode() + " to " + flight.getDestination().getIcaoCode() + " at " + processTime;
 	}
 
 }
