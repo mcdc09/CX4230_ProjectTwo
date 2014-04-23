@@ -2,6 +2,7 @@ package edu.gatech.cx4230.projecttwo.vis.map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.MarkerManager;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import de.fhpotsdam.unfolding.utils.ScreenPosition;
+import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.vis.creation.AircraftMarkerCreator;
@@ -47,7 +49,7 @@ public class SimMap {
 		aircraftManager.setMap(map);
 		map.addMarkerManager(aircraftManager);
 
-		flights = new ArrayList<Flight>();
+		flights = AirportSimulation.getFlights();
 		aircraftMap = new HashMap<Flight, AircraftMarker>();
 	}
 
@@ -64,10 +66,10 @@ public class SimMap {
 
 	/**
 	 * Creates the Aircraft Markers for the visualization
-	 * @param flights
+	 * @param f
 	 */
-	public void createAircraftMarkers(List<Flight> flights) {
-		this.flights = flights;
+	public void createAircraftMarkers(List<Flight> f) {
+		this.flights = f;
 		AircraftMarkerCreator amc = new AircraftMarkerCreator(flights, vis, vis.getTimeStep());
 		aircraftMap = amc.getAircraftMarkerMap();
 		List<AircraftMarker> aircraftMarkers = amc.getAirplaneMarkers();
@@ -80,23 +82,31 @@ public class SimMap {
 
 	public void updateAircraftMarkers(int time) {
 		List<Flight> fAMs = new ArrayList<Flight>(aircraftMap.keySet());
+		List<Flight> removeAM = new ArrayList<Flight>();
 
 		for(Flight f: fAMs) {
 			if(f.getEstimatedTimeArrival() >= time) {
 				if(flights.contains(f)) { // Update time
 					aircraftMap.get(f).updateLocation(time);
-				} else { // Remove
-					AircraftMarker am = aircraftMap.remove(f);
-					aircraftManager.removeMarker(am);
+				} else { // Add to Remove
+					removeAM.add(f);
 				}
 			}
 		}
-
-		for(Flight f: flights) {
-			if(!fAMs.contains(f) && time >= f.getTimeOfDeparture()) {
-				AircraftMarker am = new AircraftMarker(f, time, vis);
-				aircraftMap.put(f, am);
-				aircraftManager.addMarker(am);
+		for(Flight f: removeAM) { // Remove
+			AircraftMarker am = aircraftMap.remove(f);
+			aircraftManager.removeMarker(am);
+		}
+		
+		synchronized(flights) {
+			Iterator<Flight> it = flights.iterator();
+			while(it.hasNext()) {
+				Flight f = it.next();
+				if(!fAMs.contains(f) && time >= f.getTimeOfDeparture()) {
+					AircraftMarker am = new AircraftMarker(f, time, vis);
+					aircraftMap.put(f, am);
+					aircraftManager.addMarker(am);
+				}
 			}
 		}
 	}
@@ -139,7 +149,7 @@ public class SimMap {
 					vis.updateDisplayInfo(airport);
 				}
 
-				
+
 
 				lastHitMarker = hit;
 			} else {
@@ -154,7 +164,7 @@ public class SimMap {
 						}
 					} // close hit2 null
 				}
-				
+
 				if(lastHitMarker != null) lastHitMarker.setSelected(false);
 			}
 		} // close if

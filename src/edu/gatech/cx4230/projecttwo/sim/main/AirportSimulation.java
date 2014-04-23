@@ -1,6 +1,7 @@
 package edu.gatech.cx4230.projecttwo.sim.main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import edu.gatech.cx4230.projecttwo.sim.creation.FlightGenerator;
@@ -20,7 +21,7 @@ public class AirportSimulation {
 	private SimulationThread simThread;
 	public static final int THREAD_WAIT = 25;
 	private SimulationScenario scenario;
-	private static List<Flight> flights = new ArrayList<Flight>();
+	private static List<Flight> flights = Collections.synchronizedList(new ArrayList<Flight>());
 	
 	public AirportSimulation(VisPApplet vis, SimulationScenario scenario) {
 		this.scenario = scenario;
@@ -94,7 +95,6 @@ public class AirportSimulation {
 	 * @return the flightCount
 	 */
 	public int getFlightCount() {
-		flightCountChanged = false;
 		return flights.size();
 	}
 
@@ -136,7 +136,7 @@ public class AirportSimulation {
 	/**
 	 * @return the flights
 	 */
-	public List<Flight> getFlights() {
+	public static synchronized List<Flight> getFlights() {
 		flightCountChanged = false;
 		return flights;
 	}
