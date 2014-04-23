@@ -152,8 +152,8 @@ public class Airport {
 		}
 		int numAvailable = available.size();
 		if(numAvailable > 0) {
-			Random r = new Random();
-			int i = r.nextInt(numAvailable);
+			Random rand = new Random();
+			int i = rand.nextInt(numAvailable);
 			return available.get(i);
 		}
 		return null;
