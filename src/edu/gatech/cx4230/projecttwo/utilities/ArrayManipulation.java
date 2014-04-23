@@ -17,7 +17,7 @@ public class ArrayManipulation {
 	 * @param objects
 	 * @return
 	 */
-	public String ArrayToString(Object[] objects) {
+	public static String ArrayToString(Object[] objects) {
 		String out = "";
 		
 		for(int i = 0; i < objects.length; i++) {

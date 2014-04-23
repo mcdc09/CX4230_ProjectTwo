@@ -38,7 +38,7 @@ public class EventPriorityQueue<T> {
 	}
 	
 	public String toString() {
-		return ArrayManipulation.arrayToString(events.toArray());
+		return ArrayManipulation.ArrayToString(events.toArray());
 	}
 	
 	public int size() {
