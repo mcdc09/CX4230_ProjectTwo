@@ -6,8 +6,8 @@ package edu.gatech.cx4230.projecttwo.sim.testing;
  *
  */
 public class AirportSimulationLoggerMaster {
-	private static AirportSimulationLogger flightEventLogger = new AirportSimulationLogger(false, "Flight_Events");
-	private static AirportSimulationLogger simulationLogger = new AirportSimulationLogger(false, "Simulation_Logger");
+	private static AirportSimulationLogger flightEventLogger = new AirportSimulationLogger(true, "Flight_Events");
+	private static AirportSimulationLogger simulationLogger = new AirportSimulationLogger(true, "Simulation_Logger");
 	
 	// Event Logger
 	public static void logLineEvent(String in) {

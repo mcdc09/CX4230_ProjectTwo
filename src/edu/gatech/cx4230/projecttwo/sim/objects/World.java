@@ -27,9 +27,7 @@ public class World {
 	}
 	
 	public void processTimeStep(int time) {
-		Collection<Airport> airportList = airports.values();
-		
-		for(Airport a: airportList) {
+		for(Airport a: airports.values()) {
 			a.processNextEvents(time);
 		}
 	}
