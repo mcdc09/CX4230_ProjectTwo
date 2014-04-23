@@ -1,7 +1,6 @@
 package edu.gatech.cx4230.projecttwo.sim.objects;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -192,9 +191,8 @@ public class Airport {
 		this.currSimTime = currSimTime;
 		Event event = pendingEvents.removeMin();
 		if(canProcessEvent(event)) {
-			event.process();
+			event.process(currSimTime);
 			addProcessedEvent(event);
-			updateRunways(event);
 		}
 		else {
 			// if the event could not be processed, add it back to the pending event queue 
@@ -228,35 +226,16 @@ public class Airport {
 		return onTheGround.size() < maxAircraftCapacity && hasFreeRunway(e.getFlight().getAircraft().getMinRunwayLength());
 	}
 	
-	public void updateRunways(Event event) {
-		// runway management
-		if(event instanceof FlightEvent) {
-			Aircraft a = ((FlightEvent)event).getFlight().getAircraft();
-			int minRunwayLength = ((FlightEvent)event).getFlight().getAircraft().getMinRunwayLength();
-			if(event instanceof DepartureEvent) {
-				// get a free runway and make it occupied with this aircraft
-				// for the amount of time that it takes to clear the runway during takeoff
-				Runway r = getFreeRunway(minRunwayLength);
-				r.setAircraft(a);
-				r.setTimeNextAvailable(currSimTime + a.getRunwayTime());
-			}
-			else if(event instanceof LandedEvent) {
-				// get a free runway and make it occupied with this aircraft
-				// for the amount of time that it takes to clear the runway during landing
-				Runway r = getFreeRunway(minRunwayLength);
-				r.setAircraft(a);
-				r.setTimeNextAvailable(currSimTime + a.getRunwayTime());
-			}
-		}
-		else if(event instanceof AirportEvent) {
-			// TODO
-		}
-	}
-	
-	
 	public void addAircraftOnTheGround(List<Aircraft> aircrafts) {
 		for(Aircraft a: aircrafts) {
 			addAircraftOnTheGround(a);
 		}
+	}
+
+	/**
+	 * @return the currSimTime
+	 */
+	public int getCurrSimTime() {
+		return currSimTime;
 	}
 }

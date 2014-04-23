@@ -14,7 +14,7 @@ public class AirportShutDownEvent extends AirportEvent {
 	}
 
 	@Override
-	public void process() {
+	public void process(int currTime) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -40,7 +40,7 @@ public class AircraftCreationEvent extends AirportEvent {
 	}
 
 	@Override
-	public void process() {
+	public void process(int currTime) {
 		List<Aircraft> aircrafts = new ArrayList<Aircraft>();
 		for(int i = 0; i < regionalCount; i++) {
 			aircrafts.add(new RegionalAircraft());

@@ -5,6 +5,7 @@ import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
+import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
 
 public class LandedEvent extends FlightEvent {
@@ -19,13 +20,17 @@ public class LandedEvent extends FlightEvent {
 	}
 
 	@Override
-	public void process() {
+	public void process(int currTime) {
 		Airport destination = flight.getDestination();
 		Aircraft aircraft = flight.getAircraft();
 
 		// decrement inTheAir counter for destination airport
 		int inAir = destination.getInTheAir();
 		destination.setInTheAir(--inAir);
+		
+		Runway r = destination.getFreeRunway(aircraft.getMinRunwayLength());
+		r.setAircraft(aircraft);
+		r.setTimeNextAvailable(currTime + aircraft.getRunwayTime());
 
 		// add aircraft to onTheGround at destination airport
 		destination.addAircraftOnTheGround(aircraft);

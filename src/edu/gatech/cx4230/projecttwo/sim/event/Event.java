@@ -6,7 +6,7 @@ public abstract class Event {
 	protected int creationTime;
 	protected int processTime;
 	
-	public abstract void process();
+	public abstract void process(int currTime);
 
 
 	public int getCreationTime() {

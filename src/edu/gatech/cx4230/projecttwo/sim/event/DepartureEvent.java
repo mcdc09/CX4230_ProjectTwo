@@ -5,6 +5,7 @@ import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Aircraft;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
+import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
 
 public class DepartureEvent extends FlightEvent {
 	
@@ -18,18 +19,21 @@ public class DepartureEvent extends FlightEvent {
 	}
 	
 	@Override
-	public void process() {
+	public void process(int currSimTime) {
 		Airport origin = flight.getOrigin();
 		Airport destination = flight.getDestination();
 		Aircraft aircraft = flight.getAircraft();
 		
 		// Update new arrival time
-		int currSimTime = SimulationThread.getCurrTimeStep();
 		double t = (flight.getDistance() / aircraft.getSpeed()) * 3600.0;
 		flight.setActualTimeArrival(currSimTime + (int) (t / SimulationThread.TIME_PER_STEP));
 		
 		// remove aircraft from onTheGround at origin airport
 		origin.removeAircraftOnTheGround(aircraft);
+		
+		Runway r = origin.getFreeRunway(aircraft.getMinRunwayLength());
+		r.setAircraft(aircraft);
+		r.setTimeNextAvailable(currSimTime + aircraft.getRunwayTime());
 				
 		// schedule ArrivalEvent for destination airport
 		ArrivalEvent arriveEvent = new ArrivalEvent(flight);

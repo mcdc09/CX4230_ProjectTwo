@@ -16,7 +16,7 @@ public class ArrivalEvent extends FlightEvent {
 	}
 	
 	@Override
-	public void process() {
+	public void process(int currTime) {
 		Airport destination = flight.getDestination();
 		
 		// increment inTheAir counter for destination airport
