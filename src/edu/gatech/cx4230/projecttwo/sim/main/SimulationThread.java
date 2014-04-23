@@ -37,12 +37,14 @@ public class SimulationThread extends Thread {
 			if(running) {
 				currTimeStep++;
 				as.setTimeChanged(true);
-
+				
+				long start = System.currentTimeMillis();
 				as.processEventsForTimeStep(currTimeStep);
-
-				if(wait > 0) {
+				long dt = System.currentTimeMillis() - start;
+				
+				if((wait-dt) > 0) {
 					try {
-						sleep((long) wait);
+						sleep((long) wait-dt);
 					} catch(Exception e) {
 						e.printStackTrace();
 					}
