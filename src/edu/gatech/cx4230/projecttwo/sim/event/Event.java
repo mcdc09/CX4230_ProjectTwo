@@ -1,7 +1,7 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
 
-public abstract class Event {
+public abstract class Event implements Comparable<Event> {
 
 	protected int creationTime;
 	protected int processTime;
@@ -27,5 +27,10 @@ public abstract class Event {
 	
 	public String toString() {
 		return "Event to process at: " + processTime;
+	}
+	
+	@Override
+	public int compareTo(Event e) {
+		return this.processTime - e.getProcessTime();	
 	}
 }
