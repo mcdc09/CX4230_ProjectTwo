@@ -6,7 +6,8 @@ public class Flight {
 	private final Airport origin;
 	private final Airport destination;
 	private final double distance;
-	private final int timeOfDeparture;
+	private final int estTimeOfDeparture;
+	private int actualTimeOfDeparture;
 	private final int estimatedTimeArrival;
 	private int actualTimeArrival;
 	private final int flightNumber;
@@ -17,7 +18,7 @@ public class Flight {
 		this.aircraft = aircraft;
 		this.origin = origin;
 		this.destination = destination;
-		this.timeOfDeparture = timeOfDeparture;
+		this.estTimeOfDeparture = timeOfDeparture;
 		this.estimatedTimeArrival = estimatedTimeArrival;
 		this.distance = distance;
 		this.flightNumber = flightCount;
@@ -47,8 +48,8 @@ public class Flight {
 		return distance;
 	}
 
-	public int getTimeOfDeparture() {
-		return timeOfDeparture;
+	public int getEstTimeOfDeparture() {
+		return estTimeOfDeparture;
 	}
 
 	public int getEstimatedTimeArrival() {
@@ -70,6 +71,20 @@ public class Flight {
 		return flightCount;
 	}
 
+	/**
+	 * @return the actualTimeOfDeparture
+	 */
+	public int getActualTimeOfDeparture() {
+		return actualTimeOfDeparture;
+	}
+
+	/**
+	 * @param actualTimeOfDeparture the actualTimeOfDeparture to set
+	 */
+	public void setActualTimeOfDeparture(int actualTimeOfDeparture) {
+		this.actualTimeOfDeparture = actualTimeOfDeparture;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		return o instanceof Flight 
@@ -79,7 +94,7 @@ public class Flight {
 	public String toString() {
 		String out = "Flight:  " + flightNumber + " ";
 		out += origin.getIcaoCode() + " to " + destination.getIcaoCode();
-		out += " ATD: " + timeOfDeparture + " ETA: " + estimatedTimeArrival;
+		out += " ATD: " + actualTimeOfDeparture + " ETA: " + estimatedTimeArrival;
 		return out;
 	}
 }

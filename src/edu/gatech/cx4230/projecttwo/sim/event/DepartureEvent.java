@@ -15,7 +15,7 @@ public class DepartureEvent extends FlightEvent {
 		int currSimTime = SimulationThread.getCurrTimeStep();
 		
 		this.creationTime = currSimTime;
-		this.processTime = flight.getTimeOfDeparture();
+		this.processTime = flight.getEstTimeOfDeparture();
 	}
 	
 	@Override
@@ -27,6 +27,7 @@ public class DepartureEvent extends FlightEvent {
 		// Update new arrival time
 		double t = (flight.getDistance() / aircraft.getSpeed()) * 3600.0;
 		flight.setActualTimeArrival(currSimTime + (int) (t / SimulationThread.TIME_PER_STEP));
+		flight.setActualTimeOfDeparture(currSimTime);
 		
 		// remove aircraft from onTheGround at origin airport
 		origin.removeAircraftOnTheGround(aircraft);
