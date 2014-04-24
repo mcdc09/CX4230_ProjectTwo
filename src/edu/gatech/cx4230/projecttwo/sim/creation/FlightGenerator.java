@@ -30,7 +30,7 @@ public class FlightGenerator {
 		int medCount = 0;
 		int lrgCount = 0;
 		
-		System.out.println("Generating flight timetable.");
+		// System.out.println("Generating flight timetable.");
 		for(int i = 0; i < fm.length; i++){
 			for(int j = 0; j < fm[i].length; j++){
 				String aircraftType;
