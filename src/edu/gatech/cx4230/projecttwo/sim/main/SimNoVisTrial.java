@@ -2,8 +2,8 @@ package edu.gatech.cx4230.projecttwo.sim.main;
 
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
 import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
-import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
 import edu.gatech.cx4230.projecttwo.sim.testing.SimulationScenario;
+import edu.gatech.cx4230.projecttwo.sim.testing.TimedScenario;
 import edu.gatech.cx4230.projecttwo.sim.testing.TrialResult;
 import edu.gatech.cx4230.projecttwo.sim.testing.TrialResultList;
 
@@ -66,7 +66,7 @@ public class SimNoVisTrial {
 		TrialResult out = as.getSimulationResults();
 		out.setSimulationWallClockDuration(dt);
 
-		//World.getTimetable().timetableStatus();
+		World.getTimetable().timetableStatus();
 
 		// Save Logs
 		AirportSimulationLoggerMaster.save(scenario.getName() + "_" + i, true);
@@ -79,13 +79,16 @@ public class SimNoVisTrial {
 	 */
 	public static void main(String[] args) {
 		AirportSimulationLoggerMaster.setPrint(false);
-		SimulationScenario scenario = new DefaultScenario(false, null, 1); // TODO
-		int trials = 10;
+		
+		// TODO
+		int hours = 24;
+		SimulationScenario scenario = new TimedScenario(false, null, 4000, "Timed_Scenario", hours * 3600);
 
+		int trials = 10;
 
 		SimNoVisTrial snvt = new SimNoVisTrial(scenario);
 		TrialResultList trialRL = snvt.runTrials(trials);
-		System.out.println("Trial run in: " + trialRL.getTotalTime());
+		System.out.println("Trial run in: " + trialRL.getTotalTime() + " ms");
 		// TODO
 
 	}
