@@ -1,10 +1,8 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import edu.gatech.cx4230.projecttwo.utilities.ArrayManipulation;
-import edu.gatech.cx4230.projecttwo.utilities.ListHelper;
 
 public class EventPriorityQueue<T> {
 	

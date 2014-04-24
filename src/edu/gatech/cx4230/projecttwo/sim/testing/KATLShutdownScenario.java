@@ -1,7 +1,6 @@
 package edu.gatech.cx4230.projecttwo.sim.testing;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
