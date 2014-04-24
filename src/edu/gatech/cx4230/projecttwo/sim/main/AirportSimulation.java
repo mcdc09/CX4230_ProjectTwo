@@ -11,6 +11,7 @@ import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
+import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
 import edu.gatech.cx4230.projecttwo.sim.testing.SimulationScenario;
 import edu.gatech.cx4230.projecttwo.sim.testing.TrialResult;
 import edu.gatech.cx4230.projecttwo.vis.map.VisPApplet;
@@ -36,14 +37,17 @@ public class AirportSimulation {
 		World.setTimetable(timetable);
 		
 		// Load simulation scenario events
+		int totalAircraftCount = 0;
 		for(Airport a : World.getAirports()){
 			int cap = a.getMaxAircraftCapacity();
 			int rgl = (int)(cap * World.getAircraftDistr()[0]);
 			int sml = (int)(cap * World.getAircraftDistr()[1]);
 			int med = (int)(cap * World.getAircraftDistr()[2]);
 			int lrg = (int)(cap * World.getAircraftDistr()[3]);
+			totalAircraftCount +=  rgl + sml + med + lrg;
 			a.addPendingEvent(new AircraftCreationEvent(a, rgl, sml, med, lrg));
 		}
+		AirportSimulationLoggerMaster.logLineSim("AS<init> Total Aircraft created: " + totalAircraftCount);
 		
 		int wait = 0;
 		// Handle the visualization
