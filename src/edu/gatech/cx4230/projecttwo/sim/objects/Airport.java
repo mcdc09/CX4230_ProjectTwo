@@ -29,6 +29,7 @@ public class Airport {
 	private final int timeZone;
 	
 	// state
+	private boolean groundStop;
 	private ArrayList<Aircraft> onTheGround;
 	private int inTheAir;
 	
@@ -51,6 +52,7 @@ public class Airport {
 		this.name = name;
 		
 		// initialize state
+		this.groundStop = false;
 		this.onTheGround = onTheGround; // initial aircrafts on the ground
 		inTheAir = 0;
 		
@@ -107,6 +109,14 @@ public class Airport {
 
 	
 	/* STATE */
+	
+	public boolean isGroundStop() {
+		return groundStop;
+	}
+	
+	public void setGroundStop(boolean flag) {
+		this.groundStop = flag;
+	}
 	
 	public ArrayList<Aircraft> getAircraftsOnTheGround() {
 		return onTheGround;
@@ -212,7 +222,9 @@ public class Airport {
 	}
 	
 	public boolean canProcessDeparture(FlightEvent e) {
-		if(onTheGround.size() > 0 && hasFreeRunway(e.getFlight().getAircraft().getMinRunwayLength())) {
+		if(onTheGround.size() > 0 
+				&& hasFreeRunway(e.getFlight().getAircraft().getMinRunwayLength())
+				&& !e.getFlight().getDestination().isGroundStop()) {
 			return true;
 		}
 		return false;
