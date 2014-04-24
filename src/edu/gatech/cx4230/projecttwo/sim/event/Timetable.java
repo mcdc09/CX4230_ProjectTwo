@@ -78,7 +78,7 @@ public class Timetable {
 		int total = 0;
 		for(Airport a : World.getAirports()){
 			String ICAO = a.getIcaoCode();
-			HashMap<String, PriorityQueue<ScheduledFlight>> byAirport = timetable.get(ICAO.substring(1));
+			HashMap<String, PriorityQueue<ScheduledFlight>> byAirport = timetable.get(ICAO);
 			int apLrg = byAirport.get(Aircraft.TYPE_LARGE).size();
 			int apMed = byAirport.get(Aircraft.TYPE_MEDIUM).size();
 			int apSml = byAirport.get(Aircraft.TYPE_SMALL).size();
