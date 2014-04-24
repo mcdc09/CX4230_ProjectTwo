@@ -1,5 +1,6 @@
 package edu.gatech.cx4230.projecttwo.sim.main;
 
+import edu.gatech.cx4230.projecttwo.sim.objects.World;
 import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
 import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
 import edu.gatech.cx4230.projecttwo.sim.testing.SimulationScenario;
@@ -30,9 +31,9 @@ public class SimNoVisTrial {
 		
 		long start = System.currentTimeMillis();
 		for(int i = 0; i < count; i++) {
+			System.out.print("Trial " + i + " running...");
 			TrialResult trial = runTrial();
 			results.addTrialResult(trial);
-			System.out.println("Trial " + i + " run in " + trial.getSimulationWallClockDuration() + " ms");
 			
 			// Save Logs
 			AirportSimulationLoggerMaster.save(scenario.getName() + "_" + i, true);
@@ -63,9 +64,12 @@ public class SimNoVisTrial {
 			}
 		}
 		long dt = System.currentTimeMillis() - start;
+		System.out.print("done in " + dt + " ms");
 		
 		TrialResult out = as.getSimulationResults();
 		out.setSimulationWallClockDuration(dt);
+		
+		World.getTimetable().timetableStatus();
 		
 		return out;
 	}
