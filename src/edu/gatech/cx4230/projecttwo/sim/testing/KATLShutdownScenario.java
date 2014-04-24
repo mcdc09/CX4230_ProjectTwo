@@ -21,7 +21,7 @@ public class KATLShutdownScenario extends SimulationScenario {
 	 */
 	public static final int TIME_RUN = 24*60*60;
 	private static List<AirportEvent> failures = new ArrayList<AirportEvent>();
-	private static boolean f = failures.add(new AirportShutDownEvent(World.getAirport("ATL"), 500));
+	private static boolean f = failures.add(new AirportShutDownEvent(World.getAirport("ATL"), 720, 1440));
 	
 	public KATLShutdownScenario(boolean vis, List<AirportEvent> failurez, int totalAircraft) {
 		super(vis, failures, 100);

@@ -6,11 +6,11 @@ public class AirportShutDownEvent extends AirportEvent {
 	
 	private int shutDownTimeDuration;
 	
-	public AirportShutDownEvent(Airport a, int shutDownTime) {
+	public AirportShutDownEvent(Airport a, int shutDownTime, int beginTime) {
 		this.airport = a;
 		this.shutDownTimeDuration = shutDownTime;
 		
-		this.creationTime = 0; // TODO
+		this.creationTime = beginTime; // TODO
 	}
 
 	@Override
