@@ -76,7 +76,7 @@ public class FlightGenerator {
 	}
 	
 	private int[][] distanceMatrix(){
-		System.out.println("Calculating distances.");
+		// System.out.println("Calculating distances.");
 		int[][] dists = new int[airports.length][airports.length];
 		for(int i = 0; i < airports.length; i++)
 			for(int j = 0; j < airports.length; j++)
@@ -85,7 +85,7 @@ public class FlightGenerator {
 	}
 	
 	private int[][] flightMatrix(){
-		System.out.println("Getting aircraft routes.");
+		// System.out.println("Getting aircraft routes.");
 		int[][] flights = new int[flightList.size()][airports.length];
 		for(int i = 0; i < flightList.size(); i++){
 			CSVRowInitialMatrix ap = flightList.get(i);
@@ -105,7 +105,7 @@ public class FlightGenerator {
 	}
 	
 	private int[][] timezoneMatrix(){
-		System.out.println("Initializing airport timezones.");
+		// System.out.println("Initializing airport timezones.");
 		int[][] matrix = new int[airports.length][airports.length];
 		// Timezone of destination - Timezone of origin
 		for(int i = 0; i < airports.length; i++)

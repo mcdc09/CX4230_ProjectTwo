@@ -1,5 +1,6 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -10,6 +11,7 @@ import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
 import edu.gatech.cx4230.projecttwo.sim.objects.ScheduledFlight;
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
+import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
 import edu.gatech.cx4230.projecttwo.utilities.GeoHelper;
 
 public class Timetable {
@@ -73,6 +75,18 @@ public class Timetable {
 	}
 
 	public void timetableStatus(){
-
+		int total = 0;
+		for(Airport a : World.getAirports()){
+			String ICAO = a.getIcaoCode();
+			HashMap<String, PriorityQueue<ScheduledFlight>> byAirport = timetable.get(ICAO);
+			int apLrg = byAirport.get(Aircraft.TYPE_LARGE).size();
+			int apMed = byAirport.get(Aircraft.TYPE_MEDIUM).size();
+			int apSml = byAirport.get(Aircraft.TYPE_SMALL).size();
+			int apRgl = byAirport.get(Aircraft.TYPE_REGIONAL).size();
+			int airportTotal = apLrg + apMed + apSml + apRgl;
+			AirportSimulationLoggerMaster.logLineSim(ICAO + " on ground:  " + airportTotal);
+			total += airportTotal;
+		}
+		AirportSimulationLoggerMaster.logLineSim("Total aircraft on ground:  " + total);
 	}
 }
