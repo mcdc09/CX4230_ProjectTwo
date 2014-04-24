@@ -25,17 +25,20 @@ public class SimNoVisTrial {
 	 * @return
 	 */
 	public TrialResultList runTrials(int count) {
+		System.out.println("SimNoVisTrial<runTrials> Running " + count + " trials...");
 		TrialResultList results = new TrialResultList();
 		
 		long start = System.currentTimeMillis();
 		for(int i = 0; i < count; i++) {
 			TrialResult trial = runTrial();
 			results.addTrialResult(trial);
+			System.out.println("Trial " + i + " run in " + trial.getSimulationWallClockDuration() + " ms");
 			
 			// Save Logs
 			AirportSimulationLoggerMaster.save(scenario.getName() + "_" + i, true);
 			
 		}
+		System.out.println("SimNoVisTrial<runTrials> DONE!");
 		long stop = System.currentTimeMillis();
 		long dt = stop - start;
 		results.setTrials(count);
@@ -59,8 +62,7 @@ public class SimNoVisTrial {
 				e.printStackTrace();
 			}
 		}
-		long stop = System.currentTimeMillis();
-		long dt = stop - start;
+		long dt = System.currentTimeMillis() - start;
 		
 		TrialResult out = as.getSimulationResults();
 		out.setSimulationWallClockDuration(dt);

@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
 import edu.gatech.cx4230.projecttwo.utilities.FileHelper;
 import edu.gatech.cx4230.projecttwo.utilities.ListHelper;
-import edu.gatech.cx4230.projecttwo.utilities.Logger;
 
 public class CSVReaderInitialMatrix {
 	private static final String filename = "data/initialMatrix.csv";
@@ -23,7 +23,7 @@ public class CSVReaderInitialMatrix {
 
 	public CSVReaderInitialMatrix(String filename) {
 		String filepath = FileHelper.getPathToResource(filename);
-		System.out.println("CSVReaderInitialMatrix<init> "+ filepath);
+		AirportSimulationLoggerMaster.logLineSim("CSVReaderInitialMatrix<init> "+ filepath);
 		
 		rows = new ArrayList<CSVRowInitialMatrix>();
 		if(FileHelper.fileExists(filepath)) {
@@ -88,7 +88,7 @@ public class CSVReaderInitialMatrix {
 			rows.add(row);
 			lineCount++;
 		} else {
-			Logger.logLine("Header and Data row lengths don't match");
+			AirportSimulationLoggerMaster.logLineSim("CSVReader<DataRow> Header and Data row lengths don't match");
 		}	
 	}
 	

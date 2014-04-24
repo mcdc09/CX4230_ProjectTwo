@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
+import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
 import edu.gatech.cx4230.projecttwo.utilities.RandomNG;
 
 public class World {
@@ -60,11 +61,11 @@ public class World {
 		aircraftDistr[1] = (double)sml / total;
 		aircraftDistr[2] = (double)med / total;
 		aircraftDistr[3] = (double)lrg / total;
-		System.out.println("Total flights:  " + (int)total);
-		System.out.println((aircraftDistr[0] * 100) + "% regional");
-		System.out.println((aircraftDistr[1] * 100) + "% small");
-		System.out.println((aircraftDistr[2] * 100) + "% medium");
-		System.out.println((aircraftDistr[3] * 100) + "% large");
+		AirportSimulationLoggerMaster.logLineSim("Total flights:  " + (int)total);
+		AirportSimulationLoggerMaster.logLineSim((aircraftDistr[0] * 100) + "% regional");
+		AirportSimulationLoggerMaster.logLineSim((aircraftDistr[1] * 100) + "% small");
+		AirportSimulationLoggerMaster.logLineSim((aircraftDistr[2] * 100) + "% medium");
+		AirportSimulationLoggerMaster.logLineSim((aircraftDistr[3] * 100) + "% large");
 	}
 	
 	public static double[] getAircraftDistr(){

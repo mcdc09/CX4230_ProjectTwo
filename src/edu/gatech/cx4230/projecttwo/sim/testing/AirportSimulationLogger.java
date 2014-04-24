@@ -56,7 +56,7 @@ public class AirportSimulationLogger {
 			System.err.println("There was a problem writing Log to txt file");
 			e.printStackTrace();
 		}
-		System.out.println("Log saved");
+		if(print) System.out.println("Log saved");
 		if(clear) clear();
 	}
 

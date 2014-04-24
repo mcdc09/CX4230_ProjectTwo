@@ -98,7 +98,7 @@ public class DatabaseOperator {
 					.getConnection("jdbc:sqlite:" + dbFilepath);
 			
 			if (!conOut.isClosed()) {
-				System.out.println("Successfully connected to database");
+				//System.out.println("Successfully connected to database");
 			}
 		} catch (Exception e) {
 			System.err.println("Exception: " + e.getMessage());
