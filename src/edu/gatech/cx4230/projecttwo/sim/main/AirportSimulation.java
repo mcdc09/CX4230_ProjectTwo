@@ -81,7 +81,15 @@ public class AirportSimulation {
 	public TrialResult getSimulationResults() {
 		TrialResult out = new TrialResult();
 		
-		// TODO
+		for(Airport a: World.getAirports()) {
+			String icao = a.getIcaoCode();
+			out.addArrivalDelay(icao, a.getAverageArrivalDelay());
+			out.addArrivalDelays(icao, a.getArrivalDelays());
+			out.addDepartDelay(icao, a.getAverageDepartureDelay());
+			out.addDepartDelays(icao, a.getDepartureDelays());
+			out.addFlightVol(icao, a.getFlightOpCount());
+			out.addPassengerVol(icao, a.getPassengerVolume());
+		}
 		
 		return out;
 	}

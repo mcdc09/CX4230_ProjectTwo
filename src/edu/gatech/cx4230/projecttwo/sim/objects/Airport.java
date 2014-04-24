@@ -13,6 +13,7 @@ import edu.gatech.cx4230.projecttwo.sim.event.EventPriorityQueue;
 import edu.gatech.cx4230.projecttwo.sim.event.FlightEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.LandedEvent;
 import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
+import edu.gatech.cx4230.projecttwo.utilities.StatsHelper;
 
 
 public class Airport {
@@ -249,5 +250,96 @@ public class Airport {
 	 */
 	public int getCurrSimTime() {
 		return currSimTime;
+	}
+	
+	
+	// Post Simulation methods
+	public int[] getArrivalDelays() {
+		int[] out;
+		
+		List<LandedEvent> lEvents = new ArrayList<LandedEvent>();
+		for(Event e: processedEvents) {
+			if(e instanceof LandedEvent) {
+				lEvents.add((LandedEvent) e);
+			}
+		}
+
+		out = new int[lEvents.size()];
+		for(int i = 0; i < out.length; i++) {
+			out[i] = lEvents.get(i).getFlight().getArrivalDelay();
+		}
+		
+		return out;
+	}
+	
+	public int[] getDepartureDelays() {
+		int[] out;
+		
+		List<LandedEvent> departs = new ArrayList<LandedEvent>();
+		for(Event e: processedEvents) {
+			if(e instanceof LandedEvent) {
+				departs.add((LandedEvent) e);
+			}
+		}
+
+		out = new int[departs.size()];
+		for(int i = 0; i < out.length; i++) {
+			out[i] = departs.get(i).getFlight().getDepartureDelay();
+		}
+		return out;
+	}
+	
+	public double getAverageArrivalDelay() {
+		return StatsHelper.findAverage(getArrivalDelays());
+	}
+	
+	public double getAverageDepartureDelay() {
+		return StatsHelper.findAverage(getDepartureDelays());
+	}
+	
+	/**
+	 * Returns the number of events processed by this Airport
+	 * @return
+	 */
+	public int getFlightOpCount() {
+		return processedEvents.size();
+	}
+	
+	/**
+	 * Returns the number of passengers that traveled through this Airport
+	 * @return
+	 */
+	public int getPassengerVolume() {
+		int out = 0;
+		
+		// Incoming Flights
+		List<LandedEvent> lEvents = new ArrayList<LandedEvent>();
+		for(Event e: processedEvents) {
+			if(e instanceof LandedEvent) {
+				lEvents.add((LandedEvent) e);
+			}
+		}
+		for(LandedEvent ae: lEvents) {
+			Flight f = ae.getFlight();
+			if(f != null && f.getAircraft() != null) {
+				out+= f.getAircraft().getPassengerCapacity();
+			}
+		}
+		
+		
+		// Outgoing Flights
+		List<DepartureEvent> departs = new ArrayList<DepartureEvent>();
+		for(Event e: processedEvents) {
+			if(e instanceof DepartureEvent) {
+				departs.add((DepartureEvent) e);
+			}
+		}
+		for(DepartureEvent de: departs) {
+			Flight f = de.getFlight();
+			if(f != null && f.getAircraft() != null) {
+				out+= f.getAircraft().getPassengerCapacity();
+			}
+		}
+		return out;
 	}
 }

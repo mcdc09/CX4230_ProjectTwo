@@ -107,4 +107,12 @@ public class Flight {
 	public int getTotalFlightDelay() {
 		return actualTimeArrival - estimatedTimeArrival;
 	}
+	
+	public int getDepartureDelay() {
+		return actualTimeOfDeparture - estTimeOfDeparture;
+	}
+	
+	public int getArrivalDelay() {
+		return actualTimeArrival - estimatedTimeArrival;
+	}
 }
