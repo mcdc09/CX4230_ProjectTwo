@@ -52,7 +52,7 @@ public class AircraftMarker extends AbstractMarker {
 		Location originLoc = flight.getOrigin().getLocation();
 		
 		double speed = flight.getAircraft().getSpeed(); // km/hr
-		double dtStep = time - flight.getTimeOfDeparture(); // steps
+		double dtStep = time - flight.getActualTimeOfDeparture(); // steps
 		double dt = dtStep * SimulationThread.TIME_PER_STEP; // sec
 		dt = dt / 3600; // hr
 		double dist = speed * dt; // km

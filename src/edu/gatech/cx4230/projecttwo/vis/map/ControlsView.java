@@ -77,13 +77,14 @@ public class ControlsView {
 				String destName = flight.getDestination().getName();
 				String originDest = originName.substring(0, Math.min(20, originName.length())) + " => " + destName.substring(0, Math.min(20, destName.length()));
 				p.text(originDest, x + offset, y + 35);
-				p.text("Time of Departure: " + flight.getTimeOfDeparture(), x+offset, y+50);
-				p.text("ETA: " + flight.getEstimatedTimeArrival(), x+offset, y+65);
-				p.text("ATA: " + flight.getActualTimeArrival() , x+offset, y+80);
+				p.text("Estimated Time of Departure: " + flight.getEstTimeOfDeparture(), x+offset, y+50);
+				p.text("Actual Time of Departure: " + flight.getActualTimeOfDeparture(), x+offset, y+65);
+				p.text("ETA: " + flight.getEstimatedTimeArrival(), x+offset, y+80);
+				p.text("ATA: " + flight.getActualTimeArrival() , x+offset, y+95);
 				
 				Aircraft a = flight.getAircraft();
-				p.text("Type: " + a.getAircraftType(), x+offset, y+95);
-				p.text("Speed: " + a.getSpeed(), x+offset, y+110);
+				p.text("Type: " + a.getAircraftType(), x+offset, y+110);
+				p.text("Speed: " + a.getSpeed(), x+offset, y+125);
 			}
 			break;
 		}

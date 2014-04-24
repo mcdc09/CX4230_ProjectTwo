@@ -17,7 +17,7 @@ public class AircraftMarkerCreator {
 		amMap = new HashMap<Flight, AircraftMarker>();
 
 		for(Flight f: flights) {
-			if(f.getTimeOfDeparture() >= timeStep) {
+			if(f.getActualTimeOfDeparture() >= timeStep) {
 				AircraftMarker am = new AircraftMarker(f, timeStep, p);
 				amMap.put(f, am);
 			}

@@ -97,4 +97,14 @@ public class Flight {
 		out += " ATD: " + actualTimeOfDeparture + " ETA: " + estimatedTimeArrival;
 		return out;
 	}
+	
+	/**
+	 * Calculates and returns the delay between the original ETA and actual
+	 * time of arrival.  This also factors any delays in departure because
+	 * a delay in departure would mean a delay in arrival.
+	 * @return
+	 */
+	public int getTotalFlightDelay() {
+		return actualTimeArrival - estimatedTimeArrival;
+	}
 }
