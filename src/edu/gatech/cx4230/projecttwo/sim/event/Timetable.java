@@ -76,13 +76,28 @@ public class Timetable {
 
 	public void timetableStatus(){
 		int total = 0;
+		
 		for(Airport a : World.getAirports()){
 			String ICAO = a.getIcaoCode();
 			HashMap<String, PriorityQueue<ScheduledFlight>> byAirport = timetable.get(ICAO);
-			int apLrg = byAirport.get(Aircraft.TYPE_LARGE).size();
-			int apMed = byAirport.get(Aircraft.TYPE_MEDIUM).size();
-			int apSml = byAirport.get(Aircraft.TYPE_SMALL).size();
-			int apRgl = byAirport.get(Aircraft.TYPE_REGIONAL).size();
+			int apLrg = 0;
+			int apMed = 0;
+			int apSml = 0;
+			int apRgl = 0;
+			
+			try {
+				apLrg = byAirport.get(Aircraft.TYPE_LARGE).size();
+			}catch(NullPointerException e){}
+			try {
+				apMed = byAirport.get(Aircraft.TYPE_MEDIUM).size();
+			}catch(NullPointerException e){}
+			try {
+				apSml = byAirport.get(Aircraft.TYPE_SMALL).size();
+			}catch(NullPointerException e){}
+			try {
+				apRgl = byAirport.get(Aircraft.TYPE_REGIONAL).size();
+			}catch(NullPointerException e){}
+			
 			int airportTotal = apLrg + apMed + apSml + apRgl;
 			AirportSimulationLoggerMaster.logLineSim(ICAO + " on ground:  " + airportTotal);
 			total += airportTotal;
