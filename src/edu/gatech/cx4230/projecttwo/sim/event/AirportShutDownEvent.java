@@ -24,6 +24,9 @@ public class AirportShutDownEvent extends AirportEvent {
 		for(Runway r : airport.getRunways()) {
 			r.setTimeNextAvailable(processTime + shutDownTimeDuration);
 		}
+		
+		AirportOpenEvent openEvent = new AirportOpenEvent(airport, processTime + shutDownTimeDuration, processTime);
+		airport.addPendingEvent(openEvent);
 	}
 
 	/**
