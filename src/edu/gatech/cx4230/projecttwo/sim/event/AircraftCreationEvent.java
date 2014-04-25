@@ -25,14 +25,14 @@ public class AircraftCreationEvent extends AirportEvent {
 
 	/**
 	 * 
-	 * @param a The airport in question
+	 * @param aICAO The airport in question
 	 * @param regionalCount The number of regional aircraft at that airport
 	 * @param smallCount The number of small aircraft aircraft at the airport
 	 * @param medCount The number of medium aircraft aircraft at the airport
 	 * @param largeCount The number of large aircraft aircraft at the airport
 	 */
-	public AircraftCreationEvent(Airport a, int regionalCount, int smallCount, int medCount, int largeCount) {
-		this.airport = a;
+	public AircraftCreationEvent(String aICAO, int regionalCount, int smallCount, int medCount, int largeCount) {
+		this.airportICAO = aICAO;
 		this.regionalCount = regionalCount;
 		this.smallCount = smallCount;
 		this.mediumCount = medCount;
@@ -55,6 +55,7 @@ public class AircraftCreationEvent extends AirportEvent {
 			aircrafts.add(new LargeAircraft());
 		}
 		
+		Airport airport = World.getAirport(airportICAO);
 		for(Aircraft a: aircrafts) {
 			// add aircraft to onTheGround at destination airport
 			airport.addAircraftOnTheGround(a);
@@ -72,6 +73,6 @@ public class AircraftCreationEvent extends AirportEvent {
 	}
 	
 	public String toString() {
-		return airport.getIcaoCode() + " Reg: " + regionalCount + " Sml: " + smallCount + " Med: " + mediumCount + " Lrg: " + largeCount;
+		return airportICAO + " Reg: " + regionalCount + " Sml: " + smallCount + " Med: " + mediumCount + " Lrg: " + largeCount;
 	}
 }

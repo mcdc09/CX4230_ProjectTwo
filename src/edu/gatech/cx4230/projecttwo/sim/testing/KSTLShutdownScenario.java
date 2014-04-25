@@ -7,7 +7,6 @@ import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.AirportShutDownEvent;
 import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
 import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
-import edu.gatech.cx4230.projecttwo.sim.objects.World;
 
 /**
  * Simulation scenario object that shuts down a large airport like Atlanta
@@ -20,7 +19,7 @@ public class KSTLShutdownScenario extends SimulationScenario {
 	 */
 	public static final int TIME_RUN = 24*60*60;
 	private static List<AirportEvent> failures = new ArrayList<AirportEvent>();
-	private static boolean f = failures.add(new AirportShutDownEvent(World.getAirport("STL"), 720, 1800));
+	private static boolean f = failures.add(new AirportShutDownEvent("KSTL", 720, 1800));
 	
 	public KSTLShutdownScenario(boolean vis, List<AirportEvent> failurez, int totalAircraft) {
 		super(vis, failures, 100);

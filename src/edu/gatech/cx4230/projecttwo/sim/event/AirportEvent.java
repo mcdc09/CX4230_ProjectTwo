@@ -1,22 +1,21 @@
 package edu.gatech.cx4230.projecttwo.sim.event;
 
-import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 
 public abstract class AirportEvent extends Event{
-	protected Airport airport;
+	protected String airportICAO;
 
 	/**
-	 * @return the airport
+	 * @return the airportICAO
 	 */
-	public Airport getAirport() {
-		return airport;
+	public String getAirportICAO() {
+		return airportICAO;
 	}
 
 	/**
-	 * @param airport the airport to set
+	 * @param airportICAO the airportICAO to set
 	 */
-	public void setAirport(Airport airport) {
-		this.airport = airport;
+	public void setAirportICAO(String airportICAO) {
+		this.airportICAO = airportICAO;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import edu.gatech.cx4230.projecttwo.sim.creation.FlightGenerator;
 import edu.gatech.cx4230.projecttwo.sim.creation.WorldBuilder;
 import edu.gatech.cx4230.projecttwo.sim.event.AircraftCreationEvent;
+import edu.gatech.cx4230.projecttwo.sim.event.AirportEvent;
 import edu.gatech.cx4230.projecttwo.sim.event.Timetable;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
@@ -36,7 +37,7 @@ public class AirportSimulation {
 		Timetable timetable = fg.getTimetable();
 		World.setTimetable(timetable);
 		
-		// Load simulation scenario events
+		// Distribute Aircraft to Airports
 		int totalAircraftCount = 0;
 		for(Airport a : World.getAirports()){
 			int cap = a.getMaxAircraftCapacity();
@@ -45,9 +46,16 @@ public class AirportSimulation {
 			int med = (int)(cap * World.getAircraftDistr()[2]);
 			int lrg = (int)(cap * World.getAircraftDistr()[3]);
 			totalAircraftCount +=  rgl + sml + med + lrg;
-			a.addPendingEvent(new AircraftCreationEvent(a, rgl, sml, med, lrg));
+			a.addPendingEvent(new AircraftCreationEvent(a.getIcaoCode(), rgl, sml, med, lrg));
 		}
 		AirportSimulationLoggerMaster.logLineSim("AS<init> Total Aircraft created: " + totalAircraftCount);
+		
+		// Load simulation scenario events
+		List<AirportEvent> failures = scenario.getEvents();
+		for(AirportEvent e: failures) {
+			Airport a = World.getAirport(e.getAirportICAO());
+			a.addPendingEvent(e);
+		}
 		
 		int wait = 0;
 		// Handle the visualization
@@ -75,7 +83,7 @@ public class AirportSimulation {
 	}
 	
 	public void quitSimulation() {
-		// TODO handle closing of the simulation
+		
 	}
 	
 	public TrialResult getSimulationResults() {

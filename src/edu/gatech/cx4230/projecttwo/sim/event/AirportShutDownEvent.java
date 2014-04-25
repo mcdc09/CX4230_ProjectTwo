@@ -3,14 +3,15 @@ package edu.gatech.cx4230.projecttwo.sim.event;
 import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
+import edu.gatech.cx4230.projecttwo.sim.objects.World;
 import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
 
 public class AirportShutDownEvent extends AirportEvent {
 	
 	private int shutDownTimeDuration;
 	
-	public AirportShutDownEvent(Airport a, int shutDownTime, int beginTime) {
-		this.airport = a;
+	public AirportShutDownEvent(String aICAO, int shutDownTime, int beginTime) {
+		this.airportICAO = aICAO;
 		this.shutDownTimeDuration = shutDownTime;
 		
 		this.processTime = beginTime; // TODO
@@ -20,13 +21,14 @@ public class AirportShutDownEvent extends AirportEvent {
 	@Override
 	public void process(int currTime) {
 		AirportSimulationLoggerMaster.logLineEvent("AShutDownEvent<process> at " + currTime);
+		Airport airport = World.getAirport(airportICAO);
 		airport.setGroundStop(true);
 		
 		for(Runway r : airport.getRunways()) {
 			r.setTimeNextAvailable(processTime + shutDownTimeDuration);
 		}
 		
-		AirportOpenEvent openEvent = new AirportOpenEvent(airport, processTime + shutDownTimeDuration, processTime);
+		AirportOpenEvent openEvent = new AirportOpenEvent(airportICAO, processTime + shutDownTimeDuration, processTime);
 		airport.addPendingEvent(openEvent);
 	}
 
