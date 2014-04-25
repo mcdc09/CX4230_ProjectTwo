@@ -3,6 +3,7 @@ package edu.gatech.cx4230.projecttwo.sim.event;
 import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
+import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
 
 public class AirportShutDownEvent extends AirportEvent {
 	
@@ -18,7 +19,7 @@ public class AirportShutDownEvent extends AirportEvent {
 
 	@Override
 	public void process(int currTime) {
-		// TODO Auto-generated method stub
+		AirportSimulationLoggerMaster.logLineEvent("AShutDownEvent<process> at " + currTime);
 		airport.setGroundStop(true);
 		
 		for(Runway r : airport.getRunways()) {

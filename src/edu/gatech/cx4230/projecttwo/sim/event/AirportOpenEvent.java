@@ -2,6 +2,7 @@ package edu.gatech.cx4230.projecttwo.sim.event;
 
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Runway;
+import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
 
 
 /**
@@ -26,6 +27,7 @@ public class AirportOpenEvent extends AirportEvent {
 
 	@Override
 	public void process(int currTime) {
+		AirportSimulationLoggerMaster.logLineEvent("AirportOpenEvent<process> at " + currTime);
 		airport.setGroundStop(false);
 		for(Runway r: airport.getRunways()) {
 			r.setTimeNextAvailable(processTime);

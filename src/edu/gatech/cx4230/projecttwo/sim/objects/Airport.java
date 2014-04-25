@@ -208,8 +208,8 @@ public class Airport {
 		else {
 			// if the event could not be processed, add it back to the pending event queue 
 			// for next time step
-			String line = "Airport<processNextEvent> " + currSimTime + " " + event.toString() + " not processed";
-			AirportSimulationLoggerMaster.logLineEvent(line);
+			// String line = "Airport<processNextEvent> " + currSimTime + " " + event.toString() + " not processed";
+			// AirportSimulationLoggerMaster.logLineEvent(line);
 			event.setProcessTime(event.getProcessTime() + 1);
 			addPendingEvent(event);
 		}
