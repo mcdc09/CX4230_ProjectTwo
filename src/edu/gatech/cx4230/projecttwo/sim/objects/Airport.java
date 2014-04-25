@@ -275,10 +275,10 @@ public class Airport {
 	public int[] getDepartureDelays() {
 		int[] out;
 		
-		List<LandedEvent> departs = new ArrayList<LandedEvent>();
+		List<DepartureEvent> departs = new ArrayList<DepartureEvent>();
 		for(Event e: processedEvents) {
-			if(e instanceof LandedEvent) {
-				departs.add((LandedEvent) e);
+			if(e instanceof DepartureEvent) {
+				departs.add((DepartureEvent) e);
 			}
 		}
 
