@@ -22,7 +22,7 @@ public class KATLShutdownScenario extends SimulationScenario {
 	private static boolean f = failures.add(new AirportShutDownEvent("KATL", 720, 1440));
 	
 	public KATLShutdownScenario(boolean vis, List<AirportEvent> failurez, int totalAircraft) {
-		super(vis, failures, 100);
+		super(vis, failures, 100, "KATLShutdown");
 	}
 
 	@Override
