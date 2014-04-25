@@ -11,7 +11,7 @@ import edu.gatech.cx4230.projecttwo.sim.main.AirportSimulation;
 import edu.gatech.cx4230.projecttwo.sim.main.SimulationThread;
 import edu.gatech.cx4230.projecttwo.sim.objects.Airport;
 import edu.gatech.cx4230.projecttwo.sim.objects.Flight;
-import edu.gatech.cx4230.projecttwo.sim.testing.DefaultScenario;
+import edu.gatech.cx4230.projecttwo.sim.testing.KATLShutdownScenario;
 
 public class VisPApplet extends PApplet {
 	private AirportSimulation sim;
@@ -37,7 +37,7 @@ public class VisPApplet extends PApplet {
 		
 		simMap = new SimMap(this);
 		cview = new ControlsView(2*SimMap.MAP_X + SimMap.MAP_WIDTH, SimMap.MAP_Y, 350,  SimMap.MAP_HEIGHT);
-		sim = new AirportSimulation(this, new DefaultScenario(true, new ArrayList<AirportEvent>(), NUM_AIRCRAFT_FOR_VIS));	
+		sim = new AirportSimulation(this, new KATLShutdownScenario(true, new ArrayList<AirportEvent>(), NUM_AIRCRAFT_FOR_VIS));	
 	}
 	
 	public void draw() {
