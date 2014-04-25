@@ -2,10 +2,13 @@ package edu.gatech.cx4230.projecttwo.sim.main;
 
 import edu.gatech.cx4230.projecttwo.sim.objects.World;
 import edu.gatech.cx4230.projecttwo.sim.testing.AirportSimulationLoggerMaster;
+import edu.gatech.cx4230.projecttwo.sim.testing.KATLShutdownScenario;
+import edu.gatech.cx4230.projecttwo.sim.testing.KSTLShutdownScenario;
 import edu.gatech.cx4230.projecttwo.sim.testing.SimulationScenario;
 import edu.gatech.cx4230.projecttwo.sim.testing.TimedScenario;
 import edu.gatech.cx4230.projecttwo.sim.testing.TrialResult;
 import edu.gatech.cx4230.projecttwo.sim.testing.TrialResultList;
+import edu.gatech.cx4230.projecttwo.utilities.FileHelper;
 
 
 /**
@@ -15,9 +18,11 @@ import edu.gatech.cx4230.projecttwo.sim.testing.TrialResultList;
  */
 public class SimNoVisTrial {
 	private SimulationScenario scenario;
+	private boolean saveLogFiles;
 
-	public SimNoVisTrial(SimulationScenario scen) {
+	public SimNoVisTrial(SimulationScenario scen, String testName, boolean saveLogFiles) {
 		this.scenario = scen;
+		this.saveLogFiles = saveLogFiles;
 	}
 
 	/**
@@ -50,9 +55,9 @@ public class SimNoVisTrial {
 	 * @return
 	 */
 	public TrialResult runTrial(int i) {
-		AirportSimulation as = new AirportSimulation(scenario);
-
+		// Run and time Trial
 		long start = System.currentTimeMillis();
+		AirportSimulation as = new AirportSimulation(scenario);
 		while(scenario.continueSimulation(as)) {
 			try {
 				Thread.sleep(50);
@@ -63,13 +68,18 @@ public class SimNoVisTrial {
 		long dt = System.currentTimeMillis() - start;
 		System.out.println("done in " + dt + " ms");
 
+		// Process results from this trial run
 		TrialResult out = as.getSimulationResults();
 		out.setSimulationWallClockDuration(dt);
 
 		World.getTimetable().timetableStatus();
 
 		// Save Logs
-		AirportSimulationLoggerMaster.save(scenario.getName() + "_" + i, true);
+		if(saveLogFiles) {
+			AirportSimulationLoggerMaster.save(scenario.getName() + "_" + i, true);
+		} else {
+			AirportSimulationLoggerMaster.clear();
+		}
 		return out;
 	}
 
@@ -79,17 +89,36 @@ public class SimNoVisTrial {
 	 */
 	public static void main(String[] args) {
 		AirportSimulationLoggerMaster.setPrint(false);
+		String testName;
+		SimulationScenario scenario;
 		
-		// TODO
-		int hours = 24;
-		SimulationScenario scenario = new TimedScenario(false, null, 4000, "Timed_Scenario", hours * 3600);
+		// Timed Scenario
+//		testName = "Timed_Scenario";
+//		int hours = 24;
+//		scenario = new TimedScenario(false, null, 4000, testName, hours * 3600);
+		
+		
+		// KATL Shutdown Scenario
+//		testName = "KATL_Scenario";
+//		scenario = new KATLShutdownScenario(false, null, 4000);
+		
+		
+		// KSTL Shutdown Scenario
+		testName = "KSTL_Scenario";
+		scenario = new KSTLShutdownScenario(false, null, 4000);
 
-		int trials = 10;
-
-		SimNoVisTrial snvt = new SimNoVisTrial(scenario);
+		
+		
+		
+		int trials = 30;
+		SimNoVisTrial snvt = new SimNoVisTrial(scenario, testName, false);
 		TrialResultList trialRL = snvt.runTrials(trials);
-		System.out.println("Trial run in: " + trialRL.getTotalTime() + " ms");
-		// TODO
+		System.out.println("Trials run in: " + trialRL.getTotalTime() + " ms");
+		System.out.print("Saving data...");
+		trialRL.calcAllAcrossTrials();
+		String filename = FileHelper.getPathToResource("Output/" + testName);
+		trialRL.saveDataToCSV(filename);
+		System.out.println("done!");
 
 	}
 
