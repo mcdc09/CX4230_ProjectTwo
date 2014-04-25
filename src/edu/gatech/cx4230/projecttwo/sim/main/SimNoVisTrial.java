@@ -93,25 +93,26 @@ public class SimNoVisTrial {
 		SimulationScenario scenario;
 		
 		// Timed Scenario
-//		testName = "Timed_Scenario";
-//		int hours = 24;
-//		scenario = new TimedScenario(false, null, 4000, testName, hours * 3600);
+		testName = "Timed_Scenario";
+		scenario = new TimedScenario(false, null, 4000, testName, 24 * 3600);
+		SimNoVisTrial.runSimulationType(testName, scenario);
 		
 		
 		// KATL Shutdown Scenario
-//		testName = "KATL_Scenario";
-//		scenario = new KATLShutdownScenario(false, null, 4000);
-		
+		testName = "KATL_Scenario";
+		scenario = new KATLShutdownScenario(false, null, 4000);
+		SimNoVisTrial.runSimulationType(testName, scenario);
 		
 		// KSTL Shutdown Scenario
 		testName = "KSTL_Scenario";
 		scenario = new KSTLShutdownScenario(false, null, 4000);
-
-		
-		
-		
+		SimNoVisTrial.runSimulationType(testName, scenario);
+	}
+	
+	public static void runSimulationType(String testName, SimulationScenario scenario) {
+		System.out.println(testName);
 		int trials = 30;
-		SimNoVisTrial snvt = new SimNoVisTrial(scenario, testName, false);
+		SimNoVisTrial snvt = new SimNoVisTrial(scenario, testName, true);
 		TrialResultList trialRL = snvt.runTrials(trials);
 		System.out.println("Trials run in: " + trialRL.getTotalTime() + " ms");
 		System.out.print("Saving data...");
@@ -119,7 +120,9 @@ public class SimNoVisTrial {
 		String filename = FileHelper.getPathToResource("Output/" + testName);
 		trialRL.saveDataToCSV(filename);
 		System.out.println("done!");
-
+		
+		System.out.println();
+		System.out.println();
 	}
 
 }
