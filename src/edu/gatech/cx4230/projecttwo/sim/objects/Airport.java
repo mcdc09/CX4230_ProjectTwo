@@ -264,11 +264,14 @@ public class Airport {
 			}
 		}
 
+		int max = 0;
 		out = new int[lEvents.size()];
 		for(int i = 0; i < out.length; i++) {
-			out[i] = lEvents.get(i).getFlight().getArrivalDelay();
+			int delay = lEvents.get(i).getFlight().getArrivalDelay();
+			out[i] = delay;
+			if(delay > max) max = delay;
 		}
-		
+		AirportSimulationLoggerMaster.logLineEvent("Airport<getArrivalDelays> " + icaoCode + " max arrival delay = " + max);
 		return out;
 	}
 	
@@ -282,10 +285,14 @@ public class Airport {
 			}
 		}
 
+		int max = 0;
 		out = new int[departs.size()];
 		for(int i = 0; i < out.length; i++) {
-			out[i] = departs.get(i).getFlight().getDepartureDelay();
+			int delay = departs.get(i).getFlight().getDepartureDelay();
+			out[i] = delay;
+			if(delay > max) max = delay;
 		}
+		AirportSimulationLoggerMaster.logLineEvent("Airport<getDepartureDelays> " + icaoCode + " max departure delay = " + max);
 		return out;
 	}
 	
